@@ -170,7 +170,6 @@ public class MainActivity extends Activity {
                     getActionBar().setHomeButtonEnabled(false);
                 }
             }
-
         });
     }
 
@@ -213,7 +212,6 @@ public class MainActivity extends Activity {
                 return true;
 
             case R.id.action_logout:
-
                 Tools.logout(this);
                 return true;
         }
