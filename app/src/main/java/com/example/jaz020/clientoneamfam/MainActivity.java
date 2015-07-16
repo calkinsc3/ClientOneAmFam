@@ -134,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
                 Tools.replaceFragment(R.id.fragment_container, new Settings(), getFragmentManager(), true);
                 return true;
 
+            case R.id.action_logout:
+
+                Tools.logout(this);
+                return true;
+
         }
 
 

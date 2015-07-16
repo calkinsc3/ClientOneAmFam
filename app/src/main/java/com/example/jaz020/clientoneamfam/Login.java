@@ -39,17 +39,10 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sharedPreferences = getSharedPreferences("AmFam", 0);
 
-        //CHECK FOR LOGIN
-        if (sharedPreferences.getString("UserID", null) != null && sharedPreferences.getBoolean("StayLoggedIn", false)) {
-            loginSuccess();
-        } else if (sharedPreferences.getString("Username", null) != null) {
-            username_checkbox.setChecked(true);
-            username_entry.setText(sharedPreferences.getString("Username", ""));
-        }
 
         context = this;
+        sharedPreferences = getSharedPreferences("AmFam", 0);
 
         username_entry = (EditText) findViewById(R.id.username_entry);
         password_entry = (EditText) findViewById(R.id.password_entry);
@@ -58,7 +51,13 @@ public class Login extends AppCompatActivity {
         login_button = (Button) findViewById(R.id.login_button);
 
 
-       
+        //CHECK FOR LOGIN
+        if (sharedPreferences.getString("UserID", null) != null && sharedPreferences.getBoolean("StayLoggedIn", false)) {
+            loginSuccess();
+        } else if (sharedPreferences.getString("Username", null) != null) {
+            username_checkbox.setChecked(true);
+            username_entry.setText(sharedPreferences.getString("Username", ""));
+        }
 
         //INITIALIZE PARSE
         Parse.enableLocalDatastore(this);
