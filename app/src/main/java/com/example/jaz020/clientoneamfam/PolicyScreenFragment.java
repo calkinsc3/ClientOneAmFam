@@ -1,6 +1,7 @@
 package com.example.jaz020.clientoneamfam;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.widget.Spinner;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -34,20 +36,22 @@ import java.util.ArrayList;
  */
 public class PolicyScreenFragment extends Fragment {
 
-    Bundle args;
-    EditText policyDescription;
-    EditText policyCost;
-    EditText policyAddress;
-    EditText city;
-    EditText zip;
-    Spinner stateSpinner;
-    ImageButton addUploads;
-    ListView uploadsList;
-    ParseObject currentPolicy;
-    ArrayList<ParseObject> uploads;
-    ArrayAdapter stateAdapter;
-    ObjectArrayAdapter imageAdapter;
-    LinearLayout address2;
+    private final int CHANGE_IMAGE = 1;
+    private final int NEW_IMAGE = 0;
+    private Bundle args;
+    private EditText policyDescription;
+    private EditText policyCost;
+    private EditText policyAddress;
+    private EditText city;
+    private EditText zip;
+    private Spinner stateSpinner;
+    private ImageButton addUploads;
+    private ListView uploadsList;
+    private ParseObject currentPolicy;
+    private ArrayList<ParseObject> uploads;
+    private ArrayAdapter stateAdapter;
+    private ObjectArrayAdapter imageAdapter;
+    private LinearLayout address2;
 
     public PolicyScreenFragment() {
         // Required empty public constructor
@@ -63,8 +67,6 @@ public class PolicyScreenFragment extends Fragment {
         initializeFields(view);
         checkOrientationSetLayoutOrientation();
         enableEditIfNewOrEditing();
-
-
 
         return view;
     }
@@ -167,6 +169,23 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                //User is changing an image
+                case CHANGE_IMAGE:
+
+                    break;
+                case NEW_IMAGE:
+
+                    break;
+                default:
+                    Log.d("Error: ", "Reached default in upload");
+            }
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.optional_action).setVisible(true);
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
@@ -179,7 +198,22 @@ public class PolicyScreenFragment extends Fragment {
         switch (item.getItemId()) {
             //save action button enabled
             case R.id.optional_action:
-                //todo create save action
+                if(args.getBoolean("ISNEW", false)){
+                    currentPolicy = new ParseObject("Policy");
+                    currentPolicy.put("AgentID", ParseUser.getCurrentUser().getString("AgentID"));
+                    currentPolicy.put("ClientID", ParseUser.getCurrentUser().getObjectId());
+                    currentPolicy.put("Accepted", true);
+                }
+                currentPolicy.put("Description", policyDescription.getText().toString());
+                currentPolicy.put("Cost", Double.valueOf(policyCost.getText().toString()));
+                currentPolicy.put("Address", policyAddress.getText().toString());
+                currentPolicy.put("City", city.getText().toString());
+                currentPolicy.put("Zip", zip.getText().toString());
+                currentPolicy.put("State", stateSpinner.getSelectedItem().toString());
+
+                currentPolicy.saveEventually();
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
