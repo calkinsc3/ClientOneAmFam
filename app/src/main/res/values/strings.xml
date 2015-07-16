@@ -13,4 +13,11 @@
     <string name="imageDescription">Policy Image</string>
     <string name="deleteImage">Delete Image</string>
     <string name="comment">Enter Comments</string>
+
+    <string name="checkbox_1">Stay Logged In</string>
+    <string name="checkbox_2">Remember Username</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">Login</string>
 </resources>

@@ -1,12 +1,16 @@
 package com.example.jaz020.clientoneamfam;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
+
+    //PARSE KEYS
+    private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
+    private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return true; 
     }
 
     @Override
@@ -29,9 +33,15 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id) {
+
+            case R.id.action_settings:
+
+                Tools.replaceFragment(R.id.fragment_container, new Settings(), getFragmentManager(), true);
+                return true;
+
         }
+
 
         return super.onOptionsItemSelected(item);
     }
