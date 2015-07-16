@@ -1,9 +1,9 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +18,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private DrawerLayout drawerLayout;
     private ListView drawerList;
@@ -164,11 +163,11 @@ public class MainActivity extends AppCompatActivity {
                 if (stackHeight > 1) {
                     // if we have something on the stack (doesn't include the current shown fragment).
                     // >0 removes initial frag and leave a blank space...use 1 instead.
-                    getSupportActionBar().setHomeButtonEnabled(true);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getActionBar().setHomeButtonEnabled(true);
+                    getActionBar().setDisplayHomeAsUpEnabled(true);
                 } else {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setHomeButtonEnabled(false);
+                    getActionBar().setDisplayHomeAsUpEnabled(false);
+                    getActionBar().setHomeButtonEnabled(false);
                 }
             }
 
@@ -211,6 +210,11 @@ public class MainActivity extends AppCompatActivity {
         switch(id) {
             case R.id.action_settings:
                 Tools.replaceFragment(R.id.fragment_container, new Settings(), getFragmentManager(), true);
+                return true;
+
+            case R.id.action_logout:
+
+                Tools.logout(this);
                 return true;
         }
 
