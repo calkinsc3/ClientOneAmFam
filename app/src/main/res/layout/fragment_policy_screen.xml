@@ -17,6 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="false"
             android:inputType="text"/>
     </LinearLayout>
     <LinearLayout
@@ -36,7 +37,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number" />
+            android:clickable="false"
+            android:inputType="number"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/addressLayout"
@@ -55,7 +57,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="textPostalAddress" />
+            android:clickable="false"
+            android:inputType="textPostalAddress"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/address2Layout"
@@ -76,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:clickable="false"
             android:inputType="text"/>
 
         <TextView
@@ -88,7 +92,8 @@
             android:id="@+id/stateSpinner"
             android:layout_width="119dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:clickable="false"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,16 +106,42 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:clickable="false"
             android:inputType="number"
             android:maxLength="16"/>
 
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/uploadsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address2Layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/uploads"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/addUploadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="#00ffffff"
+            android:clickable="false"
+            android:src="@android:drawable/ic_input_add"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/address2Layout"
+        android:layout_below="@+id/uploadsLayout"
         android:layout_centerHorizontal="true" />
 
 

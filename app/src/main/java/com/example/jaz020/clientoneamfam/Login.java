@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
 
 
     public void loginSuccess() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Splash.class);
         startActivity(intent);
     }
 
