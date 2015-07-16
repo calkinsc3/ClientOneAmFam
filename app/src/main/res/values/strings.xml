@@ -23,10 +23,11 @@
         <item>My Policies</item>
         <item>My Claims</item>
         <item>Settings</item>
-        <item>Meet the Interns</item>
     </string-array>
 
-    <string-array name="interns">
+    <string name="meet_the_interns">Meet the Interns</string>
+
+    <string-array name="intern_names">
         <item>Evan Feller</item>
         <item>Levi Lavender</item>
         <item>Navneet Reddy</item>

@@ -10,7 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private String[] drawerItems;
+    private ExpandableListView drawerExpandableList;
+    private ExpandableListAdapter drawerExpandableListAdapter;
+
+    private List<String> meetInternsHeader;
+    private HashMap<String, List<String>> internNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +38,17 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerItems = getResources().getStringArray(R.array.drawerItems);
         drawerList = (ListView) findViewById(R.id.left_drawer);
-        drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, drawerItems));
+        drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, drawerItems));
 
-        //Sets the Up Navigation enabled only if fragments are on backStack
+        setExpandDrawerLists();
+
+        drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
+        drawerExpandableListAdapter = new ExpandableListAdapter(this, meetInternsHeader, internNames);
+
+        // Sets the Up Navigation enabled only if fragments are on backStack
         enableUpAction();
-        //Set the navigation drawer navigation
+        // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
         // TODO!!!!!
@@ -39,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
             //loads the appropriate initial fragment
 //            Tools.replaceFragment(new MainFragment(), getFragmentManager(), true);
         }
+    }
+
+    private void setExpandDrawerLists() {
+        List<String> internNamesList = new ArrayList<>();
+        meetInternsHeader = new ArrayList<>();
+        internNames = new HashMap<>();
+
+        internNamesList.addAll(Arrays.asList(getResources().getStringArray(R.array.intern_names)));
+        meetInternsHeader.add(getResources().getString(R.string.meet_the_interns));
+        internNames.put(meetInternsHeader.get(0), internNamesList);
     }
 
     public void setDrawerItemClickListener(){
@@ -78,11 +105,6 @@ public class MainActivity extends AppCompatActivity {
                     case SETTINGS:
                         Tools.replaceFragment(R.id.fragment_container, new Settings(),
                                 getFragmentManager(), true);
-                        break;
-
-                    case MEET_THE_INTERNS:
-//                        Tools.replaceFragment(R.id.fragment_container, new MeetTheInterns(),
-//                                getFragmentManager(), true);
                         break;
 
                     default:
