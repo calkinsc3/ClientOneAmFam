@@ -134,9 +134,9 @@ public class Login extends AppCompatActivity {
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return "Login";
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return "Register";
             }
             return null;
         }
