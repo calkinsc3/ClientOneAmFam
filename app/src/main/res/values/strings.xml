@@ -7,6 +7,22 @@
     <string name="checkbox_1">Stay Logged In</string>
     <string name="checkbox_2">Remember Username</string>
 
+    <string-array name="drawerItems">
+        <item>My Agent</item>
+        <item>Find An Agent</item>
+        <item>My Policies</item>
+        <item>My Claims</item>
+        <item>Settings</item>
+        <item>Meet the Interns</item>
+    </string-array>
+
+    <string-array name="interns">
+        <item>Evan Feller</item>
+        <item>Levi Lavender</item>
+        <item>Navneet Reddy</item>
+        <item>James Ziglinski</item>
+    </string-array>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Login</string>
