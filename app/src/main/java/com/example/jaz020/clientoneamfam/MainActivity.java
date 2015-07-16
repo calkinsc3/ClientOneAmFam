@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ListView drawerList;
-    private String[] drawerItems;
     private ExpandableListView drawerExpandableList;
     private ExpandableListAdapter drawerExpandableListAdapter;
 
@@ -36,15 +35,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerItems = getResources().getStringArray(R.array.drawerItems);
         drawerList = (ListView) findViewById(R.id.left_drawer);
         drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, drawerItems));
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.drawerItems)));
 
         setExpandDrawerLists();
 
         drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
-        drawerExpandableListAdapter = new ExpandableListAdapter(this, meetInternsHeader, internNames);
+        drawerExpandableListAdapter = new ExpandableListAdapter(this.getApplicationContext(), meetInternsHeader, internNames);
+        drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         // Sets the Up Navigation enabled only if fragments are on backStack
         enableUpAction();
@@ -72,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                drawerLayout.closeDrawers();
+                drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
+                drawerExpandableList.collapseGroup(0);
 
                 final int MY_AGENT = 0;
                 final int FIND_AN_AGENT = 1;
                 final int MY_POLICIES = 2;
                 final int MY_CLAIMS = 3;
                 final int SETTINGS = 4;
-                final int MEET_THE_INTERNS = 5;
 
                 switch (position) {
                     case MY_AGENT:
@@ -112,6 +112,47 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        drawerExpandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
+                drawerExpandableList.collapseGroup(0);
+
+                final int EVAN = 0;
+                final int LEVI = 1;
+                final int NAVNEET = 2;
+                final int JAMES = 3;
+
+                switch (childPosition) {
+                    case EVAN:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetEvanFragment(),
+                                getFragmentManager(), true);
+                        break;
+
+                    case LEVI:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetLeviFragment(),
+                                getFragmentManager(), true);
+                        break;
+
+                    case NAVNEET:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetNavneetFragment(),
+                                getFragmentManager(), true);
+                        break;
+
+                    case JAMES:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetJamesFragment(),
+                                getFragmentManager(), true);
+                        break;
+
+                    default:
+                        Log.d("Error", "Reached default in drawer");
+                }
+
+                return false;
+            }
+        });
     }
 
     public void enableUpAction(){
@@ -134,6 +175,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Moves the the down arrow on the expandable list view to the right side of the screen.
+     *
+     * @param hasFocus
+     */
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            drawerExpandableList.setIndicatorBounds(drawerExpandableList.getRight() - 200,
+                    drawerExpandableList.getWidth());
+        } else {
+            drawerExpandableList.setIndicatorBoundsRelative(drawerExpandableList.getRight() - 200,
+                    drawerExpandableList.getWidth());
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -150,14 +209,10 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch(id) {
-
             case R.id.action_settings:
-
                 Tools.replaceFragment(R.id.fragment_container, new Settings(), getFragmentManager(), true);
                 return true;
-
         }
-
 
         return super.onOptionsItemSelected(item);
     }
