@@ -8,10 +8,6 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    //PARSE KEYS
-    private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
-    private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
