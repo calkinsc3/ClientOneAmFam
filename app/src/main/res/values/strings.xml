@@ -3,6 +3,16 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_splash">Splash</string>
+    <string name="description">Description: </string>
+    <string name="cost">Cost: </string>
+    <string name="address">Address: </string>
+    <string name="city">City: </string>
+    <string name="state">State: </string>
+    <string name="zip">Zip: </string>
+    <string name="imageDescription">Policy Image</string>
+    <string name="deleteImage">Delete Image</string>
+    <string name="comment">Enter Comments</string>
 
     <string name="checkbox_1">Stay Logged In</string>
     <string name="checkbox_2">Remember Username</string>
