@@ -1,23 +1,19 @@
 package com.example.jaz020.clientoneamfam;
 
-import android.app.ProgressDialog;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.parse.LogInCallback;
 import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseUser;
+
+import java.util.Locale;
 
 
 public class Login extends AppCompatActivity {
@@ -26,107 +22,56 @@ public class Login extends AppCompatActivity {
     private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
     private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
 
-    EditText username_entry;
-    EditText password_entry;
-    CheckBox username_checkbox;
-    CheckBox login_checkbox;
-    Button login_button;
+
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    SectionsPagerAdapter mSectionsPagerAdapter;
+
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
+
+
     SharedPreferences sharedPreferences;
 
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sharedPreferences = getSharedPreferences("AmFam", 0);
-
-        //CHECK FOR LOGIN
-        if (sharedPreferences.getString("UserID", null) != null && sharedPreferences.getBoolean("StayLoggedIn", false)) {
-            loginSuccess();
-        } else if (sharedPreferences.getString("Username", null) != null) {
-            username_checkbox.setChecked(true);
-            username_entry.setText(sharedPreferences.getString("Username", ""));
-        }
-
-        context = this;
-
-        username_entry = (EditText) findViewById(R.id.username_entry);
-        password_entry = (EditText) findViewById(R.id.password_entry);
-        username_checkbox = (CheckBox) findViewById(R.id.remember_username_checkbox);
-        login_checkbox = (CheckBox) findViewById(R.id.stay_logged_in_checkbox);
-        login_button = (Button) findViewById(R.id.login_button);
-
-
-       
 
         //INITIALIZE PARSE
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
-        //LOGIN CLICK
-        login_button.setOnClickListener(new View.OnClickListener() {
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-            @Override
-            public void onClick(View v) {
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-                final ProgressDialog progressDialog = ProgressDialog.show(context, "", "Signing in to Parse.com", true);
+        sharedPreferences = getSharedPreferences("AmFam", 0);
 
-                final String username = username_entry.getText().toString();
-                String password = password_entry.getText().toString();
+        //CHECK FOR LOGIN
+        if (sharedPreferences.getString("UserID", null) != null && sharedPreferences.getBoolean("StayLoggedIn", false)) {
+            loginSuccess();
+        }
 
-
-                ParseUser.logInInBackground(username, password, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-
-                        progressDialog.dismiss();
-
-                        if (e == null && user != null) {
-
-                            //UPDATE SHARED PREFERENCES
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("UserID", user.getObjectId());
-                            editor.putBoolean("StayLoggedIn", login_checkbox.isChecked());
-                            if (username_checkbox.isChecked()) {
-                                editor.putString("Username", username);
-                            } else {
-                                editor.remove("Username");
-                            }
-                            editor.apply();
-
-                            //login successful
-                            loginSuccess();
-
-                        } else if (user == null) {
-                            loginFail();
-
-                        } else {
-                            loginError(e);
-                        }
-                    }
-                });
-
-            }
-        });
     }
 
 
     public void loginSuccess() {
         Intent intent = new Intent(this, Splash.class);
         startActivity(intent);
-    }
-
-
-    public void loginFail() {
-
-        Toast.makeText(this, "Wrong Username or Password", Toast.LENGTH_SHORT).show();
-
-    }
-
-
-    public void loginError(ParseException e) {
-        Toast.makeText(this, "Login Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
 
@@ -151,4 +96,50 @@ public class Login extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            switch (position){
+
+                case 0:
+                    return new LoginFragment();
+
+                case 1:
+                    return new RegisterFragment();
+            }
+          return null;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getString(R.string.title_section1).toUpperCase(l);
+                case 1:
+                    return getString(R.string.title_section2).toUpperCase(l);
+            }
+            return null;
+        }
+    }
+
 }

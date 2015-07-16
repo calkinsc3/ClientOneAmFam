@@ -1,23 +1,32 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private DrawerLayout drawerLayout;
     private ListView drawerList;
-    private String[] drawerItems;
+    private ExpandableListView drawerExpandableList;
+    private ExpandableListAdapter drawerExpandableListAdapter;
+
+    private List<String> meetInternsHeader;
+    private HashMap<String, List<String>> internNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +34,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerItems = getResources().getStringArray(R.array.drawerItems);
         drawerList = (ListView) findViewById(R.id.left_drawer);
-        drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, drawerItems));
+        drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.drawerItems)));
 
-        //Sets the Up Navigation enabled only if fragments are on backStack
+        setExpandDrawerLists();
+
+        drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
+        drawerExpandableListAdapter = new ExpandableListAdapter(this.getApplicationContext(), meetInternsHeader, internNames);
+        drawerExpandableList.setAdapter(drawerExpandableListAdapter);
+
+        // Sets the Up Navigation enabled only if fragments are on backStack
         enableUpAction();
-        //Set the navigation drawer navigation
+        // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
         // TODO!!!!!
@@ -41,18 +57,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setExpandDrawerLists() {
+        List<String> internNamesList = new ArrayList<>();
+        meetInternsHeader = new ArrayList<>();
+        internNames = new HashMap<>();
+
+        internNamesList.addAll(Arrays.asList(getResources().getStringArray(R.array.intern_names)));
+        meetInternsHeader.add(getResources().getString(R.string.meet_the_interns));
+        internNames.put(meetInternsHeader.get(0), internNamesList);
+    }
+
     public void setDrawerItemClickListener(){
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                drawerLayout.closeDrawers();
+                drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
+                drawerExpandableList.collapseGroup(0);
 
                 final int MY_AGENT = 0;
                 final int FIND_AN_AGENT = 1;
                 final int MY_POLICIES = 2;
                 final int MY_CLAIMS = 3;
                 final int SETTINGS = 4;
-                final int MEET_THE_INTERNS = 5;
 
                 switch (position) {
                     case MY_AGENT:
@@ -80,14 +106,50 @@ public class MainActivity extends AppCompatActivity {
                                 getFragmentManager(), true);
                         break;
 
-                    case MEET_THE_INTERNS:
-//                        Tools.replaceFragment(R.id.fragment_container, new MeetTheInterns(),
-//                                getFragmentManager(), true);
+                    default:
+                        Log.d("Error", "Reached default in drawer");
+                }
+            }
+        });
+
+        drawerExpandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
+                drawerExpandableList.collapseGroup(0);
+
+                final int EVAN = 0;
+                final int LEVI = 1;
+                final int NAVNEET = 2;
+                final int JAMES = 3;
+
+                switch (childPosition) {
+                    case EVAN:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetEvanFragment(),
+                                getFragmentManager(), true);
+                        break;
+
+                    case LEVI:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetLeviFragment(),
+                                getFragmentManager(), true);
+                        break;
+
+                    case NAVNEET:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetNavneetFragment(),
+                                getFragmentManager(), true);
+                        break;
+
+                    case JAMES:
+                        Tools.replaceFragment(R.id.fragment_container, new MeetJamesFragment(),
+                                getFragmentManager(), true);
                         break;
 
                     default:
                         Log.d("Error", "Reached default in drawer");
                 }
+
+                return false;
             }
         });
     }
@@ -101,15 +163,33 @@ public class MainActivity extends AppCompatActivity {
                 if (stackHeight > 1) {
                     // if we have something on the stack (doesn't include the current shown fragment).
                     // >0 removes initial frag and leave a blank space...use 1 instead.
-                    getSupportActionBar().setHomeButtonEnabled(true);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getActionBar().setHomeButtonEnabled(true);
+                    getActionBar().setDisplayHomeAsUpEnabled(true);
                 } else {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setHomeButtonEnabled(false);
+                    getActionBar().setDisplayHomeAsUpEnabled(false);
+                    getActionBar().setHomeButtonEnabled(false);
                 }
             }
 
         });
+    }
+
+    /**
+     * Moves the the down arrow on the expandable list view to the right side of the screen.
+     *
+     * @param hasFocus
+     */
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            drawerExpandableList.setIndicatorBounds(drawerExpandableList.getRight() - 200,
+                    drawerExpandableList.getWidth());
+        } else {
+            drawerExpandableList.setIndicatorBoundsRelative(drawerExpandableList.getRight() - 200,
+                    drawerExpandableList.getWidth());
+        }
     }
 
     @Override
@@ -128,14 +208,15 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch(id) {
-
             case R.id.action_settings:
-
                 Tools.replaceFragment(R.id.fragment_container, new Settings(), getFragmentManager(), true);
                 return true;
 
-        }
+            case R.id.action_logout:
 
+                Tools.logout(this);
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
