@@ -8,9 +8,6 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    //PARSE KEYS
-    private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
-    private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
 
                 Tools.replaceFragment(R.id.fragment_container, new Settings(), getFragmentManager(), true);
+                return true;
+
+            case R.id.action_logout:
+
+                Tools.logout(this);
                 return true;
 
         }
