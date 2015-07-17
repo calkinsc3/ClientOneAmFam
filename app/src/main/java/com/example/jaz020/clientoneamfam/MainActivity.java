@@ -55,6 +55,9 @@ public class MainActivity extends Activity {
             //loads the appropriate initial fragment
 //            Tools.replaceFragment(new MainFragment(), getFragmentManager(), true);
         }
+
+        Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
+                getFragmentManager(), true);
     }
 
     private void setExpandDrawerLists() {
