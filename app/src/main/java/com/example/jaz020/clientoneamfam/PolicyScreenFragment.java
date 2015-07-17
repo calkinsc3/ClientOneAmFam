@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -97,7 +98,13 @@ public class PolicyScreenFragment extends Fragment {
             policyWasSelectedPopulateViews();
         } else {
             policyWasSelectedPopulateViews();
+            disableStateSpinner();
         }
+    }
+
+    private void disableStateSpinner(){
+        stateSpinner.setEnabled(false);
+        stateSpinner.setClickable(false);
     }
 
     private void policyWasSelectedPopulateViews(){
@@ -108,10 +115,20 @@ public class PolicyScreenFragment extends Fragment {
 
     private void makeFieldsEditable(){
         policyDescription.setClickable(true);
+        policyDescription.setFocusable(true);
+        policyDescription.setFocusableInTouchMode(true);
         policyCost.setClickable(true);
+        policyCost.setFocusable(true);
+        policyCost.setFocusableInTouchMode(true);
         policyAddress.setClickable(true);
+        policyAddress.setFocusable(true);
+        policyAddress.setFocusableInTouchMode(true);
         city.setClickable(true);
+        city.setFocusable(true);
+        city.setFocusableInTouchMode(true);
         zip.setClickable(true);
+        zip.setFocusable(true);
+        zip.setFocusableInTouchMode(true);
         addUploads.setVisibility(View.VISIBLE);
         addUploads.setClickable(true);
 
@@ -119,7 +136,6 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     private void initializeFields(View view){
-        args = getArguments();
         policyDescription = (EditText)view.findViewById(R.id.policyDescription);
         policyCost = (EditText)view.findViewById(R.id.policyCost);
         policyAddress = (EditText)view.findViewById(R.id.policyAddress);
@@ -132,6 +148,11 @@ public class PolicyScreenFragment extends Fragment {
         stateAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.states, android.R.layout.simple_spinner_dropdown_item);
         stateSpinner = (Spinner)view.findViewById(R.id.stateSpinner);
         stateSpinner.setAdapter(stateAdapter);
+        if(getArguments() != null){
+            args = getArguments();
+        } else {
+            args = new Bundle();
+        }
     }
 
     private void setFields(){
@@ -160,12 +181,52 @@ public class PolicyScreenFragment extends Fragment {
 
     }
 
-    public void checkOrientationSetLayoutOrientation(){
+    private void checkOrientationSetLayoutOrientation(){
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             address2.setOrientation(LinearLayout.VERTICAL);
             city.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
             zip.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         }
+    }
+
+    private boolean validateFields(){
+        String error = getResources().getString(R.string.entryError);
+        boolean validated = false;
+
+        if(policyDescription.getText().toString().equals("")){
+            policyDescription.setError(error);
+        } else if (policyCost.getText().toString().equals("")){
+            policyCost.setError(error);
+        } else if(policyAddress.getText().toString().equals("")){
+            policyAddress.setError(error);
+        } else if(city.getText().toString().equals("")){
+            city.setError(error);
+        } else if (zip.getText().toString().equals("")){
+            zip.setError(error);
+        } else if (stateSpinner.getSelectedItem().toString().equals("Select a State")){
+            Toast.makeText(getActivity(), "You must select a state", Toast.LENGTH_SHORT).show();
+        } else {
+            validated = true;
+        }
+
+        return validated;
+    }
+
+    private void savePolicyInformation(){
+        if(args.getBoolean("ISNEW", false)){
+            currentPolicy = new ParseObject("Policy");
+            currentPolicy.put("AgentID", ParseUser.getCurrentUser().getString("AgentID"));
+            currentPolicy.put("ClientID", ParseUser.getCurrentUser().getObjectId());
+            currentPolicy.put("Accepted", true);
+        }
+        currentPolicy.put("Description", policyDescription.getText().toString());
+        currentPolicy.put("Cost", Double.valueOf(policyCost.getText().toString()));
+        currentPolicy.put("Address", policyAddress.getText().toString());
+        currentPolicy.put("City", city.getText().toString());
+        currentPolicy.put("Zip", zip.getText().toString());
+        currentPolicy.put("State", stateSpinner.getSelectedItem().toString());
+
+        currentPolicy.saveEventually();
     }
 
     @Override
@@ -189,6 +250,8 @@ public class PolicyScreenFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.optional_action).setVisible(true);
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
+        menu.findItem(R.id.optional_action).setTitle("Save");
+        menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -198,22 +261,10 @@ public class PolicyScreenFragment extends Fragment {
         switch (item.getItemId()) {
             //save action button enabled
             case R.id.optional_action:
-                if(args.getBoolean("ISNEW", false)){
-                    currentPolicy = new ParseObject("Policy");
-                    currentPolicy.put("AgentID", ParseUser.getCurrentUser().getString("AgentID"));
-                    currentPolicy.put("ClientID", ParseUser.getCurrentUser().getObjectId());
-                    currentPolicy.put("Accepted", true);
+                if(validateFields()) {
+                    savePolicyInformation();
+                    Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
                 }
-                currentPolicy.put("Description", policyDescription.getText().toString());
-                currentPolicy.put("Cost", Double.valueOf(policyCost.getText().toString()));
-                currentPolicy.put("Address", policyAddress.getText().toString());
-                currentPolicy.put("City", city.getText().toString());
-                currentPolicy.put("Zip", zip.getText().toString());
-                currentPolicy.put("State", stateSpinner.getSelectedItem().toString());
-
-                currentPolicy.saveEventually();
-
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -290,11 +341,21 @@ public class PolicyScreenFragment extends Fragment {
                     Picasso.with(getContext()).load(upload.getParseFile("Media").getUrl()).fit().centerInside().into(vHolder.policyImage);
                 }
                 if(trash != null){
-                    //todo enable trash
+                    if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
+                        trash.setVisibility(View.VISIBLE);
+                        trash.setClickable(true);
+                        trash.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+                    }
                 }
                 if(comments != null){
                     comments.setText(currentPolicy.getString("Comment"));
                 }
+
             }
 
             // view must be returned to our current activity

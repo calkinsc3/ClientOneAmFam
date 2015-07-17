@@ -36,7 +36,7 @@
     </string-array>
 
     <string-array name="states">
-        <item>Select a State&#8230;</item>
+        <item>Select a State</item>
         <item>AL</item>
         <item>AK</item>
         <item>AZ</item>
@@ -90,12 +90,7 @@
 
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Login</string>
-
-
-
     <string name="register_button_text">Register New User</string>
     <string name="policies">Policies</string>
     <string name="agent">Agent</string>
@@ -123,6 +118,7 @@
     <string name="email_title">Email:</string>
     <string name="phone_number_title">Phone Number:</string>
     <string name="logout">Logout</string>
+    <string name="entryError">You must enter a value!</string>
 
 
     <string name="email_support">Email Support</string>
