@@ -104,18 +104,7 @@ public class MainActivity extends Activity {
                     case MY_POLICIES:
 //                        Tools.replaceFragment(R.id.fragment_container, new MyPolicies(),
 //                                getFragmentManager(), true);
-                        Bundle testBundle = new Bundle();
-                        PolicyScreenFragment testFrag = new PolicyScreenFragment();
-                        testBundle.putBoolean("ISNEW", true);
-                        testFrag.setArguments(testBundle);
-//                        ParseQuery query = new ParseQuery("Policy");
-//                        try {
-//                            Singleton.setCurrentPolicy((ParseObject)query.find().get(0));
-//                        } catch (com.parse.ParseException e){
-//                            Log.e("", "");
-//                        }
 
-                        Tools.replaceFragment(R.id.fragment_container, testFrag, getFragmentManager(), true);
                         break;
 
                     case MY_CLAIMS:
