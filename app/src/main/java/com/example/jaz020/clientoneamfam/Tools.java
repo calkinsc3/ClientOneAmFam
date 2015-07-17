@@ -37,13 +37,13 @@ public class Tools {
     public static void setMyAgent(){
         ParseUser client = ParseUser.getCurrentUser();
         String agentID = client.getString("AgentID");
-        ParseQuery query = ParseUser.getQuery();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("objectId", agentID);
-        query.findInBackground(new FindCallback() {
+        query.findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(List list, ParseException e) {
+            public void done(List<ParseUser> list, ParseException e) {
                 if ( e == null && list.size() > 0)
-                    Singleton.setMyAgent((ParseUser)list.get(0));
+                    Singleton.setMyAgent(list.get(0));
             }
         });
     }

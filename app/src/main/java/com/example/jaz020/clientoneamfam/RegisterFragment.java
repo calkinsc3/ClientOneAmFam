@@ -68,7 +68,9 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       initializeFields(view);
+        //TODO send email verifications
+
+        initializeFields(view);
 
         retrieveAgentList();
 
@@ -79,8 +81,6 @@ public class RegisterFragment extends Fragment {
                 registerUser();
             }
         });
-
-        //TODO TEXTWATCHER FOR PASSWORDS
 
         password_reentry.addTextChangedListener(new TextWatcher() {
             @Override
@@ -100,15 +100,13 @@ public class RegisterFragment extends Fragment {
 
 
                 //check if passwords match
-                if(!p1.equals(p2)){
+                if (!p1.equals(p2)) {
                     password_reentry.setError("Passwords do not match");
-                }
-                else if(p1.length() < 4){
+                } else if (p1.length() < 4) {
                     password_reentry.setError("Password is not long enough");
                 }
 
                 //TODO anymore password checks
-
 
 
             }
@@ -117,7 +115,9 @@ public class RegisterFragment extends Fragment {
     }
 
 
-
+    /**
+     * Qeuries parse for Agent Users and creates a list of objects, as well as a list of names
+     */
     private void retrieveAgentList(){
 
         //initialize agentNames
@@ -156,23 +156,23 @@ public class RegisterFragment extends Fragment {
 
     }
 
+    /**
+     * Initializes all fields required for this fragment
+     * @param view the main view of this fragment
+     */
     private void initializeFields(View view){
 
         username_entry = (EditText) view.findViewById(R.id.username_entry);
-
         password_entry = (EditText) view.findViewById(R.id.password_entry);
         password_reentry = (EditText) view.findViewById(R.id.password_reentry);
         name_entry = (EditText) view.findViewById(R.id.name_entry);
         phone_entry = (EditText) view.findViewById(R.id.phone_entry);
         email_entry = (EditText) view.findViewById(R.id.email_entry);
-
         street_entry = (EditText) view.findViewById(R.id.address_street);
         city_entry = (EditText) view.findViewById(R.id.address_city);
         zip_entry = (EditText) view.findViewById(R.id.zip_code);
-
         state_spinner = (Spinner) view.findViewById(R.id.state_spinner);
         agent_spinner = (Spinner) view.findViewById(R.id.agent_spinner);
-
         register_button = (Button) view.findViewById(R.id.register_button);
 
         //POPULATE STATE DROPDOWN
@@ -182,6 +182,9 @@ public class RegisterFragment extends Fragment {
 
     }
 
+    /**
+     * Populate the Agent Selection Spinner
+     */
     private void populateAgentSpinner(){
 
         ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, agentNames);
@@ -190,41 +193,51 @@ public class RegisterFragment extends Fragment {
 
     }
 
+    /**
+     * Performs validation of all field entries and signs up a new user
+     *
+     */
     private void registerUser(){
 
-        String phoneUpdate = phone_entry.getText().toString();
-        phoneUpdate = phoneUpdate.replace("(","");
-        phoneUpdate = phoneUpdate.replace(")","");
-        phoneUpdate = phoneUpdate.replace("-","");
-        phoneUpdate = phoneUpdate.replace(" ","");
+        String phoneNumber = phone_entry.getText().toString();
+        phoneNumber = phoneNumber.replace("(","");
+        phoneNumber = phoneNumber.replace(")","");
+        phoneNumber = phoneNumber.replace("-","");
+        phoneNumber = phoneNumber.replace(" ","");
 
         String agentID = agentList.get(agent_spinner.getSelectedItemPosition()).getObjectId();
 
         ParseUser newUser = new ParseUser();
+
+        String zip = zip_entry.getText().toString();
 
         //TODO validate all entries
         newUser.setUsername(username_entry.getText().toString());
         newUser.put("Address", street_entry.getText().toString());
         newUser.put("City", city_entry.getText().toString());
         newUser.put("State", state_spinner.getSelectedItem().toString());
-        newUser.put("Zip", Double.valueOf(zip_entry.getText().toString()));
         newUser.put("Name", name_entry.getText().toString());
-        newUser.put("phoneNumber", Double.valueOf(phoneUpdate));
         newUser.put("AgentID",agentID);
         newUser.put("accountType", "Client");
         newUser.setEmail(email_entry.getText().toString());
 
-        Toast.makeText(getActivity(), password_entry.getError(), Toast.LENGTH_SHORT).show();
-
         if(password_entry.getError() == null){
             newUser.setPassword(password_entry.getText().toString());
+        }
+
+        if(zip.length() > 0 ) {
+            newUser.put("Zip", Double.valueOf(zip_entry.getText().toString()));
+        }
+
+        if(phoneNumber.length() > 0) {
+            newUser.put("phoneNumber", Double.valueOf(phoneNumber));
         }
 
         newUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                   signUpSuccess();
+                    signUpSuccess();
                 } else {
                     Toast.makeText(getActivity(), "Could Not Create New User: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -233,6 +246,9 @@ public class RegisterFragment extends Fragment {
 
     }
 
+    /**
+     * Log in the user that was just created and move to MainActivity
+     */
     private void signUpSuccess(){
         Toast.makeText(getActivity(), "New User Created", Toast.LENGTH_SHORT).show();
 
