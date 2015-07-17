@@ -1,6 +1,8 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +34,6 @@ public class MainPageFragment extends Fragment {
     Button SETTINGS;
 
     private ExpandableListView drawerExpandableList;
-    private ExpandableListAdapter drawerExpandableListAdapter;
 
     private List<String> meetInternsHeader;
     private HashMap<String, List<String>> internNames;
@@ -41,8 +42,6 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
 
-        amfamlogo = (ImageView) rootView.findViewById(R.id.amfamlogo);
-        amfamlogo.setImageResource(R.drawable.amfam3);
 
         MY_AGENT = (Button) rootView.findViewById(R.id.clientsButton);
         FIND_AN_AGENT = (Button) rootView.findViewById(R.id.claimsButton);
@@ -52,14 +51,15 @@ public class MainPageFragment extends Fragment {
 
         setExpandDrawerLists();
 
+        ExpandableListAdapter drawerExpandableListAdapter =
+                new ExpandableListAdapter(getActivity().getApplicationContext(),
+                        meetInternsHeader, internNames);
         drawerExpandableList = (ExpandableListView) rootView.findViewById(R.id.expandable_intern_list);
-        drawerExpandableListAdapter = new ExpandableListAdapter(getActivity().getApplicationContext(),
-                meetInternsHeader, internNames);
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         buttonClickListeners();
         expandableListClickListener();
-
+        Tools.setMyAgent();
         return rootView;
     }
 
@@ -77,24 +77,26 @@ public class MainPageFragment extends Fragment {
         MY_AGENT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new MyAgent(),
-//                        getFragmentManager(), true);
+                Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
+                        getFragmentManager(), true);
             }
         });
 
         FIND_AN_AGENT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new FindAgent(),
-//                        getFragmentManager(), true);
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=american+family+agents");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
 
         MY_POLICIES.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new MyPolicies(),
-//                        getFragmentManager(), true);
+                Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
+                        getFragmentManager(), true);
             }
         });
 

@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -36,7 +38,7 @@ public class Tools {
 
     public static void setMyAgent(){
         ParseUser client = ParseUser.getCurrentUser();
-        String agentID = client.getString("AgentID");
+        final String agentID = client.getString("AgentID");
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("objectId", agentID);
         query.findInBackground(new FindCallback<ParseUser>() {

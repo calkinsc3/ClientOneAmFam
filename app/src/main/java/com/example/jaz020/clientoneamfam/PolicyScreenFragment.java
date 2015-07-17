@@ -47,6 +47,8 @@ public class PolicyScreenFragment extends Fragment {
     private final int CHANGE_IMAGE = 1;
     private final int NEW_IMAGE = 0;
     ArrayList<Uri> images;
+    private boolean policyWasCreated;
+    private boolean hasImages;
     private Bundle args;
     private EditText policyDescription;
     private EditText policyCost;
@@ -101,10 +103,12 @@ public class PolicyScreenFragment extends Fragment {
             makeFieldsEditable();
             setHasOptionsMenu(true);
         } else if(args.getBoolean("ISEDIT", false)) {
+            currentPolicy = Singleton.getCurrentPolicy();
             makeFieldsEditable();
             setHasOptionsMenu(true);
             policyWasSelectedPopulateViews();
         } else {
+            currentPolicy = Singleton.getCurrentPolicy();
             policyWasSelectedPopulateViews();
             disableStateSpinner();
         }
@@ -143,6 +147,8 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     private void initializeFields(View view){
+        hasImages = false;
+        policyWasCreated = false;
         policyDescription = (EditText)view.findViewById(R.id.policyDescription);
         policyCost = (EditText)view.findViewById(R.id.policyCost);
         policyAddress = (EditText)view.findViewById(R.id.policyAddress);
@@ -152,7 +158,6 @@ public class PolicyScreenFragment extends Fragment {
         uploads = new ArrayList<>();
         uploadsList = (ListView)view.findViewById(R.id.uploadsList);
         address2 = (LinearLayout)view.findViewById(R.id.address2Layout);
-        currentPolicy = Singleton.getCurrentPolicy();
         stateAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.states, android.R.layout.simple_spinner_dropdown_item);
         stateSpinner = (Spinner)view.findViewById(R.id.stateSpinner);
         stateSpinner.setAdapter(stateAdapter);
@@ -174,8 +179,11 @@ public class PolicyScreenFragment extends Fragment {
 
     private void setUploadsListAdapter(){
         queryParseForUploads();
-        imageAdapter = new ObjectArrayAdapter(getActivity(), R.layout.edit_upload_card, uploads);
-        uploadsList.setAdapter(imageAdapter);
+        if(uploads.size() > 0) {
+            imageAdapter = new ObjectArrayAdapter(getActivity(), R.layout.edit_upload_card, uploads);
+            uploadsList.setAdapter(imageAdapter);
+            hasImages = true;
+        }
     }
 
     private void queryParseForUploads(){
@@ -193,6 +201,7 @@ public class PolicyScreenFragment extends Fragment {
     private void checkOrientationSetLayoutOrientation(){
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             address2.setOrientation(LinearLayout.VERTICAL);
+            stateSpinner.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
             city.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
             zip.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         }
@@ -222,7 +231,7 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     private void savePolicyInformation(){
-        if(args.getBoolean("ISNEW", false)){
+        if(args.getBoolean("ISNEW", false) && !policyWasCreated){
             currentPolicy = new ParseObject("Policy");
             currentPolicy.put("AgentID", ParseUser.getCurrentUser().getString("AgentID"));
             currentPolicy.put("ClientID", ParseUser.getCurrentUser().getObjectId());
@@ -236,6 +245,8 @@ public class PolicyScreenFragment extends Fragment {
         currentPolicy.put("State", stateSpinner.getSelectedItem().toString());
 
         currentPolicy.saveEventually();
+
+        Singleton.setCurrentPolicy(currentPolicy);
     }
 
     private void saveImages(){
@@ -280,9 +291,10 @@ public class PolicyScreenFragment extends Fragment {
 
                     ClipData clipData = data.getClipData();
                     Uri targetUri;
+                    images = new ArrayList<>();
 
                     if(clipData != null){
-                        images = new ArrayList<>();
+
                         for(int i =0; clipData.getItemCount() > i; i++) {
                             // get the target Uri
                             targetUri = clipData.getItemAt(i).getUri();
@@ -321,7 +333,9 @@ public class PolicyScreenFragment extends Fragment {
                     savePolicyInformation();
                     Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
                 }
-                saveImageComments();
+                if (hasImages) {
+                    saveImageComments();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -404,12 +418,17 @@ public class PolicyScreenFragment extends Fragment {
                         trash.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
+                                //todo make delete picture method
                             }
                         });
                     }
                 }
                 if(comments != null){
+                    if(!args.getBoolean("ISEDIT", false) && !args.getBoolean("ISNEW", false)){
+                        comments.setFocusable(false);
+                        comments.setClickable(false);
+                        comments.setHint("");
+                    }
                     comments.setText(currentPolicy.getString("Comment"));
                 }
 

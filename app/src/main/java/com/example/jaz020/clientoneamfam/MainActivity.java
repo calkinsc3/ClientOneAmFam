@@ -2,6 +2,8 @@ package com.example.jaz020.clientoneamfam;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -23,7 +25,6 @@ public class MainActivity extends Activity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ExpandableListView drawerExpandableList;
-    private ExpandableListAdapter drawerExpandableListAdapter;
 
     private List<String> meetInternsHeader;
     private HashMap<String, List<String>> internNames;
@@ -33,6 +34,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Singleton.setFragmentManager(getFragmentManager());
+        Singleton.setContext(this.getApplicationContext());
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
         drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
@@ -41,8 +45,10 @@ public class MainActivity extends Activity {
 
         setExpandDrawerLists();
 
+        ExpandableListAdapter drawerExpandableListAdapter =
+                new ExpandableListAdapter(this.getApplicationContext(),
+                        meetInternsHeader, internNames);
         drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
-        drawerExpandableListAdapter = new ExpandableListAdapter(this.getApplicationContext(), meetInternsHeader, internNames);
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         // Sets the Up Navigation enabled only if fragments are on backStack
@@ -54,6 +60,11 @@ public class MainActivity extends Activity {
          * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
          *
          */
+        /**
+         * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
+         * don't redraw all the fragments on rotate
+         */
+        // TODO if MainPageFragment is removed.
         if (savedInstanceState == null) {
 
             // TODO!!!!!
@@ -92,18 +103,21 @@ public class MainActivity extends Activity {
 
                 switch (position) {
                     case MY_AGENT:
-//                        Tools.replaceFragment(R.id.fragment_container, new MyAgent(),
-//                                getFragmentManager(), true);
+                        Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
+                                getFragmentManager(), true);
                         break;
 
                     case FIND_AN_AGENT:
-//                        Tools.replaceFragment(R.id.fragment_container, new FindAgent(),
-//                                getFragmentManager(), true);
+                        Uri gmmIntentUri = Uri.parse("geo:0,0?q=american+family+agents");
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        startActivity(mapIntent);
+
                         break;
 
                     case MY_POLICIES:
-//                        Tools.replaceFragment(R.id.fragment_container, new MyPolicies(),
-//                                getFragmentManager(), true);
+                        Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
+                                getFragmentManager(), true);
                         break;
 
                     case MY_CLAIMS:

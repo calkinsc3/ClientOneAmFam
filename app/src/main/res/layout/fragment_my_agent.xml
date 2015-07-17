@@ -35,7 +35,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="10"
             android:src="@android:drawable/ic_menu_mapmode"
-            android:background="@null"/>
+            android:background="@null"
+            android:id="@+id/agentDirectionsButton"/>
 
         <Space
             android:layout_width="0px"
@@ -105,7 +106,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="10"
             android:src="@android:drawable/ic_menu_call"
-            android:background="@null"/>
+            android:background="@null"
+            android:id="@+id/agentCallButton"/>
 
         <Space
             android:layout_width="0px"
