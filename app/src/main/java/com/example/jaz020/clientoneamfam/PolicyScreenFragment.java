@@ -4,9 +4,13 @@ package com.example.jaz020.clientoneamfam;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,11 +28,14 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -39,6 +46,7 @@ public class PolicyScreenFragment extends Fragment {
 
     private final int CHANGE_IMAGE = 1;
     private final int NEW_IMAGE = 0;
+    ArrayList<Uri> images;
     private Bundle args;
     private EditText policyDescription;
     private EditText policyCost;
@@ -109,7 +117,6 @@ public class PolicyScreenFragment extends Fragment {
 
     private void policyWasSelectedPopulateViews(){
         setFields();
-        queryParseForUploads();
         setUploadsListAdapter();
     }
 
@@ -142,6 +149,7 @@ public class PolicyScreenFragment extends Fragment {
         city = (EditText)view.findViewById(R.id.city);
         zip = (EditText)view.findViewById(R.id.zip);
         addUploads = (ImageButton)view.findViewById(R.id.addUploadButton);
+        uploads = new ArrayList<>();
         uploadsList = (ListView)view.findViewById(R.id.uploadsList);
         address2 = (LinearLayout)view.findViewById(R.id.address2Layout);
         currentPolicy = Singleton.getCurrentPolicy();
@@ -165,6 +173,7 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     private void setUploadsListAdapter(){
+        queryParseForUploads();
         imageAdapter = new ObjectArrayAdapter(getActivity(), R.layout.edit_upload_card, uploads);
         uploadsList.setAdapter(imageAdapter);
     }
@@ -229,6 +238,36 @@ public class PolicyScreenFragment extends Fragment {
         currentPolicy.saveEventually();
     }
 
+    private void saveImages(){
+        for(int i = 0; images.size() > i; i++){
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(images.get(i)));
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] imageBytes = stream.toByteArray();
+                ParseFile image = new ParseFile("Photo.jpg", imageBytes, "jpeg");
+                image.save();
+
+                ParseObject mediaUpload = new ParseObject("Upload");
+                mediaUpload.put("PolicyID", Singleton.getCurrentPolicy().getObjectId());
+                mediaUpload.put("UserID", ParseUser.getCurrentUser().getObjectId());
+                mediaUpload.put("Media", image);
+
+                mediaUpload.save();
+
+            } catch(FileNotFoundException e){
+                Log.e("File Not Found", e.toString());
+            } catch(com.parse.ParseException e) {
+                Log.e("Error Saving", e.toString());
+            }
+        }
+        setUploadsListAdapter();
+    }
+
+    private void saveImageComments(){
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
@@ -239,6 +278,23 @@ public class PolicyScreenFragment extends Fragment {
                     break;
                 case NEW_IMAGE:
 
+                    ClipData clipData = data.getClipData();
+                    Uri targetUri;
+
+                    if(clipData != null){
+                        images = new ArrayList<>();
+                        for(int i =0; clipData.getItemCount() > i; i++) {
+                            // get the target Uri
+                            targetUri = clipData.getItemAt(i).getUri();
+                            //add to images array
+                            images.add(targetUri);
+                        }
+                    } else {
+                        //get target Uri
+                        targetUri = data.getData();
+                        images.add(targetUri);
+                    }
+                    saveImages();
                     break;
                 default:
                     Log.d("Error: ", "Reached default in upload");
@@ -265,6 +321,7 @@ public class PolicyScreenFragment extends Fragment {
                     savePolicyInformation();
                     Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
                 }
+                saveImageComments();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
