@@ -11,6 +11,7 @@
     <string name="state">State: </string>
     <string name="zip">Zip: </string>
     <string name="imageDescription">Policy Image</string>
+    <string name="editPolicy">Edit Policy</string>
     <string name="deleteImage">Delete Image</string>
     <string name="comment">Enter Comments</string>
     <string name="uploads">Uploads</string>
