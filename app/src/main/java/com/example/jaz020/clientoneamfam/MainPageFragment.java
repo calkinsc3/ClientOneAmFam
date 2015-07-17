@@ -34,7 +34,6 @@ public class MainPageFragment extends Fragment {
     Button SETTINGS;
 
     private ExpandableListView drawerExpandableList;
-    private ExpandableListAdapter drawerExpandableListAdapter;
 
     private List<String> meetInternsHeader;
     private HashMap<String, List<String>> internNames;
@@ -54,9 +53,10 @@ public class MainPageFragment extends Fragment {
 
         setExpandDrawerLists();
 
+        ExpandableListAdapter drawerExpandableListAdapter =
+                new ExpandableListAdapter(getActivity().getApplicationContext(),
+                        meetInternsHeader, internNames);
         drawerExpandableList = (ExpandableListView) rootView.findViewById(R.id.expandable_intern_list);
-        drawerExpandableListAdapter = new ExpandableListAdapter(getActivity().getApplicationContext(),
-                meetInternsHeader, internNames);
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         buttonClickListeners();
@@ -97,8 +97,8 @@ public class MainPageFragment extends Fragment {
         MY_POLICIES.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new MyPolicies(),
-//                        getFragmentManager(), true);
+                Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
+                        getFragmentManager(), true);
             }
         });
 

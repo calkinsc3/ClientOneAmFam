@@ -1,5 +1,7 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.FragmentManager;
+
 import com.parse.ParseObject;
 
 /**
@@ -7,9 +9,9 @@ import com.parse.ParseObject;
  */
 public class Singleton {
 
-
     private static Singleton ourInstance = new Singleton();
     private static ParseObject currentPolicy;
+    private static FragmentManager fragmentManager;
 
     private Singleton() {
     }
@@ -24,5 +26,13 @@ public class Singleton {
 
     public static void setCurrentPolicy(ParseObject currentPolicy) {
         Singleton.currentPolicy = currentPolicy;
+    }
+
+    public static FragmentManager getFragmentManager() {
+        return fragmentManager;
+    }
+
+    public static void setFragmentManager(FragmentManager fragmentManager) {
+        Singleton.fragmentManager = fragmentManager;
     }
 }

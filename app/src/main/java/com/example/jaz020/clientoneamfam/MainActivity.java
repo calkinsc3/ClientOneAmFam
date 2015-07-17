@@ -25,7 +25,6 @@ public class MainActivity extends Activity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ExpandableListView drawerExpandableList;
-    private ExpandableListAdapter drawerExpandableListAdapter;
 
     private List<String> meetInternsHeader;
     private HashMap<String, List<String>> internNames;
@@ -35,6 +34,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Singleton.setFragmentManager(getFragmentManager());
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
         drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
@@ -43,8 +44,10 @@ public class MainActivity extends Activity {
 
         setExpandDrawerLists();
 
+        ExpandableListAdapter drawerExpandableListAdapter =
+                new ExpandableListAdapter(this.getApplicationContext(),
+                        meetInternsHeader, internNames);
         drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
-        drawerExpandableListAdapter = new ExpandableListAdapter(this.getApplicationContext(), meetInternsHeader, internNames);
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         // Sets the Up Navigation enabled only if fragments are on backStack
@@ -100,8 +103,8 @@ public class MainActivity extends Activity {
                         break;
 
                     case MY_POLICIES:
-//                        Tools.replaceFragment(R.id.fragment_container, new MyPolicies(),
-//                                getFragmentManager(), true);
+                        Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
+                                getFragmentManager(), true);
                         break;
 
                     case MY_CLAIMS:

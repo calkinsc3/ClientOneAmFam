@@ -23,9 +23,6 @@ import java.util.List;
  */
 public class MyPoliciesFragment extends Fragment {
 
-    private RecyclerView rv;
-    private LinearLayoutManager llm;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,31 +34,22 @@ public class MyPoliciesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /* Set up the recycler view */
-        rv = (RecyclerView) view.findViewById(R.id.policyRecyclerView);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.policyRecyclerView);
         rv.setHasFixedSize(true);
-        llm = new LinearLayoutManager(getActivity().getApplicationContext());
         rv.setLayoutManager(llm);
 
         try {
-            List<ParseObject> claims = new ArrayList<>();
-
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Policy");
             query.whereEqualTo("AgentID", ParseUser.getCurrentUser().getObjectId());
             List<ParseObject> policies = query.find();
 
-            for (int i = 0; i < policies.size(); i++) {
-                ParseQuery<ParseObject> claimQuery = ParseQuery.getQuery("Claim");
-                claimQuery.whereEqualTo("PolicyID", policies.get(i).getObjectId());
-
-                claims.addAll(claimQuery.find());
-            }
-
-            if (claims.size() != 0) {
-//                /* Attach adapter to recycler view */
-//                PolicyRVAdapter adapter = new RVAdapter(claims, "Claims");
-//                rv.setAdapter(adapter);
+            if (policies.size() != 0) {
+                /* Attach adapter to recycler view */
+                RVAdapter adapter = new RVAdapter("Policies", policies);
+                rv.setAdapter(adapter);
             } else {
-                Toast.makeText(getActivity(), "No Claims Found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No Policies Found", Toast.LENGTH_SHORT).show();
             }
         } catch (ParseException pe) {  pe.printStackTrace(); }
     }
