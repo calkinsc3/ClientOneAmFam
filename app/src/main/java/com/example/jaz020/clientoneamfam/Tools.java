@@ -7,7 +7,15 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
+
+//import com.parse.ParseObject;
+//import com.parse.ParseUser;
 
 
 /**
@@ -26,12 +34,25 @@ public class Tools {
         //refresh options menu
     }
 
+    public static void setMyAgent(){
+        ParseUser client = ParseUser.getCurrentUser();
+        String agentID = client.getString("AgentID");
+        ParseQuery query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", agentID);
+        query.findInBackground(new FindCallback() {
+            @Override
+            public void done(List list, ParseException e) {
+                if ( e == null && list.size() > 0)
+                    Singleton.setMyAgent((ParseUser)list.get(0));
+            }
+        });
+    }
+
     public static void logout(Context context) {
 
         SharedPreferences.Editor editor = context.getSharedPreferences("AmFam", 0).edit();
-        editor.remove("UserID");
-        editor.remove("StayLoggedIn");
-
+        editor.remove("OfficeUserID");
+        editor.remove("OfficeStayLoggedIn");
         editor.apply();
 
         ParseUser.logOut();

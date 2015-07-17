@@ -46,8 +46,8 @@ public class MyPoliciesFragment extends Fragment {
 
             if (policies.size() != 0) {
                 /* Attach adapter to recycler view */
-//                RVAdapter adapter = new RVAdapter("Policies", policies);
-//                rv.setAdapter(adapter);
+                RVAdapter adapter = new RVAdapter("Policies", policies);
+                rv.setAdapter(adapter);
             } else {
                 Toast.makeText(getActivity(), "No Policies Found", Toast.LENGTH_SHORT).show();
             }
