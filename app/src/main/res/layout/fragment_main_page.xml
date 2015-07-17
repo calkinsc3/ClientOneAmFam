@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp" >
+
+    <ImageView
+        android:id="@+id/amfamlogo"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/amfam_logo"
+        android:icon="@drawable/amfam3" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:textSize="30dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_agent"
+        android:id="@+id/clientsButton"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/find_an_agent"
+        android:id="@+id/claimsButton"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_policies"
+        android:id="@+id/scheduleButton"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_claims"
+        android:id="@+id/settingsButton"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:id="@+id/myUploadsButton"
+        android:layout_gravity="center_horizontal" />
+
+    <ExpandableListView
+        android:id="@+id/expandable_intern_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </ExpandableListView>
+
+</LinearLayout>
