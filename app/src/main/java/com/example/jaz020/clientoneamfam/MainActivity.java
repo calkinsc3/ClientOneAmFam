@@ -50,14 +50,21 @@ public class MainActivity extends Activity {
         // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
-        // TODO!!!!!
+        /**
+         * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
+         * don't redraw all the fragments on rotate
+         */
         if (savedInstanceState == null) {
+
+            // TODO!!!!!
+
             //loads the appropriate initial fragment
 //            Tools.replaceFragment(new MainFragment(), getFragmentManager(), true);
-        }
 
-        Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
-                getFragmentManager(), true);
+
+            Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
+                    getFragmentManager(), true);
+        }
     }
 
     private void setExpandDrawerLists() {
