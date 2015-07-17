@@ -1,12 +1,15 @@
 package com.example.jaz020.clientoneamfam;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,14 +45,14 @@ public class MyAgentFragment extends Fragment {
         TextView agentAddress2 = (TextView) view.findViewById(R.id.AgentAddress2TextView);
         TextView agentPhone = (TextView) view.findViewById(R.id.AgentPhoneTextView);
         Button agentScheduleButton = (Button) view.findViewById(R.id.AgentScheduleButton);
-
-        Tools.setMyAgent();
+        ImageButton agentDirection = (ImageButton) view.findViewById(R.id.agentDirectionsButton);
+        ImageButton agentCall = (ImageButton) view.findViewById(R.id.agentCallButton);
 
         ParseUser agent = Singleton.getMyAgent();
-
+        String phoneNum = agent.getNumber("phoneNumber").toString();
         agentAddress1.setText(agent.getString("Address"));
         agentAddress2.setText(agent.getString("City") + "," + agent.getString("State")+ " " + agent.getNumber("Zip").toString());
-        agentPhone.setText(agent.getNumber("phoneNumber").toString());
+        agentPhone.setText("( " + phoneNum.substring(0,3) + " ) - " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
 
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +61,32 @@ public class MyAgentFragment extends Fragment {
             }
         });
 
+        agentDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String addrstr = Singleton.getMyAgent().getString("Address");
+                addrstr = addrstr.replace(" ", "+");
+                String citystr = Singleton.getMyAgent().getString("City");
+                citystr = citystr.replace(" ", "+");
+                String statestr = Singleton.getMyAgent().getString("State");
+                Uri gmnIntentUri = Uri.parse("google.navigation:q=" + addrstr + ",+" + citystr + "+" + statestr);
+                //Uri gmnIntentUri = Uri.parse("google.navigation:q=6917+Ramsey+Road,+Middleton+Wisconsin"); My home address to test
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmnIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
+
+        agentCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Singleton.getMyAgent().getNumber("phoneNumber").toString()));
+                startActivity(intent);
+            }
+        });
         return view;
     }
+
 
 
 }

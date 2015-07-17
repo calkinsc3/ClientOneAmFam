@@ -61,7 +61,7 @@ public class MainPageFragment extends Fragment {
 
         buttonClickListeners();
         expandableListClickListener();
-
+        Tools.setMyAgent();
         return rootView;
     }
 
@@ -79,8 +79,8 @@ public class MainPageFragment extends Fragment {
         MY_AGENT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new MyAgent(),
-//                        getFragmentManager(), true);
+                Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
+                        getFragmentManager(), true);
             }
         });
 

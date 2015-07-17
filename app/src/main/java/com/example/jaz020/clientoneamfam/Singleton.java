@@ -54,9 +54,4 @@ public class Singleton {
         Singleton.context = context;
     }
 
-    public static void setMyAgent(ParseUser agent){
-        Singleton.myAgent = agent;
-    }
-
-    public static ParseUser getMyAgent(){ return Singleton.myAgent; }
 }

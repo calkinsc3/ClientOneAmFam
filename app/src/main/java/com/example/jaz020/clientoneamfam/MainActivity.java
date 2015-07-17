@@ -103,8 +103,8 @@ public class MainActivity extends Activity {
 
                 switch (position) {
                     case MY_AGENT:
-//                        Tools.replaceFragment(R.id.fragment_container, new MyAgent(),
-//                                getFragmentManager(), true);
+                        Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
+                                getFragmentManager(), true);
                         break;
 
                     case FIND_AN_AGENT:
