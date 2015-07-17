@@ -1,8 +1,11 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -45,17 +48,17 @@ public class Tools {
         });
     }
 
-//    public static void logout(Context context) {
-//
-//        SharedPreferences.Editor editor = context.getSharedPreferences(Singleton.PREFERENCES, 0).edit();
-//        editor.remove("OfficeUserID");
-//        editor.remove("OfficeStayLoggedIn");
-//        editor.apply();
-//
-//        ParseUser.logOut();
-//        ((Activity) context).finish();
-//
-//    }
+    public static void logout(Context context) {
+
+        SharedPreferences.Editor editor = context.getSharedPreferences("AmFam", 0).edit();
+        editor.remove("OfficeUserID");
+        editor.remove("OfficeStayLoggedIn");
+        editor.apply();
+
+        ParseUser.logOut();
+        ((Activity) context).finish();
+
+    }
 //
 //    public static void updateDateEntry(EditText editText, Calendar calendar) {
 //

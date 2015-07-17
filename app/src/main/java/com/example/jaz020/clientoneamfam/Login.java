@@ -4,6 +4,7 @@ package com.example.jaz020.clientoneamfam;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -47,17 +48,12 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //INITIALIZE PARSE
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+        if(savedInstanceState == null) {
+            //INITIALIZE PARSE
+            Parse.enableLocalDatastore(this);
+            Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        }
 
         sharedPreferences = getSharedPreferences("AmFam", 0);
 
@@ -66,6 +62,13 @@ public class Login extends AppCompatActivity {
             loginSuccess();
         }
 
+        // Create the adapter that will return a fragment for each of the two
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
 
@@ -108,7 +111,7 @@ public class Login extends AppCompatActivity {
         }
 
         @Override
-        public android.support.v4.app.Fragment getItem(int position) {
+        public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
@@ -120,7 +123,7 @@ public class Login extends AppCompatActivity {
                 case 1:
                     return new RegisterFragment();
             }
-          return null;
+            return null;
         }
 
         @Override
@@ -131,7 +134,6 @@ public class Login extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
                     return "Login";
