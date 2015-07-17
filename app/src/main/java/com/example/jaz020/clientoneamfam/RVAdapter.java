@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
 
+
 /**
  * Created by nsr009 on 6/10/2015.
  */
@@ -139,11 +140,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                         Singleton.setCurrentPolicy(currentObject);
 
                         PolicyScreenFragment policyScreenFragment = new PolicyScreenFragment();
+
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("ISEDIT", true);
                         policyScreenFragment.setArguments(bundle);
 
-                        Tools.replaceFragment(R.id.fragment_container, new PolicyScreenFragment(),
+                        Tools.replaceFragment(R.id.fragment_container, policyScreenFragment,
                                 Singleton.getFragmentManager(), true);
                     }
                 });
