@@ -42,8 +42,6 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
 
-        amfamlogo = (ImageView) rootView.findViewById(R.id.amfamlogo);
-        amfamlogo.setImageResource(R.drawable.amfam3);
 
         MY_AGENT = (Button) rootView.findViewById(R.id.clientsButton);
         FIND_AN_AGENT = (Button) rootView.findViewById(R.id.claimsButton);
@@ -61,7 +59,7 @@ public class MainPageFragment extends Fragment {
 
         buttonClickListeners();
         expandableListClickListener();
-
+        Tools.setMyAgent();
         return rootView;
     }
 
@@ -79,8 +77,8 @@ public class MainPageFragment extends Fragment {
         MY_AGENT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new MyAgent(),
-//                        getFragmentManager(), true);
+                Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
+                        getFragmentManager(), true);
             }
         });
 
