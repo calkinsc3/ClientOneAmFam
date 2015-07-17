@@ -61,7 +61,6 @@ public class MyPoliciesFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.optional_action).setVisible(true);
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_add);
-        menu.findItem(R.id.optional_action).setTitle("add");
         menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         super.onCreateOptionsMenu(menu, inflater);
