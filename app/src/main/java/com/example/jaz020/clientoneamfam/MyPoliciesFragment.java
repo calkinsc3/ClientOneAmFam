@@ -29,6 +29,8 @@ public class MyPoliciesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         return inflater.inflate(R.layout.fragment_my_policies, container, false);
     }
 
