@@ -2,6 +2,8 @@ package com.example.jaz020.clientoneamfam;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -50,10 +52,10 @@ public class MainActivity extends Activity {
         // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
-        // TODO!!!!!
+        // TODO if MainPageFragment is removed.
         if (savedInstanceState == null) {
             //loads the appropriate initial fragment
-//            Tools.replaceFragment(new MainFragment(), getFragmentManager(), true);
+            Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(), getFragmentManager(), true);
         }
 
         Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
@@ -90,8 +92,11 @@ public class MainActivity extends Activity {
                         break;
 
                     case FIND_AN_AGENT:
-//                        Tools.replaceFragment(R.id.fragment_container, new FindAgent(),
-//                                getFragmentManager(), true);
+                        Uri gmmIntentUri = Uri.parse("geo:0,0?q=american+family+agents");
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        startActivity(mapIntent);
+
                         break;
 
                     case MY_POLICIES:

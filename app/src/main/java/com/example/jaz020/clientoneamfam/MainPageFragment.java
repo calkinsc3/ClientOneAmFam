@@ -1,6 +1,8 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,8 +87,10 @@ public class MainPageFragment extends Fragment {
         FIND_AN_AGENT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new FindAgent(),
-//                        getFragmentManager(), true);
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=american+family+agents");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
 
