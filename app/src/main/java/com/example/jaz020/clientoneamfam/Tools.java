@@ -7,7 +7,12 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 //import com.parse.ParseObject;
 //import com.parse.ParseUser;
@@ -30,17 +35,17 @@ public class Tools {
     }
 
     public static void setMyAgent(){
-//        ParseUser client = ParseUser.getCurrentUser();
-//        String agentID = client.getString("AgentID");
-//        ParseQuery query = ParseUser.getQuery();
-//        query.whereEqualTo("objectId", agentID);
-//        query.findInBackground(new FindCallback() {
-//            @Override
-//            public void done(List list, ParseException e) {
-//                if ( e == null && list.size() > 0)
-//                    Singleton.setMyAgent((ParseUser)list.get(0));
-//            }
-//        });
+        ParseUser client = ParseUser.getCurrentUser();
+        String agentID = client.getString("AgentID");
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", agentID);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> list, ParseException e) {
+                if ( e == null && list.size() > 0)
+                    Singleton.setMyAgent(list.get(0));
+            }
+        });
     }
 
     public static void logout(Context context) {
