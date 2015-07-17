@@ -179,7 +179,7 @@ public class PolicyScreenFragment extends Fragment {
 
     private void setUploadsListAdapter(){
         queryParseForUploads();
-        if(uploads.size() > 1) {
+        if(uploads.size() > 0) {
             imageAdapter = new ObjectArrayAdapter(getActivity(), R.layout.edit_upload_card, uploads);
             uploadsList.setAdapter(imageAdapter);
             hasImages = true;
@@ -201,6 +201,7 @@ public class PolicyScreenFragment extends Fragment {
     private void checkOrientationSetLayoutOrientation(){
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             address2.setOrientation(LinearLayout.VERTICAL);
+            stateSpinner.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
             city.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
             zip.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         }
@@ -417,12 +418,17 @@ public class PolicyScreenFragment extends Fragment {
                         trash.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
+                                //todo make delete picture method
                             }
                         });
                     }
                 }
                 if(comments != null){
+                    if(!args.getBoolean("ISEDIT", false) && !args.getBoolean("ISNEW", false)){
+                        comments.setFocusable(false);
+                        comments.setClickable(false);
+                        comments.setHint("");
+                    }
                     comments.setText(currentPolicy.getString("Comment"));
                 }
 
