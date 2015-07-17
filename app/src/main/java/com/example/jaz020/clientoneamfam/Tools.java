@@ -51,8 +51,8 @@ public class Tools {
     public static void logout(Context context) {
 
         SharedPreferences.Editor editor = context.getSharedPreferences("AmFam", 0).edit();
-        editor.remove("OfficeUserID");
-        editor.remove("OfficeStayLoggedIn");
+        editor.remove("UserID");
+        editor.remove("StayLoggedIn");
         editor.apply();
 
         ParseUser.logOut();
