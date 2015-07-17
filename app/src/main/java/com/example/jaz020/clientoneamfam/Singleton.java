@@ -36,7 +36,9 @@ public class Singleton {
         Singleton.myAgent = agent;
     }
 
-    public static ParseUser getMyAgent(){ return Singleton.myAgent; }
+    public static ParseUser getMyAgent() {
+        return Singleton.myAgent;
+    }
 
     public static FragmentManager getFragmentManager() {
         return fragmentManager;
@@ -53,10 +55,4 @@ public class Singleton {
     public static void setContext (Context context) {
         Singleton.context = context;
     }
-
-    public static void setMyAgent(ParseUser agent){
-        Singleton.myAgent = agent;
-    }
-
-    public static ParseUser getMyAgent(){ return Singleton.myAgent; }
 }
