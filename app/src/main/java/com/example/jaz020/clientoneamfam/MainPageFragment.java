@@ -57,8 +57,23 @@ public class MainPageFragment extends Fragment {
                 meetInternsHeader, internNames);
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
+        buttonClickListeners();
+        expandableListClickListener();
 
-        /* Clients button clicked */
+        return rootView;
+    }
+
+    private void setExpandDrawerLists() {
+        List<String> internNamesList = new ArrayList<>();
+        meetInternsHeader = new ArrayList<>();
+        internNames = new HashMap<>();
+
+        internNamesList.addAll(Arrays.asList(getResources().getStringArray(R.array.intern_names)));
+        meetInternsHeader.add(getResources().getString(R.string.meet_the_interns));
+        internNames.put(meetInternsHeader.get(0), internNamesList);
+    }
+
+    private void buttonClickListeners() {
         MY_AGENT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +82,6 @@ public class MainPageFragment extends Fragment {
             }
         });
 
-        /* Claims button clicked */
         FIND_AN_AGENT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +90,6 @@ public class MainPageFragment extends Fragment {
             }
         });
 
-        /* Schedule button clicked */
         MY_POLICIES.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +98,6 @@ public class MainPageFragment extends Fragment {
             }
         });
 
-        /* Settings button clicked */
         MY_CLAIMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +106,6 @@ public class MainPageFragment extends Fragment {
             }
         });
 
-        /* Uploads button clicked */
         SETTINGS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +113,9 @@ public class MainPageFragment extends Fragment {
                         getFragmentManager(), true);
             }
         });
+    }
 
+    private void expandableListClickListener() {
         drawerExpandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -142,17 +155,5 @@ public class MainPageFragment extends Fragment {
                 return false;
             }
         });
-
-        return rootView;
-    }
-
-    private void setExpandDrawerLists() {
-        List<String> internNamesList = new ArrayList<>();
-        meetInternsHeader = new ArrayList<>();
-        internNames = new HashMap<>();
-
-        internNamesList.addAll(Arrays.asList(getResources().getStringArray(R.array.intern_names)));
-        meetInternsHeader.add(getResources().getString(R.string.meet_the_interns));
-        internNames.put(meetInternsHeader.get(0), internNamesList);
     }
 }
