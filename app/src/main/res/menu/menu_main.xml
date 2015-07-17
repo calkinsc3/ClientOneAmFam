@@ -1,6 +1,8 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
 
     <item android:id="@+id/action_settings"
         android:orderInCategory="100"
@@ -10,19 +12,13 @@
     <item
         android:id="@+id/action_logout"
         android:orderInCategory="1000"
-        android:title="Log Out"
+        android:title="@string/logout"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/optional_action"
         android:title="Optional Button"
         android:visible="false"
-        app:showAsAction="ifRoom"/>
-
-    <!--<item-->
-        <!--android:id="@+id/action_add"-->
-        <!--android:title="Add"-->
-        <!--android:visible="false"-->
-        <!--app:showAsAction="ifRoom" />-->
+        app:showAsAction="ifRoom" />
 
 </menu>

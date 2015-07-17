@@ -29,6 +29,8 @@ public class MyPoliciesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         return inflater.inflate(R.layout.fragment_my_policies, container, false);
     }
 
@@ -61,7 +63,6 @@ public class MyPoliciesFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.optional_action).setVisible(true);
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_add);
-        menu.findItem(R.id.optional_action).setTitle("add");
         menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         super.onCreateOptionsMenu(menu, inflater);
@@ -77,7 +78,7 @@ public class MyPoliciesFragment extends Fragment {
                 bundle.putBoolean("ISNEW", true);
                 policyScreenFragment.setArguments(bundle);
 
-                Tools.replaceFragment(R.id.fragment_container, new PolicyScreenFragment(),
+                Tools.replaceFragment(R.id.fragment_container, policyScreenFragment,
                         Singleton.getFragmentManager(), true);
 
                 return true;
