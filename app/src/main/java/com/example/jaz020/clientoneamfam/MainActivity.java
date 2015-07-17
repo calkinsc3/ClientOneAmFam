@@ -58,6 +58,10 @@ public class MainActivity extends Activity {
 
         /**
          * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
+         *
+         */
+        /**
+         * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
          * don't redraw all the fragments on rotate
          */
         // TODO if MainPageFragment is removed.
