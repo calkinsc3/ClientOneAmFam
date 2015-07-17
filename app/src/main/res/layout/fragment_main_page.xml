@@ -8,12 +8,13 @@
 
     <ImageView
         android:id="@+id/amfamlogo"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="130dp"
         android:paddingRight="15dp"
         android:paddingLeft="15dp"
         android:layout_gravity="center_horizontal"
         android:contentDescription="@string/amfam_logo"
+        android:src="@drawable/oneamfamlogo"
         android:icon="@drawable/amfam3" />
 
     <TextView
