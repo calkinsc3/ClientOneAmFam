@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         Singleton.setFragmentManager(getFragmentManager());
+        Singleton.setContext(this.getApplicationContext());
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);

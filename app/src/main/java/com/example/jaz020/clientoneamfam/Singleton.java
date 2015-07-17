@@ -1,6 +1,7 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.FragmentManager;
+import android.content.Context;
 
 import com.parse.ParseObject;
 
@@ -12,6 +13,7 @@ public class Singleton {
     private static Singleton ourInstance = new Singleton();
     private static ParseObject currentPolicy;
     private static FragmentManager fragmentManager;
+    private static Context context;
 
     private Singleton() {
     }
@@ -34,5 +36,13 @@ public class Singleton {
 
     public static void setFragmentManager(FragmentManager fragmentManager) {
         Singleton.fragmentManager = fragmentManager;
+    }
+
+    public static Context getContext() {
+        return context;
+    }
+
+    public static void setContext (Context context) {
+        Singleton.context = context;
     }
 }

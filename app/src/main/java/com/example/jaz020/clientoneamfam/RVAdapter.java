@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -77,14 +81,45 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         switch (cardType) {
             /* Display cards for list of policies */
             case "Policies": {
+                ivh.image.setVisibility(View.GONE);
+
+                try {
+                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Claim");
+                    claimQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
+
+                    List<ParseObject> claims = claimQuery.find();
+
+                    for (int x = 0; x < claims.size(); x++) {
+                        JSONArray jArray = claims.get(x).getJSONArray("UploadIDs");
+
+                        if (jArray != null && jArray.length() != 0) {
+                            String uploadID = jArray.get(x).toString();
+
+                            ParseQuery<ParseObject> uploadQuery = new ParseQuery<>("Upload");
+                            ParseObject upload = uploadQuery.get(uploadID);
+                            String url = upload.getParseFile("Media").getUrl();
+
+                            ivh.image.setVisibility(View.VISIBLE);
+
+                            /* Load picture into current card's image view */
+                            Picasso.with(Singleton.getContext())
+                                    .load(url)
+                                    .fit()
+                                    .centerInside()
+                                    .into(ivh.image);
+
+                            break;
+                        }
+                    }
+
+                } catch (Exception e) { e.printStackTrace(); }
+
                 String cost = currentObject.getNumber("Cost").toString();
                 BigDecimal parsed = new BigDecimal(cost).setScale(2, BigDecimal.ROUND_FLOOR);
                 String formattedCost = NumberFormat.getCurrencyInstance().format(parsed);
 
                 ivh.cost.setText(formattedCost);
                 ivh.description.setText(currentObject.getString("Description"));
-
-                
 
                 /* Handle card click */
                 ivh.getCardView().setOnClickListener(new View.OnClickListener() {
