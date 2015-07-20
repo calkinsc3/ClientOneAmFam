@@ -46,8 +46,11 @@ import java.util.ArrayList;
  */
 public class PolicyScreenFragment extends Fragment {
 
-    private final int CHANGE_IMAGE = 1;
+
     private final int NEW_IMAGE = 0;
+    /**
+     * The Images.
+     */
     ArrayList<Uri> images;
     private boolean policyWasCreated;
     private boolean hasImages;
@@ -67,11 +70,22 @@ public class PolicyScreenFragment extends Fragment {
     private ObjectArrayAdapter imageAdapter;
     private LinearLayout address2;
 
+    /**
+     * Instantiates a new Policy screen fragment.
+     */
     public PolicyScreenFragment() {
         // Required empty public constructor
     }
 
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -176,7 +190,7 @@ public class PolicyScreenFragment extends Fragment {
         policyCost.setText(String.valueOf(currentPolicy.getDouble("Cost")));
         policyAddress.setText(currentPolicy.getString("Address"));
         city.setText(currentPolicy.getString("City"));
-        zip.setText(String.valueOf(currentPolicy.getInt("Zip")));
+        zip.setText(String.valueOf(currentPolicy.getNumber("Zip")));
         stateSpinner.setSelection(stateAdapter.getPosition(currentPolicy.getString("State")));
     }
 
@@ -291,17 +305,23 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     private void saveImageComments(){
-
+        for(int i = 0; uploads.size() > i; i++){
+            uploads.get(i).put("Comment", commentsList.get(i));
+            ParseObject.saveAllInBackground(uploads);
+        }
     }
 
+    /**
+     * On activity result.
+     *
+     * @param requestCode the request code
+     * @param resultCode the result code
+     * @param data the data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                //User is changing an image
-                case CHANGE_IMAGE:
-
-                    break;
                 case NEW_IMAGE:
 
                     ClipData clipData = data.getClipData();
@@ -329,6 +349,12 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * On create options menu.
+     *
+     * @param menu the menu
+     * @param inflater the inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.optional_action).setVisible(true);
@@ -338,6 +364,12 @@ public class PolicyScreenFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * On options item selected.
+     *
+     * @param item the item
+     * @return the boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -350,6 +382,7 @@ public class PolicyScreenFragment extends Fragment {
                 }
                 if (hasImages) {
                     saveImageComments();
+                    Toast.makeText(getActivity(), "Comments Saved", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default:
@@ -357,10 +390,14 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * The type Object array adapter.
+     */
     public class ObjectArrayAdapter extends ArrayAdapter<ParseObject> {
 
         //declare Array List of items we create
         private ArrayList<ParseObject> uploads;
+
 
         /**
          * Constructor overrides constructor for array adapter
@@ -434,6 +471,14 @@ public class PolicyScreenFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 //todo make delete picture method
+                                try {
+                                    uploads.get(vHolder.index).delete();
+                                    commentsList.remove(vHolder.index);
+                                    Toast.makeText(getActivity(), "Image removed", Toast.LENGTH_SHORT).show();
+                                    setUploadsListAdapterAndComments();
+                                } catch (com.parse.ParseException e) {
+                                    Log.d("Save Error", e.toString());
+                                }
                             }
                         });
                     }
@@ -444,8 +489,8 @@ public class PolicyScreenFragment extends Fragment {
                         comments.setClickable(false);
                         comments.setHint("");
                     }
-                    comments.setText(currentPolicy.getString("Comment"));
-                    setCommentsChangeListener(comments, vHolder.index);
+                    setCommentsChangeListener(comments, vHolder);
+                    comments.setText(commentsList.get(vHolder.index));
                 }
 
             }
@@ -454,7 +499,7 @@ public class PolicyScreenFragment extends Fragment {
             return view;
         }
 
-        private void setCommentsChangeListener(MultiAutoCompleteTextView comments, final int position){
+        private void setCommentsChangeListener(MultiAutoCompleteTextView comments, final ViewHolder vHolder){
             comments.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -468,18 +513,32 @@ public class PolicyScreenFragment extends Fragment {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    commentsList.set(position, s.toString());
+                    commentsList.set(vHolder.index, s.toString());
                 }
             });
         }
 
+        /**
+         * The type View holder.
+         */
         public class ViewHolder {
+            /**
+             * The Policy image.
+             */
             ImageButton policyImage;
+            /**
+             * The Trash.
+             */
             ImageButton trash;
+            /**
+             * The Comments.
+             */
             MultiAutoCompleteTextView comments;
 
+            /**
+             * The Index.
+             */
             int index;
         }
     }
-
 }

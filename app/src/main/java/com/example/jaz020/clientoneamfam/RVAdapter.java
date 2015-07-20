@@ -1,5 +1,6 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -148,6 +149,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
             /* Display cards for list of claims */
             case "Claims": {
+                ivh.image.setVisibility(View.GONE);
 
                 try {
                     ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
@@ -156,6 +158,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     claimQuery.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> list, ParseException e) {
+
                             if(e == null & !list.isEmpty()) {
                                 String url = list.get(0).getParseFile("Media").getUrl();
 
@@ -183,8 +186,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ivh.cost.setText(formattedCost);
                 ivh.description.setText(currentObject.getString("Comment"));
 
-
-                ivh.image.setVisibility(View.VISIBLE);
                 ivh.editButton.setVisibility(View.GONE);
 
 
@@ -195,7 +196,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     public void onClick(View v) {
                         Singleton.setCurrentClaim(currentObject);
 
-//                        Tools.replaceFragment(R.id.fragment_container, new ClaimScreenFragment(),
+//                        Fragment fragment = new ClaimScreenFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putBoolean("ISNEW", true );
+//                        fragment.setArguments(bundle);
+//
+//                        Tools.replaceFragment(R.id.fragment_container, fragment,
 //                                Singleton.getFragmentManager(), true);
                     }
                 });

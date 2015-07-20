@@ -52,17 +52,13 @@ public class MainActivity extends Activity {
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         // Sets the Up Navigation enabled only if fragments are on backStack
-        enableUpAction();
+       enableUpAction();
         // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
         /**
          * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
          *
-         */
-        /**
-         * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
-         * don't redraw all the fragments on rotate
          */
         // TODO if MainPageFragment is removed.
         if (savedInstanceState == null) {
@@ -226,6 +222,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true; 
     }
 
@@ -245,8 +242,20 @@ public class MainActivity extends Activity {
             case R.id.action_logout:
                 Tools.logout(this);
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
-        return super.onOptionsItemSelected(item);
+       return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        if(getFragmentManager().getBackStackEntryCount() > 1){
+            super.onBackPressed();
+        }
+
     }
 }

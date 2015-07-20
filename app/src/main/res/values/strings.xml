@@ -16,7 +16,8 @@
     <string name="comment">Enter Comments</string>
     <string name="uploads">Uploads</string>
     <string name="editCard">Edit Card</string>
-
+    <string name="policy">Policy: </string>
+    <string name="damages">Damages: </string>
     <string name="checkbox_1">Stay Logged In</string>
     <string name="checkbox_2">Remember Username</string>
 
