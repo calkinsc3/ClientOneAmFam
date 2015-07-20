@@ -66,7 +66,13 @@ public class MyClaimsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+               // Fragment fragment = new ClaimScreenFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putBoolean("ISNEW", true );
+//                        fragment.setArguments(bundle);
+//
+//                        Tools.replaceFragment(R.id.fragment_container, fragment,
+//                                Singleton.getFragmentManager(), true);
             }
         });
 
