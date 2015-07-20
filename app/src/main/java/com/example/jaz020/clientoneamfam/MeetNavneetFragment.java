@@ -38,7 +38,8 @@ public class MeetNavneetFragment extends Fragment {
     }
 
     private void setDescription() {
-        String description = "";
+        String description =
+                ""; // TODO
 
         descriptionText.setText(description);
     }

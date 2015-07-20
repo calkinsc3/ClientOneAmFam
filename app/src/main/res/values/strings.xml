@@ -147,4 +147,6 @@
     <string name="amfam_team_paul">BST Omni CRM/APEX Team</string>
     <string name="job_title">Application Development Intern</string>
     <string name="email_navneet">Email Navneet</string>
+    <string name="linkedin_navneet">linkedin.com/in/navneetreddy</string>
+    <string name="github_navneet">github.com/navneetreddy</string>
 </resources>
