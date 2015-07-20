@@ -5,19 +5,21 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -26,9 +28,12 @@ import android.widget.TextView;
  */
 public class MeetNavneetFragment extends Fragment {
 
-    private View rootView;
+    private FrameLayout rootView;
+    private LinearLayout backgroundView;
 
     private ImageButton imageThumb;
+    private ImageView expandedImage;
+    private TextView nameText;
     private TextView descriptionText;
     private Button emailButton;
 
@@ -45,9 +50,11 @@ public class MeetNavneetFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rootView = view;
-
+        rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_root_layout);
+        backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout);
         imageThumb = (ImageButton) view.findViewById(R.id.picture);
+        expandedImage = (ImageView) view.findViewById(R.id.expanded_image);
+        nameText = (TextView) view.findViewById(R.id.name_navneet);
         descriptionText = (TextView) view.findViewById(R.id.descriptionText);
         emailButton = (Button) view.findViewById(R.id.emailNavneetButton);
 
@@ -60,8 +67,11 @@ public class MeetNavneetFragment extends Fragment {
 
     private void setDescription() {
         String description =
-                "Navneet is currently a student at the University of Wisconsin - Madison studying " +
-                "Computer Sciences. ";
+                "Navneet is currently a student at the University of Wisconsin - Madison studying" +
+                " Computer Sciences.\n\nSkills:\n  Languages: Java, C++, C, XML, JSON" +
+                "\n  Operating Systems: Linux, Unix, OS X, Windows\n  Software: Android Studio, " +
+                "Eclipse, Xcode\n\n\nIn his free time, Navneet loves to referee soccer, watch " +
+                "sports, and write personal applications.";
 
         descriptionText.setText(description);
     }
@@ -92,7 +102,7 @@ public class MeetNavneetFragment extends Fragment {
         });
     }
 
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
+    private void zoomImageFromThumb(final View thumbView, int imageID) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
         if (currentAnimator != null) {
@@ -100,8 +110,7 @@ public class MeetNavneetFragment extends Fragment {
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) rootView.findViewById(R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
+        expandedImage.setImageResource(imageID);
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
@@ -112,8 +121,7 @@ public class MeetNavneetFragment extends Fragment {
         // The start bounds are the global visible rectangle of the thumbnail,
         // and the final bounds are the global visible rectangle of the container
         // view. Also set the container view's offset as the origin for the
-        // bounds, since that's the origin for the positioning animation
-        // properties (X, Y).
+        // bounds, since that's the origin for the positioning animation properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
         rootView.findViewById(R.id.navneet_fragment_root_layout)
                 .getGlobalVisibleRect(finalBounds, globalOffset);
@@ -148,28 +156,31 @@ public class MeetNavneetFragment extends Fragment {
             startBounds.bottom += deltaHeight;
         }
 
-        // Hide the thumbnail and show the zoomed-in view. When the animation
-        // begins, it will position the zoomed-in view in the place of the
-        // thumbnail.
+        // Hide the thumbnail and show the zoomed-in view. When the animation begins,
+        // it will position the zoomed-in view in the place of the thumbnail and
+        // the background will fade to transparent black.
         thumbView.setAlpha(0f);
-        expandedImageView.setVisibility(View.VISIBLE);
+        backgroundView.setAlpha(.7f);
+        backgroundView.setBackgroundColor(Color.BLACK);
+        nameText.setTextColor(Color.DKGRAY);
 
-        // Set the pivot point for SCALE_X and SCALE_Y transformations
-        // to the top-left corner of the zoomed-in view (the default
-        // is the center of the view).
-        expandedImageView.setPivotX(0f);
-        expandedImageView.setPivotY(0f);
+        expandedImage.setVisibility(View.VISIBLE);
+
+        // Set the pivot point for SCALE_X and SCALE_Y transformations to the
+        // top-left corner of the zoomed-in view (the default is the center of the view).
+        expandedImage.setPivotX(0f);
+        expandedImage.setPivotY(0f);
 
         // Construct and run the parallel animation of the four translation and
         // scale properties (X, Y, SCALE_X, and SCALE_Y).
         AnimatorSet set = new AnimatorSet();
 
-        set.play(ObjectAnimator.ofFloat(expandedImageView, View.X,
+        set.play(ObjectAnimator.ofFloat(expandedImage, View.X,
                 startBounds.left, finalBounds.left))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y,
+                .with(ObjectAnimator.ofFloat(expandedImage, View.Y,
                         startBounds.top, finalBounds.top))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X,
-                        startScale, 1f)).with(ObjectAnimator.ofFloat(expandedImageView,
+                .with(ObjectAnimator.ofFloat(expandedImage, View.SCALE_X,
+                        startScale, 1f)).with(ObjectAnimator.ofFloat(expandedImage,
                 View.SCALE_Y, startScale, 1f));
 
         set.setDuration(animationDuration);
@@ -191,10 +202,9 @@ public class MeetNavneetFragment extends Fragment {
         currentAnimator = set;
 
         // Upon clicking the zoomed-in image, it should zoom back down
-        // to the original bounds and show the thumbnail instead of
-        // the expanded image.
+        // to the original bounds and show the thumbnail instead of the expanded image.
         final float startScaleFinal = startScale;
-        expandedImageView.setOnClickListener(new View.OnClickListener() {
+        expandedImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (currentAnimator != null) {
@@ -205,32 +215,41 @@ public class MeetNavneetFragment extends Fragment {
                 // back to their original values.
                 AnimatorSet set = new AnimatorSet();
                 set.play(ObjectAnimator
-                        .ofFloat(expandedImageView, View.X, startBounds.left))
+                        .ofFloat(expandedImage, View.X, startBounds.left))
                         .with(ObjectAnimator
-                                .ofFloat(expandedImageView,
+                                .ofFloat(expandedImage,
                                         View.Y,startBounds.top))
                         .with(ObjectAnimator
-                                .ofFloat(expandedImageView,
+                                .ofFloat(expandedImage,
                                         View.SCALE_X, startScaleFinal))
                         .with(ObjectAnimator
-                                .ofFloat(expandedImageView,
+                                .ofFloat(expandedImage,
                                         View.SCALE_Y, startScaleFinal));
 
                 set.setDuration(animationDuration);
                 set.setInterpolator(new DecelerateInterpolator());
 
+                // Sets the view to the normal view when animation is either done or cancelled.
                 set.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         thumbView.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
+                        backgroundView.setAlpha(1f);
+                        backgroundView.setBackgroundColor(Color.TRANSPARENT);
+                        nameText.setTextColor(Color.BLACK);
+
+                        expandedImage.setVisibility(View.GONE);
                         currentAnimator = null;
                     }
 
                     @Override
                     public void onAnimationCancel(Animator animation) {
                         thumbView.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
+                        backgroundView.setAlpha(1f);
+                        backgroundView.setBackgroundColor(Color.TRANSPARENT);
+                        nameText.setTextColor(Color.BLACK);
+
+                        expandedImage.setVisibility(View.GONE);
                         currentAnimator = null;
                     }
                 });
