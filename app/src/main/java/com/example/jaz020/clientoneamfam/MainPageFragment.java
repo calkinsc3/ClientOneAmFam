@@ -103,8 +103,8 @@ public class MainPageFragment extends Fragment {
         MY_CLAIMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.replaceFragment(R.id.fragment_container, new MyClaims(),
-//                        getFragmentManager(), true);
+                Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
+                        getFragmentManager(), true);
             }
         });
 
