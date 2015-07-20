@@ -105,6 +105,8 @@
 
     <string name="title_activity_login">Login</string>
 
+
+
     <string name="register_button_text">Register New User</string>
     <string name="policies">Policies</string>
     <string name="agent">Agent</string>
@@ -133,6 +135,7 @@
     <string name="phone_number_title">Phone Number:</string>
     <string name="logout">Logout</string>
     <string name="entryError">You must enter a value!</string>
+
 
     <string name="email_support">Email Support</string>
     <string name="name">Name</string>
