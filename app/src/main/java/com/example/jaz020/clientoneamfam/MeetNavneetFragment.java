@@ -39,7 +39,8 @@ public class MeetNavneetFragment extends Fragment {
 
     private void setDescription() {
         String description =
-                ""; // TODO
+                "Navneet is currently a student at the University of Wisconsin - Madison studying " +
+                "Computer Sciences. ";
 
         descriptionText.setText(description);
     }
