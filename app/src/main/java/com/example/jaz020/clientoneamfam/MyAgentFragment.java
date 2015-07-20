@@ -51,13 +51,16 @@ public class MyAgentFragment extends Fragment {
         ParseUser agent = Singleton.getMyAgent();
         String phoneNum = agent.getNumber("phoneNumber").toString();
         agentAddress1.setText(agent.getString("Address"));
-        agentAddress2.setText(agent.getString("City") + "," + agent.getString("State")+ " " + agent.getNumber("Zip").toString());
+        agentAddress2.setText(agent.getString("City") + "," + agent.getString("State") + " " + agent.getNumber("Zip").toString());
         agentPhone.setText("( " + phoneNum.substring(0,3) + " ) - " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
 
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Open Scheduling Here", Toast.LENGTH_SHORT).show();
+
+
+                Tools.replaceFragment(R.id.fragment_container, new EditAppointment(), getFragmentManager(), true);
             }
         });
 
