@@ -9,7 +9,7 @@
     android:background="#ffffffff">
 
     <ImageView
-        android:src="@drawable/amfam3"
+        android:src="@drawable/oneamfamlogo"
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="100dp" />
