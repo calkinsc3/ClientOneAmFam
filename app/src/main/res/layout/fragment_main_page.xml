@@ -28,45 +28,58 @@
         android:textStyle="bold"
         android:textSize="30dp" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/my_agent"
-        android:id="@+id/clientsButton"
-        android:layout_gravity="center_horizontal" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/find_an_agent"
-        android:id="@+id/claimsButton"
-        android:layout_gravity="center_horizontal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/my_policies"
-        android:id="@+id/scheduleButton"
-        android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_agent"
+                android:id="@+id/clientsButton"
+                android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/my_claims"
-        android:id="@+id/settingsButton"
-        android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/find_an_agent"
+                android:id="@+id/claimsButton"
+                android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings"
-        android:id="@+id/myUploadsButton"
-        android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_policies"
+                android:id="@+id/scheduleButton"
+                android:layout_gravity="center_horizontal" />
 
-    <ExpandableListView
-        android:id="@+id/expandable_intern_list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </ExpandableListView>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_claims"
+                android:id="@+id/settingsButton"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                android:id="@+id/myUploadsButton"
+                android:layout_gravity="center_horizontal" />
+
+            <ExpandableListView
+                android:id="@+id/expandable_intern_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+            </ExpandableListView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

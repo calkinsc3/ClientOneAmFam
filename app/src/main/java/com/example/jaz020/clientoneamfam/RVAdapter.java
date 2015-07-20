@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
 
+
 /**
  * Created by nsr009 on 6/10/2015.
  */
@@ -84,34 +85,23 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ivh.image.setVisibility(View.GONE);
 
                 try {
-                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Claim");
+                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
                     claimQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
 
-                    List<ParseObject> claims = claimQuery.find();
+                    List<ParseObject> uploads = claimQuery.find();
 
-                    for (int x = 0; x < claims.size(); x++) {
-                        JSONArray jArray = claims.get(x).getJSONArray("UploadIDs");
+                    if (!uploads.isEmpty()) {
+                        String url = uploads.get(0).getParseFile("Media").getUrl();
 
-                        if (jArray != null && jArray.length() != 0) {
-                            String uploadID = jArray.get(x).toString();
-
-                            ParseQuery<ParseObject> uploadQuery = new ParseQuery<>("Upload");
-                            ParseObject upload = uploadQuery.get(uploadID);
-                            String url = upload.getParseFile("Media").getUrl();
-
-                            ivh.image.setVisibility(View.VISIBLE);
+                        ivh.image.setVisibility(View.VISIBLE);
 
                             /* Load picture into current card's image view */
-                            Picasso.with(Singleton.getContext())
-                                    .load(url)
-                                    .fit()
-                                    .centerInside()
-                                    .into(ivh.image);
-
-                            break;
-                        }
+                        Picasso.with(Singleton.getContext())
+                                .load(url)
+                                .fit()
+                                .centerInside()
+                                .into(ivh.image);
                     }
-
                 } catch (Exception e) { e.printStackTrace(); }
 
                 String cost = currentObject.getNumber("Cost").toString();
@@ -139,11 +129,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                         Singleton.setCurrentPolicy(currentObject);
 
                         PolicyScreenFragment policyScreenFragment = new PolicyScreenFragment();
+
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("ISEDIT", true);
                         policyScreenFragment.setArguments(bundle);
 
-                        Tools.replaceFragment(R.id.fragment_container, new PolicyScreenFragment(),
+                        Tools.replaceFragment(R.id.fragment_container, policyScreenFragment,
                                 Singleton.getFragmentManager(), true);
                     }
                 });

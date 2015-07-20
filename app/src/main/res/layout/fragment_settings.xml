@@ -5,17 +5,24 @@
     >
 
     <LinearLayout
-        android:layout_weight="0"
         android:id="@+id/header_layout"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        //TODO add logo
+        <ImageView
+            android:src="@drawable/amfam3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/logo_image_view"
+            android:cropToPadding="false"
+            android:fitsSystemWindows="false" />
 
         <TextView
             android:gravity="center_horizontal"
-            android:hint="version"
+            android:hint="@string/version"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:id="@+id/version_text_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
@@ -46,17 +53,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:text="Phone: "
-                android:id="@+id/phone_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
 
-            <TextView
-                android:text="Email: "
-                android:id="@+id/email_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -77,6 +74,43 @@
                 android:id="@+id/address_text_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/title_layout_2"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Phone: "
+                android:id="@+id/phone_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Email: "
+                android:id="@+id/email_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/text_layout_2"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:hint="phone"
