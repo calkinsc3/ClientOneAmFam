@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -14,7 +15,10 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 //import com.parse.ParseObject;
 //import com.parse.ParseUser;
@@ -62,31 +66,31 @@ public class Tools {
 
     }
 //
-//    public static void updateDateEntry(EditText editText, Calendar calendar) {
-//
-//        String myFormat = "MM/dd/yy"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//
-//        editText.setText(sdf.format(calendar.getTime()));
-//    }
-//
-//    public static void updateTimeEntry(EditText editText, Calendar calendar) {
-//
-//        String minutes = String.valueOf(calendar.get(Calendar.MINUTE));
-//        String am_pm;
-//
-//        if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
-//            am_pm = "am";
-//        } else {
-//            am_pm = "pm";
-//        }
-//
-//        if (minutes.length() < 2) {
-//            minutes += "0";
-//        }
-//
-//        editText.setText(calendar.get(Calendar.HOUR) + ":" + minutes + " " + am_pm);
-//    }
+    public static void updateDateEntry(EditText editText, Calendar calendar) {
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editText.setText(sdf.format(calendar.getTime()));
+    }
+
+    public static void updateTimeEntry(EditText editText, Calendar calendar) {
+
+        String minutes = String.valueOf(calendar.get(Calendar.MINUTE));
+        String am_pm;
+
+        if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
+            am_pm = "am";
+        } else {
+            am_pm = "pm";
+        }
+
+        if (minutes.length() < 2) {
+            minutes += "0";
+        }
+
+        editText.setText(calendar.get(Calendar.HOUR) + ":" + minutes + " " + am_pm);
+    }
 //
 //    public static byte[] readBytes(Context context, Uri uri) throws IOException {
 //        // this dynamically extends to take the bytes you read
