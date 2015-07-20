@@ -95,13 +95,19 @@ public class MainActivity extends Activity {
                 drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
                 drawerExpandableList.collapseGroup(0);
 
-                final int MY_AGENT = 0;
-                final int FIND_AN_AGENT = 1;
-                final int MY_POLICIES = 2;
-                final int MY_CLAIMS = 3;
-                final int SETTINGS = 4;
+                final int HOME_PAGE = 0;
+                final int MY_AGENT = 1;
+                final int FIND_AN_AGENT = 2;
+                final int MY_POLICIES = 3;
+                final int MY_CLAIMS = 4;
+                final int SETTINGS = 5;
 
                 switch (position) {
+                    case HOME_PAGE:
+                        Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
+                                getFragmentManager(), true);
+                        break;
+
                     case MY_AGENT:
                         Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
                                 getFragmentManager(), true);
