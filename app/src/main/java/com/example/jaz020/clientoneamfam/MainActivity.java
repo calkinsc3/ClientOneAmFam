@@ -189,6 +189,7 @@ public class MainActivity extends Activity {
                     // >0 removes initial frag and leave a blank space...use 1 instead.
                     getActionBar().setHomeButtonEnabled(true);
                     getActionBar().setDisplayHomeAsUpEnabled(true);
+
                 } else {
                     getActionBar().setDisplayHomeAsUpEnabled(false);
                     getActionBar().setHomeButtonEnabled(false);

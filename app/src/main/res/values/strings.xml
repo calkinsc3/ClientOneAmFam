@@ -143,4 +143,5 @@
     <string name="save_changes">Save Changes</string>
     <string name="create_client">Create Client</string>
     <string name="password_title_2">Password (Again):</string>
+    <string name="version">version</string>
 </resources>
