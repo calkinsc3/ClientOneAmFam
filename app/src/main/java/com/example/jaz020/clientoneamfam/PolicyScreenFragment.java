@@ -46,7 +46,7 @@ import java.util.ArrayList;
  */
 public class PolicyScreenFragment extends Fragment {
 
-    private final int CHANGE_IMAGE = 1;
+
     private final int NEW_IMAGE = 0;
     /**
      * The Images.
@@ -322,10 +322,6 @@ public class PolicyScreenFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                //User is changing an image
-                case CHANGE_IMAGE:
-
-                    break;
                 case NEW_IMAGE:
 
                     ClipData clipData = data.getClipData();

@@ -13,6 +13,7 @@ public class Singleton {
 
     private static Singleton ourInstance = new Singleton();
     private static ParseObject currentPolicy;
+    private static ParseObject currentClaim;
     private static FragmentManager fragmentManager;
     private static Context context;
     private static ParseUser myAgent;
@@ -32,11 +33,19 @@ public class Singleton {
         Singleton.currentPolicy = currentPolicy;
     }
 
-    public static void setMyAgent(ParseUser agent){
-        Singleton.myAgent = agent;
+    public static ParseObject getCurrentClaim() {
+        return currentClaim;
+    }
+
+    public static void setCurrentClaim(ParseObject currentClaim) {
+        Singleton.currentClaim = currentClaim;
     }
 
     public static ParseUser getMyAgent(){ return Singleton.myAgent; }
+
+    public static void setMyAgent(ParseUser agent){
+        Singleton.myAgent = agent;
+    }
 
     public static FragmentManager getFragmentManager() {
         return fragmentManager;
