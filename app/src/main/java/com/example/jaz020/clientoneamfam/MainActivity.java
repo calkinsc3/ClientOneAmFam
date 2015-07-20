@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         // Sets the Up Navigation enabled only if fragments are on backStack
-        enableUpAction();
+       enableUpAction();
         // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
@@ -226,6 +226,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true; 
     }
 
@@ -245,8 +246,12 @@ public class MainActivity extends Activity {
             case R.id.action_logout:
                 Tools.logout(this);
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
-        return super.onOptionsItemSelected(item);
+
+       return super.onOptionsItemSelected(item);
     }
 }
