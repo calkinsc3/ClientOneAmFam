@@ -121,8 +121,8 @@ public class MainActivity extends Activity {
                         break;
 
                     case MY_CLAIMS:
-//                        Tools.replaceFragment(R.id.fragment_container, new MyClaims(),
-//                                getFragmentManager(), true);
+                        Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
+                                getFragmentManager(), true);
                         break;
 
                     case SETTINGS:
