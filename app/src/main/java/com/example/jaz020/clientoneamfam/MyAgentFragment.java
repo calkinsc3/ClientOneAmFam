@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -34,9 +36,6 @@ public class MyAgentFragment extends Fragment {
     }
 
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,15 +44,18 @@ public class MyAgentFragment extends Fragment {
         TextView agentAddress2 = (TextView) view.findViewById(R.id.AgentAddress2TextView);
         TextView agentPhone = (TextView) view.findViewById(R.id.AgentPhoneTextView);
         Button agentScheduleButton = (Button) view.findViewById(R.id.AgentScheduleButton);
+        ImageView agentImg = (ImageView) view.findViewById(R.id.agentImage);
         ImageButton agentDirection = (ImageButton) view.findViewById(R.id.agentDirectionsButton);
         ImageButton agentCall = (ImageButton) view.findViewById(R.id.agentCallButton);
+        ImageButton emailBtn = (ImageButton) view.findViewById(R.id.agentEmailingButton);
 
-        ParseUser agent = Singleton.getMyAgent();
+        final ParseUser agent = Singleton.getMyAgent();
         String phoneNum = agent.getNumber("phoneNumber").toString();
         agentAddress1.setText(agent.getString("Address"));
         agentAddress2.setText(agent.getString("City") + "," + agent.getString("State")+ " " + agent.getNumber("Zip").toString());
-        agentPhone.setText("( " + phoneNum.substring(0,3) + " ) - " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
+        agentPhone.setText("( " + phoneNum.substring(0, 3) + " ) - " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
 
+        Picasso.with(getActivity()).load(agent.getParseFile("AgentPhoto").getUrl()).into(agentImg);
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +83,18 @@ public class MyAgentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Singleton.getMyAgent().getNumber("phoneNumber").toString()));
+                startActivity(intent);
+            }
+        });
+
+        emailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                String[] emails = new String[1];
+                emails[0] = agent.getString("email");
+                intent.putExtra(Intent.EXTRA_EMAIL, emails);
                 startActivity(intent);
             }
         });
