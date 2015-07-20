@@ -14,7 +14,9 @@
             android:src="@drawable/amfam3"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-         />
+            android:id="@+id/logo_image_view"
+            android:cropToPadding="false"
+            android:fitsSystemWindows="false" />
 
         <TextView
             android:gravity="center_horizontal"

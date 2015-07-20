@@ -46,7 +46,7 @@ public class MyPoliciesFragment extends Fragment {
 
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Policy");
-            query.whereEqualTo("AgentID", ParseUser.getCurrentUser().getObjectId());
+            query.whereEqualTo("ClientID", ParseUser.getCurrentUser().getObjectId());
             List<ParseObject> policies = query.find();
 
             if (policies.size() != 0) {

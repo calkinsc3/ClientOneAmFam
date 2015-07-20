@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/optional_action"
-        android:title="Optional Button"
+        android:title="optional button"
         android:visible="false"
         app:showAsAction="ifRoom" />
 

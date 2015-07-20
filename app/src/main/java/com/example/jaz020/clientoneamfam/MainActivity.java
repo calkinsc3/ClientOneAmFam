@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         // Sets the Up Navigation enabled only if fragments are on backStack
-        enableUpAction();
+       enableUpAction();
         // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
@@ -95,13 +95,19 @@ public class MainActivity extends Activity {
                 drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
                 drawerExpandableList.collapseGroup(0);
 
-                final int MY_AGENT = 0;
-                final int FIND_AN_AGENT = 1;
-                final int MY_POLICIES = 2;
-                final int MY_CLAIMS = 3;
-                final int SETTINGS = 4;
+                final int HOME_PAGE = 0;
+                final int MY_AGENT = 1;
+                final int FIND_AN_AGENT = 2;
+                final int MY_POLICIES = 3;
+                final int MY_CLAIMS = 4;
+                final int SETTINGS = 5;
 
                 switch (position) {
+                    case HOME_PAGE:
+                        Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
+                                getFragmentManager(), true);
+                        break;
+
                     case MY_AGENT:
                         Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
                                 getFragmentManager(), true);
@@ -121,8 +127,8 @@ public class MainActivity extends Activity {
                         break;
 
                     case MY_CLAIMS:
-//                        Tools.replaceFragment(R.id.fragment_container, new MyClaims(),
-//                                getFragmentManager(), true);
+                        Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
+                                getFragmentManager(), true);
                         break;
 
                     case SETTINGS:
@@ -220,6 +226,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true; 
     }
 
@@ -239,8 +246,12 @@ public class MainActivity extends Activity {
             case R.id.action_logout:
                 Tools.logout(this);
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
-        return super.onOptionsItemSelected(item);
+
+       return super.onOptionsItemSelected(item);
     }
 }

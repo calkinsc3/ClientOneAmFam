@@ -29,7 +29,10 @@
     <string name="my_claims">My Claims</string>
     <string name="settings">Settings</string>
 
+    <string name="navneet">Navneet Reddy</string>
+
     <string-array name="drawerItems">
+        <item>Home</item>
         <item>My Agent</item>
         <item>Find An Agent</item>
         <item>My Policies</item>
@@ -145,7 +148,12 @@
     <string name="create_client">Create Client</string>
     <string name="password_title_2">Password (Again):</string>
     <string name="version">version</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="amfam_team_paul">BST Omni CRM/APEX Team</string>
+    <string name="job_title">Application Development Intern</string>
+    <string name="email_navneet">Email Navneet</string>
+    <string name="linkedin_navneet">linkedin.com/in/navneetreddy</string>
+    <string name="github_navneet">github.com/navneetreddy</string>
+    <string name="picture_navneet">Navneet\'s Picture</string>
+    <string name="about_navneet">About Navneet</string>
+    <string name="expanded_image">Expanded Image</string>
 </resources>

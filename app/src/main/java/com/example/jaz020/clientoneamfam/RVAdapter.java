@@ -1,5 +1,6 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
@@ -81,39 +85,30 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
         switch (cardType) {
             /* Display cards for list of policies */
-            case "Policies": {
+            case "Policies":{
                 ivh.image.setVisibility(View.GONE);
 
                 try {
-                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Claim");
+                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
                     claimQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
 
-                    List<ParseObject> claims = claimQuery.find();
+                    List<ParseObject> uploads = claimQuery.find();
 
-                    for (int x = 0; x < claims.size(); x++) {
-                        JSONArray jArray = claims.get(x).getJSONArray("UploadIDs");
+                    if (!uploads.isEmpty()) {
+                        String url = uploads.get(0).getParseFile("Media").getUrl();
 
-                        if (jArray != null && jArray.length() != 0) {
-                            String uploadID = jArray.get(x).toString();
-
-                            ParseQuery<ParseObject> uploadQuery = new ParseQuery<>("Upload");
-                            ParseObject upload = uploadQuery.get(uploadID);
-                            String url = upload.getParseFile("Media").getUrl();
-
-                            ivh.image.setVisibility(View.VISIBLE);
+                        ivh.image.setVisibility(View.VISIBLE);
 
                             /* Load picture into current card's image view */
-                            Picasso.with(Singleton.getContext())
-                                    .load(url)
-                                    .fit()
-                                    .centerInside()
-                                    .into(ivh.image);
-
-                            break;
-                        }
+                        Picasso.with(Singleton.getContext())
+                                .load(url)
+                                .fit()
+                                .centerInside()
+                                .into(ivh.image);
                     }
-
-                } catch (Exception e) { e.printStackTrace(); }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 String cost = currentObject.getNumber("Cost").toString();
                 BigDecimal parsed = new BigDecimal(cost).setScale(2, BigDecimal.ROUND_FLOOR);
@@ -151,24 +146,73 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 });
 
                 break;
-            }
+        }
             /* Display cards for list of claims */
             case "Claims": {
-                // TODO -- James
+                ivh.image.setVisibility(View.GONE);
 
+                try {
+                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
+                    claimQuery.whereEqualTo("ClaimID", currentObject.getObjectId());
 
+                    claimQuery.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> list, ParseException e) {
+
+                            if(e == null & !list.isEmpty()) {
+                                String url = list.get(0).getParseFile("Media").getUrl();
+
+                                ivh.image.setVisibility(View.VISIBLE);
+
+                            /* Load picture into current card's image view */
+                                Picasso.with(Singleton.getContext())
+                                        .load(url)
+                                        .fit()
+                                        .centerInside()
+                                        .into(ivh.image);
+                            }
+                        }
+
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String damages = currentObject.getNumber("Damages").toString();
+                BigDecimal parsed = new BigDecimal(damages).setScale(2, BigDecimal.ROUND_FLOOR);
+                String formattedCost = NumberFormat.getCurrencyInstance().format(parsed);
+
+                ivh.cost.setText(formattedCost);
+                ivh.description.setText(currentObject.getString("Comment"));
+
+                ivh.editButton.setVisibility(View.GONE);
 
 
                 // TODO Handle clicks.
+                /* Handle card click */
+                ivh.getCardView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Singleton.setCurrentClaim(currentObject);
 
-
+//                        Fragment fragment = new ClaimScreenFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putBoolean("ISNEW", true );
+//                        fragment.setArguments(bundle);
+//
+//                        Tools.replaceFragment(R.id.fragment_container, fragment,
+//                                Singleton.getFragmentManager(), true);
+                    }
+                });
 
                 break;
             }
-            default: {
+
+            default:
                 Log.e("CardRVAdapter", cardType + " passed in as argument.");
                 break;
-            }
+
         }
     }
 
