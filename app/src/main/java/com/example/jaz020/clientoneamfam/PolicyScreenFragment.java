@@ -12,6 +12,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,6 +62,7 @@ public class PolicyScreenFragment extends Fragment {
     private ListView uploadsList;
     private ParseObject currentPolicy;
     private ArrayList<ParseObject> uploads;
+    private ArrayList<String> commentsList;
     private ArrayAdapter stateAdapter;
     private ObjectArrayAdapter imageAdapter;
     private LinearLayout address2;
@@ -121,7 +124,7 @@ public class PolicyScreenFragment extends Fragment {
 
     private void policyWasSelectedPopulateViews(){
         setFields();
-        setUploadsListAdapter();
+        setUploadsListAdapterAndComments();
     }
 
     private void makeFieldsEditable(){
@@ -177,12 +180,24 @@ public class PolicyScreenFragment extends Fragment {
         stateSpinner.setSelection(stateAdapter.getPosition(currentPolicy.getString("State")));
     }
 
-    private void setUploadsListAdapter(){
+    private void setUploadsListAdapterAndComments(){
         queryParseForUploads();
         if(uploads.size() > 0) {
+            setComments();
             imageAdapter = new ObjectArrayAdapter(getActivity(), R.layout.edit_upload_card, uploads);
             uploadsList.setAdapter(imageAdapter);
             hasImages = true;
+        }
+    }
+
+    private void setComments(){
+        commentsList = new ArrayList<>();
+        for(ParseObject upload : uploads){
+            if(upload.getString("Comment") != null) {
+                commentsList.add(upload.getString("Comment"));
+            } else {
+                commentsList.add("");
+            }
         }
     }
 
@@ -272,7 +287,7 @@ public class PolicyScreenFragment extends Fragment {
                 Log.e("Error Saving", e.toString());
             }
         }
-        setUploadsListAdapter();
+        setUploadsListAdapterAndComments();
     }
 
     private void saveImageComments(){
@@ -430,12 +445,32 @@ public class PolicyScreenFragment extends Fragment {
                         comments.setHint("");
                     }
                     comments.setText(currentPolicy.getString("Comment"));
+                    setCommentsChangeListener(comments, vHolder.index);
                 }
 
             }
 
             // view must be returned to our current activity
             return view;
+        }
+
+        private void setCommentsChangeListener(MultiAutoCompleteTextView comments, final int position){
+            comments.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    commentsList.set(position, s.toString());
+                }
+            });
         }
 
         public class ViewHolder {
