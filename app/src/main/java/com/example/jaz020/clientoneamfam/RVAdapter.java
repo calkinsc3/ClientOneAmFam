@@ -85,34 +85,23 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ivh.image.setVisibility(View.GONE);
 
                 try {
-                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Claim");
+                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
                     claimQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
 
-                    List<ParseObject> claims = claimQuery.find();
+                    List<ParseObject> uploads = claimQuery.find();
 
-                    for (int x = 0; x < claims.size(); x++) {
-                        JSONArray jArray = claims.get(x).getJSONArray("UploadIDs");
+                    if (!uploads.isEmpty()) {
+                        String url = uploads.get(0).getParseFile("Media").getUrl();
 
-                        if (jArray != null && jArray.length() != 0) {
-                            String uploadID = jArray.get(x).toString();
-
-                            ParseQuery<ParseObject> uploadQuery = new ParseQuery<>("Upload");
-                            ParseObject upload = uploadQuery.get(uploadID);
-                            String url = upload.getParseFile("Media").getUrl();
-
-                            ivh.image.setVisibility(View.VISIBLE);
+                        ivh.image.setVisibility(View.VISIBLE);
 
                             /* Load picture into current card's image view */
-                            Picasso.with(Singleton.getContext())
-                                    .load(url)
-                                    .fit()
-                                    .centerInside()
-                                    .into(ivh.image);
-
-                            break;
-                        }
+                        Picasso.with(Singleton.getContext())
+                                .load(url)
+                                .fit()
+                                .centerInside()
+                                .into(ivh.image);
                     }
-
                 } catch (Exception e) { e.printStackTrace(); }
 
                 String cost = currentObject.getNumber("Cost").toString();
