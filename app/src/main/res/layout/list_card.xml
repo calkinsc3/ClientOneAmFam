@@ -15,6 +15,16 @@
         android:layout_height="wrap_content"
         android:weightSum="5">
 
+        <ImageButton
+            android:id="@+id/cardEditButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="#00ffffff"
+            android:contentDescription="@string/editCard"
+            android:src="@android:drawable/ic_menu_edit" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -44,15 +54,7 @@
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/cardEditButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="#00ffffff"
-            android:contentDescription="@string/editCard"
-            android:src="@android:drawable/ic_menu_edit" />
+
 
     </LinearLayout>
 
