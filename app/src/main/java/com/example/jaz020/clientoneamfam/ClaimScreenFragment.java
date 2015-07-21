@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.ClipData;
@@ -42,9 +41,12 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * The claim scree fragment holds the information pertaining to each Claim if a claim was chosen. If
+ * the AddClaim button was pressed it will enable the user to create a new claim from a list of possible
+ * policies and allow the user to upload photos.
+ *
+ * @author lsl017
  */
 public class ClaimScreenFragment extends Fragment {
 
@@ -77,11 +79,21 @@ public class ClaimScreenFragment extends Fragment {
     private boolean hasImages;
     private boolean userHasSavedPolicy;
 
+    /**
+     * Instantiates a new Claim screen fragment.
+     */
     public ClaimScreenFragment() {
         // Required empty public constructor
     }
 
-    //todo include number formatter
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,6 +106,10 @@ public class ClaimScreenFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Intializes all global variables and sets the size of the Recycler view.
+     * @param view the view connected to the fragment
+     */
     private void initializeVariables(View view){
         userHasSavedPolicy = false;
 
@@ -126,12 +142,15 @@ public class ClaimScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * Enables editing, and gets ParseIDs if it is a new Claim. If a claim was selected it populates
+     * the views with data and hides the policy spinner.
+     */
     private void enableEditingifNew(){
         if(args.getBoolean("ISNEW", false)){
             getAndSetParseIDs();
             makeFieldsEditable();
             setHasOptionsMenu(true);
-            getAndSetParseIDs();
         }  else {
             currentClaim = Singleton.getCurrentClaim();
             userHasSavedPolicy = true;
@@ -140,6 +159,9 @@ public class ClaimScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * Hides the spinner and makes it un-clickable
+     */
     private void hideSpinner(){
         policySpinner.setVisibility(View.GONE);
         policySpinner.setClickable(false);
@@ -147,13 +169,19 @@ public class ClaimScreenFragment extends Fragment {
         policySpinner.setFocusableInTouchMode(false);
     }
 
+    /**
+     * makes the fields editable and loads the policySpinner. Also sets the textWatcher and
+     * Add upload listener
+     */
     private void makeFieldsEditable() {
         damages.setClickable(true);
         damages.setFocusable(true);
         damages.setFocusableInTouchMode(true);
+
         comment.setClickable(true);
         comment.setFocusable(true);
         comment.setFocusableInTouchMode(true);
+
         addImage.setVisibility(View.VISIBLE);
         addImage.setClickable(true);
         addImage.setFocusable(true);
@@ -164,6 +192,9 @@ public class ClaimScreenFragment extends Fragment {
         loadPolicySpinner();
     }
 
+    /**
+     * loads the policy spinner
+     */
     private void loadPolicySpinner(){
         String[] policyIDs = this.policyIDs.toArray(new String[this.policyIDs.size()]);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, policyIDs);
@@ -171,6 +202,10 @@ public class ClaimScreenFragment extends Fragment {
         policySpinner.setAdapter(adapter);
     }
 
+    /**
+     * if the user has saved the Claim it sets the on click listener for the addImage button,
+     * enables uploading of images;
+     */
     private void setAddUploadClickListener(){
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,9 +227,13 @@ public class ClaimScreenFragment extends Fragment {
         });
     }
 
+    /**
+     * sets the listener for text changed on damages. Formats the number on text changed
+     */
     private void setDamagesChangeListener(){
         damages.addTextChangedListener(new TextWatcher() {
             private String current = "";
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -202,7 +241,7 @@ public class ClaimScreenFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.toString().equals(current)){
+                if (!s.toString().equals(current)) {
                     damages.removeTextChangedListener(this);
 
                     String cleanString = s.toString().replaceAll("[$,.]", "");
@@ -228,6 +267,9 @@ public class ClaimScreenFragment extends Fragment {
         });
     }
 
+    /**
+     * sets the values of all edit texts. Formats the damages text to a number
+     */
     private void setFields(){
         String damages = currentClaim.getNumber("Damages").toString();
         BigDecimal parsed = new BigDecimal(damages).setScale(2, BigDecimal.ROUND_FLOOR);
@@ -238,6 +280,9 @@ public class ClaimScreenFragment extends Fragment {
         comment.setText(currentClaim.getString("Comment"));
     }
 
+    /**
+     * gets parse ID's where the clientID equals the current user ID
+     */
     private void getAndSetParseIDs(){
         ParseQuery policyQuery = new ParseQuery("Policy");
         policyQuery.whereEqualTo("ClientID", ParseUser.getCurrentUser().getObjectId());
@@ -251,12 +296,18 @@ public class ClaimScreenFragment extends Fragment {
         getPolicyIDs();
     }
 
+    /**
+     * adds the Object ID of each policy connected to the user to an array list of ID's
+     */
     private void getPolicyIDs(){
         for(int i = 0; policies.size() > i; i++){
             policyIDs.add(policies.get(i).getObjectId());
         }
     }
 
+    /**
+     * queries Parse.com for uploads connected to the uploadIDs
+     */
     private void queryParseForUploads(){
         uploads = new ArrayList<>();
         ArrayList uploadIDs = (ArrayList)currentClaim.getList("UploadIDs");
@@ -273,6 +324,9 @@ public class ClaimScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * if uploads contains content re-attach new adapter. If non set the RecyclerView to invisible
+     */
     private void setUploadListAdapterAndComments(){
 
         queryParseForUploads();
@@ -288,6 +342,9 @@ public class ClaimScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * loads the commentsList with the comments for each photo
+     */
     private void setComments(){
         commentsList = new ArrayList<>();
         for(ParseObject upload : uploads){
@@ -299,12 +356,19 @@ public class ClaimScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * sets the fields and sets the upload List adapter
+     */
     private void claimWasSelectedPopulateViews(){
-        //todo populate views
         setFields();
         setUploadListAdapterAndComments();
     }
 
+    /**
+     * Validates the data in each edit text field and returns true if valid
+     *
+     * @return validated if the entered text areas are valid
+     */
     private boolean validateFields(){
         String error = getResources().getString(R.string.entryError);
         boolean validated = false;
@@ -320,6 +384,9 @@ public class ClaimScreenFragment extends Fragment {
         return validated;
     }
 
+    /**
+     * saves the claim information
+     */
     private void saveClaimInformation(){
         String damages = this.damages.getText().toString();
         damages = damages.replace("$","");
@@ -344,6 +411,10 @@ public class ClaimScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * saves the images to parse and populates the required fields. Re-sets the uploadlist adapter
+     * after saving.
+     */
     private void saveImages(){
         for(int i = 0; images.size() > i; i++){
             try {
@@ -374,6 +445,9 @@ public class ClaimScreenFragment extends Fragment {
         setUploadListAdapterAndComments();
     }
 
+    /**
+     * saves all of the image comments
+     */
     private void saveImageComments(){
         for(int i = 0; uploads.size() > i; i++){
             uploads.get(i).put("Comment", commentsList.get(i));
@@ -382,7 +456,7 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     /**
-     * On create options menu.
+     * On create options menu. Enables the save icon
      *
      * @param menu the menu
      * @param inflater the inflater
@@ -397,7 +471,7 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     /**
-     * On options item selected.
+     * On options item selected. Saves all information on screen
      *
      * @param item the item
      * @return the boolean
@@ -423,7 +497,7 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     /**
-     * On activity result.
+     * On activity result. Handles the return of image data from the intent
      *
      * @param requestCode the request code
      * @param resultCode the result code
@@ -460,14 +534,30 @@ public class ClaimScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * The type Image rV adapter.
+     */
     public class ImageRVAdapter extends RecyclerView.Adapter<ImageRVAdapter.ViewHolder>{
 
+        /**
+         * The Objects to display.
+         */
         List<ParseObject> objectsToDisplay;
 
+        /**
+         * Instantiates a new Image rV adapter.
+         *
+         * @param objectsToDisplay the objects to display
+         */
         ImageRVAdapter(List<ParseObject> objectsToDisplay){
             this.objectsToDisplay = objectsToDisplay;
         }
 
+        /**
+         * Gets item count.
+         *
+         * @return the item count
+         */
         @Override
         public int getItemCount() {
             if(objectsToDisplay != null){
@@ -477,6 +567,13 @@ public class ClaimScreenFragment extends Fragment {
             }
         }
 
+        /**
+         * On create view holder.
+         *
+         * @param viewGroup the view group
+         * @param i the i
+         * @return the view holder
+         */
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.edit_upload_card,
@@ -504,6 +601,12 @@ public class ClaimScreenFragment extends Fragment {
             return vHolder;
         }
 
+        /**
+         * On bind view holder.
+         *
+         * @param vHolder the v holder
+         * @param i the i
+         */
         @Override
         public void onBindViewHolder(final ViewHolder vHolder, int i){
             final ParseObject currentObject = objectsToDisplay.get(i);
@@ -543,15 +646,38 @@ public class ClaimScreenFragment extends Fragment {
 
         }
 
+        /**
+         * The type View holder.
+         */
         public class ViewHolder extends RecyclerView.ViewHolder {
 
+            /**
+             * The Cv.
+             */
             CardView cv;
 
+            /**
+             * The Claim image.
+             */
             ImageButton claimImage;
+            /**
+             * The Comments.
+             */
             MultiAutoCompleteTextView comments;
+            /**
+             * The Trash.
+             */
             ImageButton trash;
+            /**
+             * The Index.
+             */
             int index;
 
+            /**
+             * Instantiates a new View holder.
+             *
+             * @param view the view
+             */
             ViewHolder(View view) {
                 super(view);
 
@@ -563,5 +689,4 @@ public class ClaimScreenFragment extends Fragment {
         }
 
     }
-
 }

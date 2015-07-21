@@ -45,7 +45,7 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Shows all data pertaining to the selected policy or creates a new policy
  */
 public class PolicyScreenFragment extends Fragment {
 
@@ -111,6 +111,10 @@ public class PolicyScreenFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Sets the on click listener for the addImage button, enables uploading of images;
+     *
+     */
     private void setAddUploadClickListener(){
         addUploads.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,9 +131,13 @@ public class PolicyScreenFragment extends Fragment {
         });
     }
 
+    /**
+     * sets the listener for text changed on policyCost. Formats the number on text changed
+     */
     private void setPolicyCostTextListener(){
         policyCost.addTextChangedListener(new TextWatcher() {
             private String current = "";
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -137,7 +145,7 @@ public class PolicyScreenFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.toString().equals(current)){
+                if (!s.toString().equals(current)) {
                     policyCost.removeTextChangedListener(this);
 
                     String cleanString = s.toString().replaceAll("[$,.]", "");
@@ -163,6 +171,10 @@ public class PolicyScreenFragment extends Fragment {
         });
     }
 
+    /**
+     * If new Policy make fields editable; if edit make fields editable and populate views; if
+     * policy selected disable spinner and populate views
+     */
     private void enableEditIfNewOrEditing(){
         if(args.getBoolean("ISNEW", false)){
             makeFieldsEditable();
@@ -179,16 +191,25 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * disables the stateSpinner
+     */
     private void disableStateSpinner(){
         stateSpinner.setEnabled(false);
         stateSpinner.setClickable(false);
     }
 
+    /**
+     * set the fields and the upload List adapter
+     */
     private void policyWasSelectedPopulateViews(){
         setFields();
         setUploadsListAdapterAndComments();
     }
 
+    /**
+     * makes fields editable and sets the upload click listener and cost change listener
+     */
     private void makeFieldsEditable(){
         policyDescription.setClickable(true);
         policyDescription.setFocusable(true);
@@ -212,6 +233,10 @@ public class PolicyScreenFragment extends Fragment {
         setPolicyCostTextListener();
     }
 
+    /**
+     * initalizes all global variables and sets required size of Recycler view
+     * @param view the view attached to the fragment
+     */
     private void initializeFields(View view){
         hasImages = false;
         policyWasCreated = false;
@@ -238,6 +263,9 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * sets the available fields and formats the cost field to a number
+     */
     private void setFields(){
         String damages = currentPolicy.getNumber("Cost").toString();
         BigDecimal parsed = new BigDecimal(damages).setScale(2, BigDecimal.ROUND_FLOOR);
@@ -251,6 +279,9 @@ public class PolicyScreenFragment extends Fragment {
         stateSpinner.setSelection(stateAdapter.getPosition(currentPolicy.getString("State")));
     }
 
+    /**
+     * if uploads exist reset a new adapter for the uploadsList otherwise make it invisible
+     */
     private void setUploadsListAdapterAndComments(){
         queryParseForUploads();
         if(uploads.size() > 0) {
@@ -264,6 +295,9 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * loads the comments list from the uploads, if no comment is there set the entry to ""
+     */
     private void setComments(){
         commentsList = new ArrayList<>();
         for(ParseObject upload : uploads){
@@ -275,6 +309,9 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * queries parse for uploads whose policyID matches the currentPolicy Object ID
+     */
     private void queryParseForUploads(){
         ParseQuery imageQuery = new ParseQuery("Upload");
         imageQuery.whereEqualTo("PolicyID", currentPolicy.getObjectId());
@@ -287,6 +324,9 @@ public class PolicyScreenFragment extends Fragment {
 
     }
 
+    /**
+     * sets the orientation of the address2 layout to differentiate between portrait and landscape
+     */
     private void checkOrientationSetLayoutOrientation(){
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             address2.setOrientation(LinearLayout.VERTICAL);
@@ -296,6 +336,10 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * validates user input
+     * @return validated whether the input is valid or not
+     */
     private boolean validateFields(){
         String error = getResources().getString(R.string.entryError);
         boolean validated = false;
@@ -319,6 +363,9 @@ public class PolicyScreenFragment extends Fragment {
         return validated;
     }
 
+    /**
+     * saves the policy information after removing formatting from the policy cost.
+     */
     private void savePolicyInformation(){
         String policyCost = this.policyCost.getText().toString();
         policyCost = policyCost.replace("$","");
@@ -342,6 +389,9 @@ public class PolicyScreenFragment extends Fragment {
         Singleton.setCurrentPolicy(currentPolicy);
     }
 
+    /**
+     * saves all images associated with this Policy. Re-attaches adapter to the Recycler view
+     */
     private void saveImages(){
         for(int i = 0; images.size() > i; i++){
             try {
@@ -368,6 +418,9 @@ public class PolicyScreenFragment extends Fragment {
         setUploadsListAdapterAndComments();
     }
 
+    /**
+     * saves all image comments to parse
+     */
     private void saveImageComments(){
         for(int i = 0; uploads.size() > i; i++){
             uploads.get(i).put("Comment", commentsList.get(i));
@@ -376,7 +429,7 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     /**
-     * On activity result.
+     * On activity result. Handles the Image data upon return to the activity
      *
      * @param requestCode the request code
      * @param resultCode the result code
@@ -414,7 +467,7 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     /**
-     * On create options menu.
+     * On create options menu. enables the save icon
      *
      * @param menu the menu
      * @param inflater the inflater
@@ -429,7 +482,7 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     /**
-     * On options item selected.
+     * On options item selected. validates and saves the policy and images
      *
      * @param item the item
      * @return the boolean
@@ -454,6 +507,9 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
+    /**
+     * Custom RecyclerView adapter
+     */
     public class ImageRVAdapter extends RecyclerView.Adapter<ImageRVAdapter.ViewHolder>{
 
         List<ParseObject> objectsToDisplay;
