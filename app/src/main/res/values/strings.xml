@@ -16,7 +16,8 @@
     <string name="comment">Enter Comments</string>
     <string name="uploads">Uploads</string>
     <string name="editCard">Edit Card</string>
-
+    <string name="policy">Policy: </string>
+    <string name="damages">Damages: </string>
     <string name="checkbox_1">Stay Logged In</string>
     <string name="checkbox_2">Remember Username</string>
 
@@ -152,6 +153,9 @@
     <string name="email_navneet">Email Navneet</string>
     <string name="linkedin_navneet">linkedin.com/in/navneetreddy</string>
     <string name="github_navneet">github.com/navneetreddy</string>
+    <string name="picture_navneet">Navneet\'s Picture</string>
+    <string name="about_navneet">About Navneet</string>
+    <string name="expanded_image">Expanded Image</string>
 
     <string name="EvanFeller">Evan Feller</string>
     <string name="github_evan">github.com/fellere</string>

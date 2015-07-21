@@ -1,5 +1,6 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,15 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -30,34 +28,8 @@ import java.util.List;
  */
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        CardView cv;
-
-        ImageView image;
-        ImageButton editButton;
-        TextView description;
-        TextView cost;
-
-        ViewHolder(View view) {
-            super(view);
-
-            cv = (CardView) view.findViewById(R.id.list_card_view);
-
-            image = (ImageView) view.findViewById(R.id.cardImage);
-            editButton = (ImageButton) view.findViewById(R.id.cardEditButton);
-            description = (TextView) view.findViewById(R.id.cardDescription);
-            cost = (TextView) view.findViewById(R.id.cardCost);
-        }
-
-        public CardView getCardView() {
-            return cv;
-        }
-    }
-
     List<ParseObject> objectsToDisplay;
     String cardType;
-
     RVAdapter(String cardType, List<ParseObject> objectsToDisplay) {
         this.cardType = cardType;
         this.objectsToDisplay = objectsToDisplay;
@@ -88,10 +60,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ivh.image.setVisibility(View.GONE);
 
                 try {
-                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
-                    claimQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
+                    ParseQuery<ParseObject> policyQuery = new ParseQuery<>("Upload");
+                    policyQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
 
-                    List<ParseObject> uploads = claimQuery.find();
+                    List<ParseObject> uploads = policyQuery.find();
 
                     if (!uploads.isEmpty()) {
                         String url = uploads.get(0).getParseFile("Media").getUrl();
@@ -148,6 +120,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
             /* Display cards for list of claims */
             case "Claims": {
+                ivh.image.setVisibility(View.GONE);
 
                 try {
                     ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
@@ -156,6 +129,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     claimQuery.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> list, ParseException e) {
+
                             if(e == null & !list.isEmpty()) {
                                 String url = list.get(0).getParseFile("Media").getUrl();
 
@@ -183,8 +157,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ivh.cost.setText(formattedCost);
                 ivh.description.setText(currentObject.getString("Comment"));
 
-
-                ivh.image.setVisibility(View.VISIBLE);
                 ivh.editButton.setVisibility(View.GONE);
 
 
@@ -195,8 +167,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     public void onClick(View v) {
                         Singleton.setCurrentClaim(currentObject);
 
-//                        Tools.replaceFragment(R.id.fragment_container, new ClaimScreenFragment(),
-//                                Singleton.getFragmentManager(), true);
+                        Fragment fragment = new ClaimScreenFragment();
+//
+//
+                        Tools.replaceFragment(R.id.fragment_container, fragment,
+                                Singleton.getFragmentManager(), true);
                     }
                 });
 
@@ -213,5 +188,30 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        CardView cv;
+
+        ImageView image;
+        ImageButton editButton;
+        TextView description;
+        TextView cost;
+
+        ViewHolder(View view) {
+            super(view);
+
+            cv = (CardView) view.findViewById(R.id.list_card_view);
+
+            image = (ImageView) view.findViewById(R.id.cardImage);
+            editButton = (ImageButton) view.findViewById(R.id.cardEditButton);
+            description = (TextView) view.findViewById(R.id.cardDescription);
+            cost = (TextView) view.findViewById(R.id.cardCost);
+        }
+
+        public CardView getCardView() {
+            return cv;
+        }
     }
 }

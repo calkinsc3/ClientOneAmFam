@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jaz020.clientoneamfam.ClaimScreenFragment">
+
+    <LinearLayout
+        android:id="@+id/policyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/policyNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/policy" />
+        <Spinner
+            android:id="@+id/policySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/damagesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/policyLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/damages"/>
+
+        <EditText
+            android:id="@+id/claimDamages"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:focusable="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/commentsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/damagesLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comments_title"/>
+
+        <EditText
+            android:id="@+id/claimComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:focusable="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/uploadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commentsLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/uploads" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/addUploadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00ffffff"
+            android:clickable="false"
+            android:contentDescription="Add Uploads"
+            android:src="@android:drawable/ic_input_add"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/claimUploadsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uploadLayout">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>
