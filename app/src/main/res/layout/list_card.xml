@@ -4,55 +4,66 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/list_card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
     android:layout_margin="5dp"
     android:clickable="true" >
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="5">
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="4">
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:id="@+id/cardImage" />
+                android:layout_height="100dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:id="@+id/cardImage"
+                android:contentDescription="@string/policy_claim_card_image"/>
 
-            <TextView
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:shadowColor="#ffffff"-->
+                <!--android:shadowDx="5"-->
+                <!--android:shadowDy="5"-->
+                <!--android:shadowRadius="10"-->
+                <!--android:text="@string/description"-->
+                <!--android:id="@+id/cardDescription"-->
+                <!--android:layout_gravity="start|bottom" />-->
+
+            <com.example.jaz020.clientoneamfam.TextOutlineView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/description"
                 android:id="@+id/cardDescription"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="start|bottom" />
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageButton
+                android:id="@+id/cardEditButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/cost"
-                android:id="@+id/cardCost"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="end|center"
+                android:background="#00ffffff"
+                android:contentDescription="@string/editCard"
+                android:src="@android:drawable/ic_menu_edit" />
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/cardEditButton"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="#00ffffff"
-            android:contentDescription="@string/editCard"
-            android:src="@android:drawable/ic_menu_edit" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/cost"
+            android:id="@+id/cardCost"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

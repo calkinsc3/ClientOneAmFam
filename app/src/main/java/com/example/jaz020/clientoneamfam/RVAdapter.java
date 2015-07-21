@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -37,8 +33,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
         ImageView image;
         ImageButton editButton;
-        TextView description;
         TextView cost;
+        com.example.jaz020.clientoneamfam.TextOutlineView description;
 
         ViewHolder(View view) {
             super(view);
@@ -47,8 +43,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
             image = (ImageView) view.findViewById(R.id.cardImage);
             editButton = (ImageButton) view.findViewById(R.id.cardEditButton);
-            description = (TextView) view.findViewById(R.id.cardDescription);
             cost = (TextView) view.findViewById(R.id.cardCost);
+            description = (com.example.jaz020.clientoneamfam.TextOutlineView)
+                    view.findViewById(R.id.cardDescription);
         }
 
         public CardView getCardView() {
@@ -116,7 +113,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
                 ivh.cost.setText(formattedCost);
                 ivh.description.setText(currentObject.getString("Description"));
-
+                ivh.description.refreshDrawableState();
                 /* Handle card click */
                 ivh.getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override
