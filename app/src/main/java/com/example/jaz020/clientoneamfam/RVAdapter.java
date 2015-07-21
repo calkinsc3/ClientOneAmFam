@@ -28,32 +28,6 @@ import java.util.List;
  */
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        CardView cv;
-
-        ImageView image;
-        ImageButton editButton;
-        TextView cost;
-        com.example.jaz020.clientoneamfam.TextOutlineView description;
-
-        ViewHolder(View view) {
-            super(view);
-
-            cv = (CardView) view.findViewById(R.id.list_card_view);
-
-            image = (ImageView) view.findViewById(R.id.cardImage);
-            editButton = (ImageButton) view.findViewById(R.id.cardEditButton);
-            cost = (TextView) view.findViewById(R.id.cardCost);
-            description = (com.example.jaz020.clientoneamfam.TextOutlineView)
-                    view.findViewById(R.id.cardDescription);
-        }
-
-        public CardView getCardView() {
-            return cv;
-        }
-    }
-
     List<ParseObject> objectsToDisplay;
     String cardType;
 
@@ -196,13 +170,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     public void onClick(View v) {
                         Singleton.setCurrentClaim(currentObject);
 
-//                        Fragment fragment = new ClaimScreenFragment();
-//                        Bundle bundle = new Bundle();
-//                        bundle.putBoolean("ISNEW", true );
-//                        fragment.setArguments(bundle);
+                        Fragment fragment = new ClaimScreenFragment();
 //
-//                        Tools.replaceFragment(R.id.fragment_container, fragment,
-//                                Singleton.getFragmentManager(), true);
+//
+                        Tools.replaceFragment(R.id.fragment_container, fragment,
+                                Singleton.getFragmentManager(), true);
                     }
                 });
 
@@ -219,5 +191,30 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        CardView cv;
+
+        ImageView image;
+        ImageButton editButton;
+        TextView description;
+        TextView cost;
+
+        ViewHolder(View view) {
+            super(view);
+
+            cv = (CardView) view.findViewById(R.id.list_card_view);
+
+            image = (ImageView) view.findViewById(R.id.cardImage);
+            editButton = (ImageButton) view.findViewById(R.id.cardEditButton);
+            description = (TextView) view.findViewById(R.id.cardDescription);
+            cost = (TextView) view.findViewById(R.id.cardCost);
+        }
+
+        public CardView getCardView() {
+            return cv;
+        }
     }
 }
