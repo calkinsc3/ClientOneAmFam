@@ -1,5 +1,6 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -111,9 +112,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 BigDecimal parsed = new BigDecimal(cost).setScale(2, BigDecimal.ROUND_FLOOR);
                 String formattedCost = NumberFormat.getCurrencyInstance().format(parsed);
 
+                String description = currentObject.getString("Description");
+
                 ivh.cost.setText(formattedCost);
-                ivh.description.setText(currentObject.getString("Description"));
-                ivh.description.refreshDrawableState();
+                ivh.description.setText(description);
+
                 /* Handle card click */
                 ivh.getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override

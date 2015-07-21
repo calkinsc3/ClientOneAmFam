@@ -1,63 +1,190 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
+import android.graphics.Paint.Join;
+import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
+
 
 /**
  * Created by nsr009 on 7/21/2015.
  */
 public class TextOutlineView extends TextView {
 
+    private float strokeWidth;
+    private Integer strokeColor;
+    private Join strokeJoin;
+    private float strokeMiter;
+
+    private int[] lockedCompoundPadding;
+    private boolean frozen = false;
+
     public TextOutlineView(Context context) {
         super(context);
+        init(null);
     }
 
     public TextOutlineView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(attrs);
+    }
+
+    public TextOutlineView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(attrs);
+    }
+
+    public void init(AttributeSet attrs) {
+        if(attrs != null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextOutlineView);
+
+            String typefaceName = a.getString(R.styleable.TextOutlineView_typeface);
+
+            if(typefaceName != null) {
+                Typeface tf = Typeface.createFromAsset(getContext().getAssets(), String.format("fonts/%s.ttf", typefaceName));
+                setTypeface(tf);
+            }
+
+            if(a.hasValue(R.styleable.TextOutlineView_strokeColor)) {
+                float strokeMiter = a.getDimensionPixelSize(R.styleable.TextOutlineView_strokeMiter, 10);
+                float strokeWidth = a.getDimensionPixelSize(R.styleable.TextOutlineView_strokeWidth, 1);
+                int strokeColor = a.getColor(R.styleable.TextOutlineView_strokeColor, 0xff000000);
+
+                Join strokeJoin = null;
+
+                switch(a.getInt(R.styleable.TextOutlineView_strokeJoinStyle, 0)) {
+                    case(0):
+                        strokeJoin = Join.MITER;
+                        break;
+
+                    case(1):
+                        strokeJoin = Join.BEVEL;
+                        break;
+
+                    case(2):
+                        strokeJoin = Join.ROUND;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                this.setStroke(strokeWidth, strokeColor, strokeJoin, strokeMiter);
+            }
+        }
+    }
+
+    public void setStroke(float width, int color) {
+        setStroke(width, color, Join.MITER, 10);
+    }
+
+    public void setStroke(float width, int color, Join join, float miter) {
+        strokeWidth = width;
+        strokeColor = color;
+        strokeJoin = join;
+        strokeMiter = miter;
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        freeze();
+
+        int restoreColor = this.getCurrentTextColor();
+        this.setCompoundDrawables(null,  null, null, null);
+        this.setTextColor(restoreColor);
+
+        if(strokeColor != null) {
+            TextPaint paint = this.getPaint();
+
+            paint.setStyle(Style.STROKE);
+            paint.setStrokeJoin(strokeJoin);
+            paint.setStrokeMiter(strokeMiter);
+
+            this.setTextColor(strokeColor);
+            paint.setStrokeWidth(strokeWidth);
+
+            super.onDraw(canvas);
+
+            paint.setStyle(Style.FILL);
+            paint.setTypeface(Typeface.DEFAULT_BOLD);
+            this.setTextColor(restoreColor);
+        }
+
+        this.setTextColor(restoreColor);
+
+        unfreeze();
+    }
+
+    public void freeze() {
+        lockedCompoundPadding = new int[]{
+                getCompoundPaddingLeft(),
+                getCompoundPaddingRight(),
+                getCompoundPaddingTop(),
+                getCompoundPaddingBottom()
+        };
+
+        frozen = true;
+    }
+
+    public void unfreeze(){
+        frozen = false;
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        Paint strokePaint = new Paint();
+    public void requestLayout(){
+        if(!frozen) super.requestLayout();
+    }
 
-        strokePaint.setARGB(255, 0, 0, 0);
-        strokePaint.setTextAlign(Paint.Align.CENTER);
-        strokePaint.setTextSize(16);
-        strokePaint.setTypeface(Typeface.DEFAULT_BOLD);
-        strokePaint.setStyle(Paint.Style.STROKE);
-        strokePaint.setStrokeWidth(3);
+    @Override
+    public void postInvalidate(){
+        if(!frozen) super.postInvalidate();
+    }
 
-        Paint textPaint = new Paint();
+    @Override
+    public void postInvalidate(int left, int top, int right, int bottom){
+        if(!frozen) super.postInvalidate(left, top, right, bottom);
+    }
 
-        textPaint.setARGB(255, 255, 255, 255);
-        textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(16);
-        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+    @Override
+    public void invalidate(){
+        if(!frozen)	super.invalidate();
+    }
 
-        Path path = new Path();
+    @Override
+    public void invalidate(Rect rect){
+        if(!frozen) super.invalidate(rect);
+    }
 
-        String text = (String) getText();
-        Log.i("TEXT", text);
+    @Override
+    public void invalidate(int l, int t, int r, int b){
+        if(!frozen) super.invalidate(l,t,r,b);
+    }
 
-        textPaint.getTextPath(text, 0, text.length(), 0, 100, path);
+    @Override
+    public int getCompoundPaddingLeft(){
+        return !frozen ? super.getCompoundPaddingLeft() : lockedCompoundPadding[0];
+    }
 
-        canvas.drawPath(path, strokePaint);
-        canvas.drawPath(path, textPaint);
+    @Override
+    public int getCompoundPaddingRight(){
+        return !frozen ? super.getCompoundPaddingRight() : lockedCompoundPadding[1];
+    }
 
-//        canvas.drawText("Some Text", 100, 100, strokePaint);
-//        canvas.drawText("Some Text", 100, 100, textPaint);
+    @Override
+    public int getCompoundPaddingTop(){
+        return !frozen ? super.getCompoundPaddingTop() : lockedCompoundPadding[2];
+    }
 
-        super.draw(canvas);
+    @Override
+    public int getCompoundPaddingBottom(){
+        return !frozen ? super.getCompoundPaddingBottom() : lockedCompoundPadding[3];
     }
 }
