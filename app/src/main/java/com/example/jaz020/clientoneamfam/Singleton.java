@@ -38,7 +38,7 @@ public class Singleton {
     }
 
     public static void setCurrentClaim(ParseObject currentClaim) {
-        Singleton.currentPolicy = currentClaim;
+        Singleton.currentClaim = currentClaim;
     }
 
     public static void setMyAgent(ParseUser agent){
