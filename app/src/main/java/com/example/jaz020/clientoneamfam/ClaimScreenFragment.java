@@ -47,21 +47,31 @@ import java.util.List;
 public class ClaimScreenFragment extends Fragment {
 
     private final int NEW_IMAGE = 0;
+
     LinearLayoutManager llm;
+
     private Bundle args;
+
     private TextView policy;
+
     private EditText damages;
     private EditText comment;
+
     private RecyclerView claimsView;
+
     private ImageButton addImage;
+
     private Spinner policySpinner;
+
     private ParseObject currentClaim;
+
     private ArrayList<ParseObject> uploads;
     private ArrayList<String> commentsList;
     private ArrayList<ParseObject> policies;
     private ArrayList<String> policyIDs;
     private ArrayList<String> uploadIDs;
     private ArrayList<Uri> images;
+
     private boolean hasImages;
     private boolean userHasSavedPolicy;
 
@@ -69,6 +79,7 @@ public class ClaimScreenFragment extends Fragment {
         // Required empty public constructor
     }
 
+    //todo include number formatter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,19 +94,29 @@ public class ClaimScreenFragment extends Fragment {
 
     private void initializeVariables(View view){
         userHasSavedPolicy = false;
+
         policy = (TextView)view.findViewById(R.id.policyNumber);
+
         damages = (EditText)view.findViewById(R.id.claimDamages);
         comment = (EditText)view.findViewById(R.id.claimComment);
+
         claimsView = (RecyclerView)view.findViewById(R.id.claimUploadsView);
+
         addImage = (ImageButton)view.findViewById(R.id.addUploadButton);
+
         policySpinner = (Spinner)view.findViewById(R.id.policySpinner);
+
         llm = new LinearLayoutManager(getActivity().getApplicationContext());
+
         claimsView.setHasFixedSize(true);
         claimsView.setLayoutManager(llm);
+
         uploads = new ArrayList<>();
         policyIDs = new ArrayList<>();
         uploadIDs = new ArrayList<>();
+
         hasImages = false;
+
         if(getArguments() != null){
             args = getArguments();
         } else {
@@ -196,13 +217,15 @@ public class ClaimScreenFragment extends Fragment {
     private void queryParseForUploads(){
         uploads = new ArrayList<>();
         ArrayList uploadIDs = (ArrayList)currentClaim.getList("UploadIDs");
-        for(int i = 0; uploadIDs.size() > i; i++) {
-            ParseQuery imageQuery = new ParseQuery("Upload");
-            imageQuery.whereEqualTo("objectId", uploadIDs.get(i).toString());
-            try {
-                uploads.add((ParseObject)imageQuery.find().get(0));
-            } catch (com.parse.ParseException e) {
-                Log.e("Upload Error", e.toString());
+        if(uploadIDs != null) {
+            for (int i = 0; uploadIDs.size() > i; i++) {
+                ParseQuery imageQuery = new ParseQuery("Upload");
+                imageQuery.whereEqualTo("objectId", uploadIDs.get(i).toString());
+                try {
+                    uploads.add((ParseObject) imageQuery.find().get(0));
+                } catch (com.parse.ParseException e) {
+                    Log.e("Upload Error", e.toString());
+                }
             }
         }
     }
@@ -215,7 +238,10 @@ public class ClaimScreenFragment extends Fragment {
             setComments();
             ImageRVAdapter adapter = new ImageRVAdapter(uploads);
             claimsView.setAdapter(adapter);
+            claimsView.setVisibility(View.VISIBLE);
             hasImages = true;
+        } else {
+            claimsView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -240,9 +266,9 @@ public class ClaimScreenFragment extends Fragment {
         String error = getResources().getString(R.string.entryError);
         boolean validated = false;
 
-        if(damages.getText().toString().equals("")){
+        if (damages.getText().toString().equals("")){
             damages.setError(error);
-        } else if(comment.getText().toString().equals("")){
+        } else if (comment.getText().toString().equals("")){
             comment.setError(error);
         } else {
             validated = true;
@@ -267,11 +293,8 @@ public class ClaimScreenFragment extends Fragment {
             currentClaim.put("Damages", Double.valueOf(damages.getText().toString()));
             currentClaim.put("Comment", comment.getText().toString());
             currentClaim.put("UploadIDs", uploadIDs);
+            currentClaim.saveInBackground();
         }
-
-        //todo create list of upload ids
-        //currentClaim.put("UploadIDs", )
-
     }
 
     private void saveImages(){
@@ -287,6 +310,7 @@ public class ClaimScreenFragment extends Fragment {
                 ParseObject mediaUpload = new ParseObject("Upload");
                 Toast.makeText(getActivity(), policySpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 mediaUpload.put("PolicyID", policySpinner.getSelectedItem().toString());
+                mediaUpload.put("ClaimID", currentClaim.getObjectId());
                 mediaUpload.put("UserID", ParseUser.getCurrentUser().getObjectId());
                 mediaUpload.put("Media", image);
 
@@ -304,7 +328,10 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     private void saveImageComments(){
-        //todo save image comments
+        for(int i = 0; uploads.size() > i; i++){
+            uploads.get(i).put("Comment", commentsList.get(i));
+            ParseObject.saveAllInBackground(uploads);
+        }
     }
 
     /**
@@ -435,9 +462,11 @@ public class ClaimScreenFragment extends Fragment {
             final ParseObject currentObject = objectsToDisplay.get(i);
 
             if(vHolder.comments != null) {
-                vHolder.comments.setFocusable(false);
-                vHolder.comments.setClickable(false);
-                vHolder.comments.setText(commentsList.get(i));
+                if(!args.getBoolean("ISNEW", false)) {
+                    vHolder.comments.setFocusable(false);
+                    vHolder.comments.setClickable(false);
+                    vHolder.comments.setText(commentsList.get(i));
+                }
             }
             if(vHolder.claimImage != null) {
                 Picasso.with(getActivity()).load(currentObject.getParseFile("Media").getUrl())
@@ -451,6 +480,7 @@ public class ClaimScreenFragment extends Fragment {
                     public void onClick(View v) {
                         //todo make delete picture method
                         try {
+                            uploadIDs.remove(vHolder.index);
                             uploads.get(vHolder.index).delete();
                             commentsList.remove(vHolder.index);
                             Toast.makeText(getActivity(), "Image removed", Toast.LENGTH_SHORT).show();
