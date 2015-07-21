@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.jaz020.clientoneamfam.MeetJamesFragment" >
 
+
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -16,17 +18,35 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/james_world_party_time_excellent"
-                />
-
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/about_james"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+
+                android:text="@string/james_ziglinski"
                 />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/james_world_party_time_excellent"
+                    />
+
+                <TextView
+                    android:layout_marginStart="@dimen/padding_interns"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_james"
+                    />
+
+
+            </LinearLayout>
+
 
             <TextView
                 android:layout_marginTop="10dp"
