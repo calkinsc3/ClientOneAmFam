@@ -1,6 +1,6 @@
 package com.example.jaz020.clientoneamfam;
 
-import android.graphics.Canvas;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -71,7 +71,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
                         ivh.image.setVisibility(View.VISIBLE);
 
-                            /* Load picture into current card's image view */
+                        /* Load picture into current card's image view */
                         Picasso.with(Singleton.getContext())
                                 .load(url)
                                 .fit()
@@ -138,7 +138,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
                                 ivh.image.setVisibility(View.VISIBLE);
 
-                            /* Load picture into current card's image view */
+                                /* Load picture into current card's image view */
                                 Picasso.with(Singleton.getContext())
                                         .load(url)
                                         .fit()
@@ -171,8 +171,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                         Singleton.setCurrentClaim(currentObject);
 
                         Fragment fragment = new ClaimScreenFragment();
-//
-//
                         Tools.replaceFragment(R.id.fragment_container, fragment,
                                 Singleton.getFragmentManager(), true);
                     }
@@ -184,7 +182,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             default:
                 Log.e("CardRVAdapter", cardType + " passed in as argument.");
                 break;
-
         }
     }
 
