@@ -34,14 +34,22 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="30"
+        android:layout_weight="20"
+        android:weightSum="100"
         android:orientation="horizontal">
+
+        <Space
+            android:layout_weight="20"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="new text"/>
-        
+            android:text="New Text"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -48,7 +48,7 @@ public class MainPageFragment extends Fragment {
         MY_POLICIES = (Button) rootView.findViewById(R.id.scheduleButton);
         MY_CLAIMS = (Button) rootView.findViewById(R.id.settingsButton);
         SETTINGS = (Button) rootView.findViewById(R.id.myUploadsButton);
-
+        Singleton.getMyAgent();
         setExpandDrawerLists();
 
         ExpandableListAdapter drawerExpandableListAdapter =

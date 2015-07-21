@@ -152,4 +152,9 @@
     <string name="email_navneet">Email Navneet</string>
     <string name="linkedin_navneet">linkedin.com/in/navneetreddy</string>
     <string name="github_navneet">github.com/navneetreddy</string>
+
+    <string name="EvanFeller">Evan Feller</string>
+    <string name="github_evan">github.com/fellere</string>
+    <string name="linkedin_evan">linkedin.com/in/evanfeller</string>
+    <string name="email_evan">Email Evan</string>
 </resources>
