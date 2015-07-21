@@ -37,6 +37,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,6 +160,7 @@ public class ClaimScreenFragment extends Fragment {
         addImage.setFocusableInTouchMode(true);
 
         setAddUploadClickListener();
+        setDamagesChangeListener();
         loadPolicySpinner();
     }
 
@@ -189,9 +192,49 @@ public class ClaimScreenFragment extends Fragment {
         });
     }
 
+    private void setDamagesChangeListener(){
+        damages.addTextChangedListener(new TextWatcher() {
+            private String current = "";
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().equals(current)){
+                    damages.removeTextChangedListener(this);
+
+                    String cleanString = s.toString().replaceAll("[$,.]", "");
+
+                    BigDecimal parsed = new BigDecimal(cleanString)
+                            .setScale(2, BigDecimal.ROUND_FLOOR)
+                            .divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR);
+
+                    String formatted = NumberFormat.getCurrencyInstance().format(parsed);
+
+                    current = formatted;
+                    damages.setText(formatted);
+                    damages.setSelection(formatted.length());
+
+                    damages.addTextChangedListener(this);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     private void setFields(){
+        String damages = currentClaim.getNumber("Damages").toString();
+        BigDecimal parsed = new BigDecimal(damages).setScale(2, BigDecimal.ROUND_FLOOR);
+        String formattedDamages = NumberFormat.getCurrencyInstance().format(parsed);
+
+        this.damages.setText(formattedDamages);
         policy.append(" " + currentClaim.getString("PolicyID"));
-        damages.setText(String.valueOf(currentClaim.getDouble("Damages")));
         comment.setText(currentClaim.getString("Comment"));
     }
 
@@ -278,9 +321,13 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     private void saveClaimInformation(){
+        String damages = this.damages.getText().toString();
+        damages = damages.replace("$","");
+        damages = damages.replace(",","");
+
         if(currentClaim == null) {
             currentClaim = new ParseObject("Claim");
-            currentClaim.put("Damages", Double.valueOf(damages.getText().toString()));
+            currentClaim.put("Damages", Double.valueOf(damages));
             currentClaim.put("Comment", comment.getText().toString());
             currentClaim.put("PolicyID", policySpinner.getSelectedItem().toString());
             try {
@@ -290,7 +337,7 @@ public class ClaimScreenFragment extends Fragment {
                 Log.e("Error creating claim", e.toString());
             }
         } else {
-            currentClaim.put("Damages", Double.valueOf(damages.getText().toString()));
+            currentClaim.put("Damages", Double.valueOf(damages));
             currentClaim.put("Comment", comment.getText().toString());
             currentClaim.put("UploadIDs", uploadIDs);
             currentClaim.saveInBackground();

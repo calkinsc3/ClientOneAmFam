@@ -38,6 +38,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +127,42 @@ public class PolicyScreenFragment extends Fragment {
         });
     }
 
+    private void setPolicyCostTextListener(){
+        policyCost.addTextChangedListener(new TextWatcher() {
+            private String current = "";
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().equals(current)){
+                    policyCost.removeTextChangedListener(this);
+
+                    String cleanString = s.toString().replaceAll("[$,.]", "");
+
+                    BigDecimal parsed = new BigDecimal(cleanString)
+                            .setScale(2, BigDecimal.ROUND_FLOOR)
+                            .divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR);
+
+                    String formatted = NumberFormat.getCurrencyInstance().format(parsed);
+
+                    current = formatted;
+                    policyCost.setText(formatted);
+                    policyCost.setSelection(formatted.length());
+
+                    policyCost.addTextChangedListener(this);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     private void enableEditIfNewOrEditing(){
         if(args.getBoolean("ISNEW", false)){
             makeFieldsEditable();
@@ -171,6 +209,7 @@ public class PolicyScreenFragment extends Fragment {
         addUploads.setClickable(true);
 
         setAddUploadClickListener();
+        setPolicyCostTextListener();
     }
 
     private void initializeFields(View view){
@@ -200,8 +239,12 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     private void setFields(){
+        String damages = currentPolicy.getNumber("Cost").toString();
+        BigDecimal parsed = new BigDecimal(damages).setScale(2, BigDecimal.ROUND_FLOOR);
+        String formattedDamages = NumberFormat.getCurrencyInstance().format(parsed);
+
+        policyCost.setText(formattedDamages);
         policyDescription.setText(currentPolicy.getString("Description"));
-        policyCost.setText(String.valueOf(currentPolicy.getDouble("Cost")));
         policyAddress.setText(currentPolicy.getString("Address"));
         city.setText(currentPolicy.getString("City"));
         zip.setText(String.valueOf(currentPolicy.getNumber("Zip")));
@@ -277,6 +320,10 @@ public class PolicyScreenFragment extends Fragment {
     }
 
     private void savePolicyInformation(){
+        String policyCost = this.policyCost.getText().toString();
+        policyCost = policyCost.replace("$","");
+        policyCost = policyCost.replace(",","");
+
         if(args.getBoolean("ISNEW", false) && !policyWasCreated){
             currentPolicy = new ParseObject("Policy");
             currentPolicy.put("AgentID", ParseUser.getCurrentUser().getString("AgentID"));
@@ -284,7 +331,7 @@ public class PolicyScreenFragment extends Fragment {
             currentPolicy.put("Accepted", true);
         }
         currentPolicy.put("Description", policyDescription.getText().toString());
-        currentPolicy.put("Cost", Double.valueOf(policyCost.getText().toString()));
+        currentPolicy.put("Cost", Double.valueOf(policyCost));
         currentPolicy.put("Address", policyAddress.getText().toString());
         currentPolicy.put("City", city.getText().toString());
         currentPolicy.put("Zip", zip.getText().toString());
