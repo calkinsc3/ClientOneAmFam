@@ -53,8 +53,7 @@ public class MyAgentFragment extends Fragment {
         String phoneNum = agent.getNumber("phoneNumber").toString();
         agentAddress1.setText(agent.getString("Address"));
         agentAddress2.setText(agent.getString("City") + "," + agent.getString("State")+ " " + agent.getNumber("Zip").toString());
-        agentPhone.setText("( " + phoneNum.substring(0,3) + " ) - " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
-
+        agentPhone.setText("( " + phoneNum.substring(0, 3) + " ) - " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
         Picasso.with(getActivity()).load(agent.getParseFile("AgentPhoto").getUrl()).into(agentImg);
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override

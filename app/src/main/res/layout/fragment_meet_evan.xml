@@ -11,45 +11,96 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="40"
-        android:padding="10px">
+        android:layout_weight="40">
     
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/evan_headshot"
-        android:scaleType="centerCrop"/>
+        android:scaleType="fitCenter"
+        android:id="@+id/mainImage"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="47dp"
             android:text="Evan Feller"
             android:id="@+id/textView2"
-            android:textColor="@android:color/holo_blue_bright"
+            android:textColor="@android:color/white"
             android:layout_gravity="right|bottom"
-            android:textSize="35sp"/>
+            android:textSize="35sp"
+            android:background="#65706d74" />
 
     </FrameLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="20"
-        android:weightSum="100"
-        android:orientation="horizontal">
-
-        <Space
-            android:layout_weight="20"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            />
+        android:layout_weight="45">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            />
+            android:id="@+id/textView3"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
-    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="15"
+        android:id="@+id/horizontalScrollView"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/light_gray">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent">
+            <Space
+                android:layout_width="40dp"
+                android:layout_height="fill_parent" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@null"
+                android:id="@+id/evan_linked_button"/>
+            <Space
+                android:layout_width="40dp"
+                android:layout_height="fill_parent" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/evan_github_button"
+                android:background="@null"/>
+            <Space
+                android:layout_width="40dp"
+                android:layout_height="fill_parent" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@null"
+                android:id="@+id/evan_gmail_button"/>
+            <Space
+                android:layout_width="40dp"
+                android:layout_height="fill_parent" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@null"
+                android:id="@+id/evan_stack_button"/>
+            <Space
+                android:layout_width="40dp"
+                android:layout_height="fill_parent" />
+
+
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </LinearLayout>
