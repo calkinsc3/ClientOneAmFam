@@ -60,10 +60,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ivh.image.setVisibility(View.GONE);
 
                 try {
-                    ParseQuery<ParseObject> claimQuery = new ParseQuery<>("Upload");
-                    claimQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
+                    ParseQuery<ParseObject> policyQuery = new ParseQuery<>("Upload");
+                    policyQuery.whereEqualTo("PolicyID", currentObject.getObjectId());
 
-                    List<ParseObject> uploads = claimQuery.find();
+                    List<ParseObject> uploads = policyQuery.find();
 
                     if (!uploads.isEmpty()) {
                         String url = uploads.get(0).getParseFile("Media").getUrl();

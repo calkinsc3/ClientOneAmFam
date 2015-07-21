@@ -60,10 +60,6 @@ public class MainActivity extends Activity {
          * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
          *
          */
-        /**
-         * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
-         * don't redraw all the fragments on rotate
-         */
         // TODO if MainPageFragment is removed.
         if (savedInstanceState == null) {
 
@@ -251,7 +247,15 @@ public class MainActivity extends Activity {
                 return true;
         }
 
-
        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        if(getFragmentManager().getBackStackEntryCount() > 1){
+            super.onBackPressed();
+        }
+
     }
 }
