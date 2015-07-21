@@ -47,6 +47,7 @@ import java.util.List;
 public class ClaimScreenFragment extends Fragment {
 
     private final int NEW_IMAGE = 0;
+    LinearLayoutManager llm;
     private Bundle args;
     private TextView policy;
     private EditText damages;
@@ -59,8 +60,10 @@ public class ClaimScreenFragment extends Fragment {
     private ArrayList<String> commentsList;
     private ArrayList<ParseObject> policies;
     private ArrayList<String> policyIDs;
+    private ArrayList<String> uploadIDs;
     private ArrayList<Uri> images;
     private boolean hasImages;
+    private boolean userHasSavedPolicy;
 
     public ClaimScreenFragment() {
         // Required empty public constructor
@@ -79,14 +82,19 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     private void initializeVariables(View view){
+        userHasSavedPolicy = false;
         policy = (TextView)view.findViewById(R.id.policyNumber);
         damages = (EditText)view.findViewById(R.id.claimDamages);
         comment = (EditText)view.findViewById(R.id.claimComment);
         claimsView = (RecyclerView)view.findViewById(R.id.claimUploadsView);
         addImage = (ImageButton)view.findViewById(R.id.addUploadButton);
         policySpinner = (Spinner)view.findViewById(R.id.policySpinner);
+        llm = new LinearLayoutManager(getActivity().getApplicationContext());
+        claimsView.setHasFixedSize(true);
+        claimsView.setLayoutManager(llm);
         uploads = new ArrayList<>();
         policyIDs = new ArrayList<>();
+        uploadIDs = new ArrayList<>();
         hasImages = false;
         if(getArguments() != null){
             args = getArguments();
@@ -97,13 +105,23 @@ public class ClaimScreenFragment extends Fragment {
 
     private void enableEditingifNew(){
         if(args.getBoolean("ISNEW", false)){
+            getAndSetParseIDs();
             makeFieldsEditable();
             setHasOptionsMenu(true);
             getAndSetParseIDs();
         }  else {
             currentClaim = Singleton.getCurrentClaim();
+            userHasSavedPolicy = true;
             claimWasSelectedPopulateViews();
+            hideSpinner();
         }
+    }
+
+    private void hideSpinner(){
+        policySpinner.setVisibility(View.GONE);
+        policySpinner.setClickable(false);
+        policySpinner.setFocusable(false);
+        policySpinner.setFocusableInTouchMode(false);
     }
 
     private void makeFieldsEditable() {
@@ -117,32 +135,35 @@ public class ClaimScreenFragment extends Fragment {
         addImage.setClickable(true);
         addImage.setFocusable(true);
         addImage.setFocusableInTouchMode(true);
-        policySpinner.setVisibility(View.VISIBLE);
-        policySpinner.setClickable(true);
-        policySpinner.setFocusable(true);
-        policySpinner.setFocusableInTouchMode(true);
 
         setAddUploadClickListener();
         loadPolicySpinner();
     }
 
     private void loadPolicySpinner(){
+        String[] policyIDs = this.policyIDs.toArray(new String[this.policyIDs.size()]);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, policyIDs);
 
-        policySpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, policyIDs));
+        policySpinner.setAdapter(adapter);
     }
 
     private void setAddUploadClickListener(){
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //INTENT FOR MOVING TO GALLERY
-                Intent intent = new Intent()
-                        .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                        .setType("image/*")
-                        .setAction(Intent.ACTION_GET_CONTENT);
+                if (userHasSavedPolicy) {
+                    //INTENT FOR MOVING TO GALLERY
+                    Intent intent = new Intent()
+                            .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                            .setType("image/*")
+                            .setAction(Intent.ACTION_GET_CONTENT);
 
-                //WILL START A CHOOSER ACTIVITY WITH GALLERY AND OTHER OPTIONS IN IT
-                startActivityForResult(Intent.createChooser(intent, "Select Picture(s)"), 0);
+                    //WILL START A CHOOSER ACTIVITY WITH GALLERY AND OTHER OPTIONS IN IT
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture(s)"), 0);
+                } else {
+                    Toast.makeText(getActivity(), "You must save your claim before adding photos!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -187,10 +208,6 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     private void setUploadListAdapterAndComments(){
-        /* Set up the recycler view */
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
-        claimsView.setHasFixedSize(true);
-        claimsView.setLayoutManager(llm);
 
         queryParseForUploads();
 
@@ -235,11 +252,23 @@ public class ClaimScreenFragment extends Fragment {
     }
 
     private void saveClaimInformation(){
+        if(currentClaim == null) {
+            currentClaim = new ParseObject("Claim");
+            currentClaim.put("Damages", Double.valueOf(damages.getText().toString()));
+            currentClaim.put("Comment", comment.getText().toString());
+            currentClaim.put("PolicyID", policySpinner.getSelectedItem().toString());
+            try {
+                currentClaim.save();
+                userHasSavedPolicy = true;
+            } catch (com.parse.ParseException e) {
+                Log.e("Error creating claim", e.toString());
+            }
+        } else {
+            currentClaim.put("Damages", Double.valueOf(damages.getText().toString()));
+            currentClaim.put("Comment", comment.getText().toString());
+            currentClaim.put("UploadIDs", uploadIDs);
+        }
 
-        currentClaim = new ParseObject("Claim");
-        currentClaim.put("Damages", Double.valueOf(damages.getText().toString()));
-        currentClaim.put("Comment", comment.getText().toString());
-        currentClaim.put("PolicyID", policySpinner.getSelectedItem().toString());
         //todo create list of upload ids
         //currentClaim.put("UploadIDs", )
 
@@ -256,12 +285,15 @@ public class ClaimScreenFragment extends Fragment {
                 image.save();
 
                 ParseObject mediaUpload = new ParseObject("Upload");
-                mediaUpload.put("PolicyID", Singleton.getCurrentPolicy().getObjectId());
+                Toast.makeText(getActivity(), policySpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                mediaUpload.put("PolicyID", policySpinner.getSelectedItem().toString());
                 mediaUpload.put("UserID", ParseUser.getCurrentUser().getObjectId());
                 mediaUpload.put("Media", image);
 
                 mediaUpload.save();
+                uploadIDs.add(mediaUpload.getObjectId());
 
+                saveClaimInformation();
             } catch(FileNotFoundException e){
                 Log.e("File Not Found", e.toString());
             } catch(com.parse.ParseException e) {

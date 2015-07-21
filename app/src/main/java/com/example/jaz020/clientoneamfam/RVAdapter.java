@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -31,34 +28,8 @@ import java.util.List;
  */
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        CardView cv;
-
-        ImageView image;
-        ImageButton editButton;
-        TextView description;
-        TextView cost;
-
-        ViewHolder(View view) {
-            super(view);
-
-            cv = (CardView) view.findViewById(R.id.list_card_view);
-
-            image = (ImageView) view.findViewById(R.id.cardImage);
-            editButton = (ImageButton) view.findViewById(R.id.cardEditButton);
-            description = (TextView) view.findViewById(R.id.cardDescription);
-            cost = (TextView) view.findViewById(R.id.cardCost);
-        }
-
-        public CardView getCardView() {
-            return cv;
-        }
-    }
-
     List<ParseObject> objectsToDisplay;
     String cardType;
-
     RVAdapter(String cardType, List<ParseObject> objectsToDisplay) {
         this.cardType = cardType;
         this.objectsToDisplay = objectsToDisplay;
@@ -196,13 +167,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     public void onClick(View v) {
                         Singleton.setCurrentClaim(currentObject);
 
-//                        Fragment fragment = new ClaimScreenFragment();
-//                        Bundle bundle = new Bundle();
-//                        bundle.putBoolean("ISNEW", true );
-//                        fragment.setArguments(bundle);
+                        Fragment fragment = new ClaimScreenFragment();
 //
-//                        Tools.replaceFragment(R.id.fragment_container, fragment,
-//                                Singleton.getFragmentManager(), true);
+//
+                        Tools.replaceFragment(R.id.fragment_container, fragment,
+                                Singleton.getFragmentManager(), true);
                     }
                 });
 
@@ -219,5 +188,30 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        CardView cv;
+
+        ImageView image;
+        ImageButton editButton;
+        TextView description;
+        TextView cost;
+
+        ViewHolder(View view) {
+            super(view);
+
+            cv = (CardView) view.findViewById(R.id.list_card_view);
+
+            image = (ImageView) view.findViewById(R.id.cardImage);
+            editButton = (ImageButton) view.findViewById(R.id.cardEditButton);
+            description = (TextView) view.findViewById(R.id.cardDescription);
+            cost = (TextView) view.findViewById(R.id.cardCost);
+        }
+
+        public CardView getCardView() {
+            return cv;
+        }
     }
 }
