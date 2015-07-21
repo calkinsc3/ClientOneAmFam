@@ -3,15 +3,16 @@ package com.example.jaz020.clientoneamfam;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,7 +26,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -39,6 +39,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -48,26 +49,35 @@ public class PolicyScreenFragment extends Fragment {
 
 
     private final int NEW_IMAGE = 0;
-    /**
-     * The Images.
-     */
-    ArrayList<Uri> images;
+
     private boolean policyWasCreated;
     private boolean hasImages;
+
     private Bundle args;
+
     private EditText policyDescription;
     private EditText policyCost;
     private EditText policyAddress;
     private EditText city;
     private EditText zip;
+
     private Spinner stateSpinner;
+
     private ImageButton addUploads;
-    private ListView uploadsList;
+
+    private RecyclerView uploadsList;
+
+    private LinearLayoutManager llm;
+
     private ParseObject currentPolicy;
+
+    private ArrayList<Uri> images;
     private ArrayList<ParseObject> uploads;
     private ArrayList<String> commentsList;
+
     private ArrayAdapter stateAdapter;
-    private ObjectArrayAdapter imageAdapter;
+    private ImageRVAdapter imageAdapter;
+
     private LinearLayout address2;
 
     /**
@@ -173,7 +183,11 @@ public class PolicyScreenFragment extends Fragment {
         zip = (EditText)view.findViewById(R.id.zip);
         addUploads = (ImageButton)view.findViewById(R.id.addUploadButton);
         uploads = new ArrayList<>();
-        uploadsList = (ListView)view.findViewById(R.id.uploadsList);
+        uploadsList = (RecyclerView)view.findViewById(R.id.uploadsList);
+        llm = new LinearLayoutManager(getActivity().getApplicationContext());
+
+        uploadsList.setHasFixedSize(true);
+        uploadsList.setLayoutManager(llm);
         address2 = (LinearLayout)view.findViewById(R.id.address2Layout);
         stateAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.states, android.R.layout.simple_spinner_dropdown_item);
         stateSpinner = (Spinner)view.findViewById(R.id.stateSpinner);
@@ -197,10 +211,13 @@ public class PolicyScreenFragment extends Fragment {
     private void setUploadsListAdapterAndComments(){
         queryParseForUploads();
         if(uploads.size() > 0) {
+            uploadsList.setVisibility(View.VISIBLE);
             setComments();
-            imageAdapter = new ObjectArrayAdapter(getActivity(), R.layout.edit_upload_card, uploads);
+            imageAdapter = new ImageRVAdapter(uploads);
             uploadsList.setAdapter(imageAdapter);
             hasImages = true;
+        } else {
+            uploadsList.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -307,8 +324,8 @@ public class PolicyScreenFragment extends Fragment {
     private void saveImageComments(){
         for(int i = 0; uploads.size() > i; i++){
             uploads.get(i).put("Comment", commentsList.get(i));
-            ParseObject.saveAllInBackground(uploads);
         }
+        ParseObject.saveAllInBackground(uploads);
     }
 
     /**
@@ -390,117 +407,31 @@ public class PolicyScreenFragment extends Fragment {
         }
     }
 
-    /**
-     * The type Object array adapter.
-     */
-    public class ObjectArrayAdapter extends ArrayAdapter<ParseObject> {
+    public class ImageRVAdapter extends RecyclerView.Adapter<ImageRVAdapter.ViewHolder>{
 
-        //declare Array List of items we create
-        private ArrayList<ParseObject> uploads;
+        List<ParseObject> objectsToDisplay;
 
-
-        /**
-         * Constructor overrides constructor for array adapter
-         * The only variable we care about is the ArrayList<PlatformVersion> objects
-         * it is the list of the objects we want to display
-         *
-         * @param context The current context.
-         * @param resource The resource ID for a layout file containing a layout to use when
-         *                           instantiating views.
-         * @param uploads The objects to represent in the ListView.
-         */
-        public ObjectArrayAdapter(Context context, int resource, ArrayList uploads) {
-            super(context, resource, uploads);
-            this.uploads = uploads;
+        ImageRVAdapter(List<ParseObject> objectsToDisplay){
+            this.objectsToDisplay = objectsToDisplay;
         }
 
-        /**
-         * Creates a custom view for our list View and populates the data
-         *
-         * @param position position in the ListView
-         * @param convertView the view to be inflated
-         * @param parent the parent view
-         * @return the view created
-         */
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            final ViewHolder vHolder;
-            final FragmentManager fm = getFragmentManager();
-
-            /**
-             * Checking to see if the view is null. If it is we must inflate the view
-             * "inflate" means to render/show the view
-             */
-
-            if (view == null) {
-                vHolder = new ViewHolder();
-                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.edit_upload_card, null);
-                vHolder.policyImage = (ImageButton)view.findViewById(R.id.policyImage);
-                vHolder.trash = (ImageButton)view.findViewById(R.id.deleteImageButton);
-                vHolder.comments = (MultiAutoCompleteTextView)view.findViewById(R.id.imageDescription);
-
-                view.setTag(vHolder);
+        @Override
+        public int getItemCount() {
+            if(objectsToDisplay != null){
+                return objectsToDisplay.size();
             } else {
-                vHolder = (ViewHolder) convertView.getTag();
+                return 0;
             }
-
-            vHolder.index = position;
-
-            /**
-             * Remember the variable position is sent in as an argument to this method.
-             * The variable simply refers to the position of the current object on the list\
-             * The ArrayAdapter iterate through the list we sent it
-             */
-            final ParseObject upload = uploads.get(position);
-
-            if (upload != null) {
-                // obtain a reference to the widgets in the defined layout
-                ImageButton policyImage = vHolder.policyImage;
-                ImageButton trash = vHolder.trash;
-                MultiAutoCompleteTextView comments = vHolder.comments;
-
-                if(policyImage != null){
-                    Picasso.with(getContext()).load(upload.getParseFile("Media").getUrl()).fit().centerInside().into(vHolder.policyImage);
-                }
-                if(trash != null){
-                    if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
-                        trash.setVisibility(View.VISIBLE);
-                        trash.setClickable(true);
-                        trash.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //todo make delete picture method
-                                try {
-                                    uploads.get(vHolder.index).delete();
-                                    commentsList.remove(vHolder.index);
-                                    Toast.makeText(getActivity(), "Image removed", Toast.LENGTH_SHORT).show();
-                                    setUploadsListAdapterAndComments();
-                                } catch (com.parse.ParseException e) {
-                                    Log.d("Save Error", e.toString());
-                                }
-                            }
-                        });
-                    }
-                }
-                if(comments != null){
-                    if(!args.getBoolean("ISEDIT", false) && !args.getBoolean("ISNEW", false)){
-                        comments.setFocusable(false);
-                        comments.setClickable(false);
-                        comments.setHint("");
-                    }
-                    setCommentsChangeListener(comments, vHolder);
-                    comments.setText(commentsList.get(vHolder.index));
-                }
-
-            }
-
-            // view must be returned to our current activity
-            return view;
         }
 
-        private void setCommentsChangeListener(MultiAutoCompleteTextView comments, final ViewHolder vHolder){
-            comments.addTextChangedListener(new TextWatcher() {
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.edit_upload_card,
+                    viewGroup, false);
+            final ViewHolder vHolder = new ViewHolder(v);
+            vHolder.index = i;
+
+            vHolder.comments.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -516,29 +447,69 @@ public class PolicyScreenFragment extends Fragment {
                     commentsList.set(vHolder.index, s.toString());
                 }
             });
+
+            return vHolder;
         }
 
-        /**
-         * The type View holder.
-         */
-        public class ViewHolder {
-            /**
-             * The Policy image.
-             */
+        @Override
+        public void onBindViewHolder(final ViewHolder vHolder, int i){
+            final ParseObject currentObject = objectsToDisplay.get(i);
+
+            vHolder.index = i;
+
+            if(vHolder.comments != null){
+                if(!args.getBoolean("ISEDIT", false) && !args.getBoolean("ISNEW", false)){
+                    vHolder.comments.setFocusable(false);
+                    vHolder.comments.setClickable(false);
+                    vHolder.comments.setHint("");
+                }
+                vHolder.comments.setText(commentsList.get(vHolder.index));
+            }
+            if(vHolder.policyImage != null){
+                Picasso.with(getActivity()).load(currentObject.getParseFile("Media").getUrl()).fit().centerInside().into(vHolder.policyImage);
+            }
+            if(vHolder.trash != null){
+                if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
+                    vHolder.trash.setVisibility(View.VISIBLE);
+                    vHolder.trash.setClickable(true);
+                    vHolder.trash.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //todo make delete picture method
+                            try {
+                                uploads.get(vHolder.index).delete();
+                                commentsList.remove(vHolder.index);
+                                Toast.makeText(getActivity(), "Image removed", Toast.LENGTH_SHORT).show();
+                                setUploadsListAdapterAndComments();
+                            } catch (com.parse.ParseException e) {
+                                Log.d("Save Error", e.toString());
+                            }
+                        }
+                    });
+                }
+            }
+
+
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            CardView cv;
+
             ImageButton policyImage;
-            /**
-             * The Trash.
-             */
-            ImageButton trash;
-            /**
-             * The Comments.
-             */
             MultiAutoCompleteTextView comments;
-
-            /**
-             * The Index.
-             */
+            ImageButton trash;
             int index;
+
+            ViewHolder(View view) {
+                super(view);
+
+                cv = (CardView) view.findViewById(R.id.claims_card_view);
+                policyImage = (ImageButton)view.findViewById(R.id.policyImage);
+                comments = (MultiAutoCompleteTextView)view.findViewById(R.id.imageDescription);
+                trash = (ImageButton)view.findViewById(R.id.deleteImageButton);
+            }
         }
+
     }
 }

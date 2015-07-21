@@ -460,6 +460,7 @@ public class ClaimScreenFragment extends Fragment {
         @Override
         public void onBindViewHolder(final ViewHolder vHolder, int i){
             final ParseObject currentObject = objectsToDisplay.get(i);
+            vHolder.index = i;
 
             if(vHolder.comments != null) {
                 if(!args.getBoolean("ISNEW", false)) {
