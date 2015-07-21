@@ -156,4 +156,9 @@
     <string name="picture_navneet">Navneet\'s Picture</string>
     <string name="about_navneet">About Navneet</string>
     <string name="expanded_image">Expanded Image</string>
+
+    <string name="EvanFeller">Evan Feller</string>
+    <string name="github_evan">github.com/fellere</string>
+    <string name="linkedin_evan">linkedin.com/in/evanfeller</string>
+    <string name="email_evan">Email Evan</string>
 </resources>

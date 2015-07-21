@@ -38,14 +38,14 @@ public class Singleton {
     }
 
     public static void setCurrentClaim(ParseObject currentClaim) {
-        Singleton.currentClaim = currentClaim;
+        Singleton.currentPolicy = currentClaim;
     }
-
-    public static ParseUser getMyAgent(){ return Singleton.myAgent; }
 
     public static void setMyAgent(ParseUser agent){
         Singleton.myAgent = agent;
     }
+
+    public static ParseUser getMyAgent(){ return Singleton.myAgent; }
 
     public static FragmentManager getFragmentManager() {
         return fragmentManager;
