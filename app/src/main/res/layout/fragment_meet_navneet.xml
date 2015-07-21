@@ -1,138 +1,313 @@
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffff"
-    android:id="@+id/navneet_fragment_root_layout"
     tools:context="com.example.jaz020.clientoneamfam.MeetNavneetFragment" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+
+    <!-- Layout view for when the device is in portrait mode. -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/padding_interns"
         android:background="#ffffff"
-        android:id="@+id/navneet_fragment_linear_layout">
+        android:id="@+id/navneet_fragment_portrait_layout"
+        android:visibility="gone" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10" >
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_interns"
+            android:background="#ffffff"
+            android:id="@+id/navneet_fragment_linear_layout_portrait">
 
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="4"
-                android:padding="0dp"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:background="#ffffff"
-                android:id="@+id/picture"
-                android:src="@drawable/navneet"
-                android:contentDescription="@string/picture_navneet" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10" >
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="4"
+                    android:padding="0dp"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:background="#ffffff"
+                    android:id="@+id/picture_portrait"
+                    android:src="@drawable/navneet"
+                    android:contentDescription="@string/picture_navneet" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="6" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="10dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/name_navneet_portrait"
+                        android:text="@string/navneet"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="7dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/job_title"
+                        android:textSize="@dimen/text_size_interns" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="2dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/amfam_team_paul"
+                        android:textSize="@dimen/text_size_interns" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="12dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/linkedin_navneet"
+                        android:autoLink="web"
+                        android:textSize="@dimen/text_size_interns" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="2dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/github_navneet"
+                        android:autoLink="web"
+                        android:textSize="@dimen/text_size_interns" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/about_navneet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:id="@+id/descriptionText_portrait" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" >
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/emailNavneetButton_portrait"
+                    android:text="@string/email_navneet"
+                    android:padding="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/expanded_image_portrait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_interns"
+            android:visibility="invisible"
+            android:contentDescription="@string/expanded_image" />
+
+    </FrameLayout>
+
+
+    <!-- Layout view for when the device is in landscape mode. -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        android:id="@+id/navneet_fragment_landscape_layout"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:weightSum="10"
+            android:padding="@dimen/padding_interns"
+            android:background="#ffffff"
+            android:id="@+id/navneet_fragment_linear_layout_landscape">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_weight="6" >
+                android:layout_weight="3" >
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:padding="0dp"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:background="#ffffff"
+                    android:id="@+id/picture_landscape"
+                    android:src="@drawable/navneet"
+                    android:contentDescription="@string/picture_navneet"
+                    android:layout_gravity="center_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/name_navneet_landscape"
+                        android:text="@string/navneet"
+                        android:textStyle="bold" />
+
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" >
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="5dp"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/job_title"
+                                android:textSize="@dimen/text_size_interns" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="2dp"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/amfam_team_paul"
+                                android:textSize="@dimen/text_size_interns" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="5dp"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/linkedin_navneet"
+                                android:autoLink="web"
+                                android:textSize="@dimen/text_size_interns" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="2dp"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/github_navneet"
+                                android:autoLink="web"
+                                android:textSize="@dimen/text_size_interns" />
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="7"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/about_navneet"
                     android:paddingStart="10dp"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:paddingTop="10dp"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/name_navneet"
-                    android:text="@string/navneet"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:paddingStart="10dp"
-                    android:paddingEnd="0dp"
-                    android:paddingTop="7dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/job_title"
-                    android:textSize="@dimen/text_size_interns" />
+                    android:paddingEnd="10dp"
+                    android:scrollbars="vertical"
+                    android:id="@+id/descriptionText_landscape" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="0dp"
-                    android:paddingTop="2dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/amfam_team_paul"
-                    android:textSize="@dimen/text_size_interns" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="0dp"
-                    android:paddingTop="12dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/linkedin_navneet"
-                    android:autoLink="web"
-                    android:textSize="@dimen/text_size_interns" />
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/emailNavneetButton_landscape"
+                        android:text="@string/email_navneet"
+                        android:padding="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_alignParentBottom="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="0dp"
-                    android:paddingTop="2dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/github_navneet"
-                    android:autoLink="web"
-                    android:textSize="@dimen/text_size_interns" />
+                </RelativeLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
+        <ImageView
+            android:id="@+id/expanded_image_landscape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/about_navneet" />
+            android:padding="@dimen/padding_interns"
+            android:visibility="invisible"
+            android:contentDescription="@string/expanded_image" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:id="@+id/descriptionText" />
+    </FrameLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent" >
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/emailNavneetButton"
-                android:text="@string/email_navneet"
-                android:padding="20dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_alignParentBottom="true" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/expanded_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_interns"
-        android:visibility="invisible"
-        android:contentDescription="@string/expanded_image" />
-
-</FrameLayout>
+</RelativeLayout>

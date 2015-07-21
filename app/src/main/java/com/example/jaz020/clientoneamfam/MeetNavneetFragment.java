@@ -5,12 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import android.widget.TextView;
  */
 public class MeetNavneetFragment extends Fragment {
 
+    private View view;
     private FrameLayout rootView;
     private LinearLayout backgroundView;
 
@@ -43,20 +46,46 @@ public class MeetNavneetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_meet_navneet, container, false);
+        view = inflater.inflate(R.layout.fragment_meet_navneet, container, false);
+
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_root_layout);
-        backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout);
-        imageThumb = (ImageButton) view.findViewById(R.id.picture);
-        expandedImage = (ImageView) view.findViewById(R.id.expanded_image);
-        nameText = (TextView) view.findViewById(R.id.name_navneet);
-        descriptionText = (TextView) view.findViewById(R.id.descriptionText);
-        emailButton = (Button) view.findViewById(R.id.emailNavneetButton);
+//        // Check the orientation of the device.
+//        // The fragment has different layouts for the different device orientations.
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_portrait_layout);
+//            backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout_portrait);
+//
+//            imageThumb = (ImageButton) view.findViewById(R.id.picture_portrait);
+//            expandedImage = (ImageView) view.findViewById(R.id.expanded_image_portrait);
+//
+//            nameText = (TextView) view.findViewById(R.id.name_navneet_portrait);
+//            descriptionText = (TextView) view.findViewById(R.id.descriptionText_portrait);
+//
+//            emailButton = (Button) view.findViewById(R.id.emailNavneetButton_portrait);
+//
+//            rootView.setVisibility(View.VISIBLE);
+//        } else {
+//            rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_landscape_layout);
+//            backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout_landscape);
+//
+//            imageThumb = (ImageButton) view.findViewById(R.id.picture_landscape);
+//            expandedImage = (ImageView) view.findViewById(R.id.expanded_image_landscape);
+//
+//            nameText = (TextView) view.findViewById(R.id.name_navneet_landscape);
+//            descriptionText = (TextView) view.findViewById(R.id.descriptionText_landscape);
+//
+//            emailButton = (Button) view.findViewById(R.id.emailNavneetButton_landscape);
+//
+//            rootView.setVisibility(View.VISIBLE);
+//        }
+
+        initializeFields();
 
         setDescription();
 
@@ -65,12 +94,53 @@ public class MeetNavneetFragment extends Fragment {
         imageClickListener();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        initializeFields();
+    }
+
+    private void initializeFields() {
+        // Check the orientation of the device.
+        // The fragment has different layouts for the different device orientations.
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_portrait_layout);
+            backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout_portrait);
+
+            imageThumb = (ImageButton) view.findViewById(R.id.picture_portrait);
+            expandedImage = (ImageView) view.findViewById(R.id.expanded_image_portrait);
+
+            nameText = (TextView) view.findViewById(R.id.name_navneet_portrait);
+            descriptionText = (TextView) view.findViewById(R.id.descriptionText_portrait);
+
+            emailButton = (Button) view.findViewById(R.id.emailNavneetButton_portrait);
+
+            rootView.setVisibility(View.VISIBLE);
+        } else {
+            rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_landscape_layout);
+            backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout_landscape);
+
+            imageThumb = (ImageButton) view.findViewById(R.id.picture_landscape);
+            expandedImage = (ImageView) view.findViewById(R.id.expanded_image_landscape);
+
+            nameText = (TextView) view.findViewById(R.id.name_navneet_landscape);
+            descriptionText = (TextView) view.findViewById(R.id.descriptionText_landscape);
+
+            emailButton = (Button) view.findViewById(R.id.emailNavneetButton_landscape);
+
+            rootView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void setDescription() {
+        descriptionText.setMovementMethod(new ScrollingMovementMethod());
+
         String description =
                 "Navneet is currently a student at the University of Wisconsin - Madison studying" +
                 " Computer Sciences.\n\nSkills:\n  Languages: Java, C++, C, XML, JSON" +
                 "\n  Operating Systems: Linux, Unix, OS X, Windows\n  Software: Android Studio, " +
-                "Eclipse, Xcode\n\n\nIn his free time, Navneet loves to referee soccer, watch " +
+                "Eclipse, Xcode\n\nIn his free time, Navneet loves to referee soccer, watch " +
                 "sports, and write personal applications.";
 
         descriptionText.setText(description);
@@ -123,8 +193,14 @@ public class MeetNavneetFragment extends Fragment {
         // view. Also set the container view's offset as the origin for the
         // bounds, since that's the origin for the positioning animation properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
-        rootView.findViewById(R.id.navneet_fragment_root_layout)
-                .getGlobalVisibleRect(finalBounds, globalOffset);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rootView.findViewById(R.id.navneet_fragment_portrait_layout)
+                    .getGlobalVisibleRect(finalBounds, globalOffset);
+        } else {
+            rootView.findViewById(R.id.navneet_fragment_landscape_layout)
+                    .getGlobalVisibleRect(finalBounds, globalOffset);
+        }
 
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
