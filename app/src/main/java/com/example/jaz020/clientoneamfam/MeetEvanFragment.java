@@ -33,10 +33,13 @@ public class MeetEvanFragment extends Fragment {
         ImageButton github = (ImageButton) view.findViewById(R.id.evan_github_button);
         ImageButton gmail = (ImageButton) view.findViewById(R.id.evan_gmail_button);
         ImageButton stack = (ImageButton) view.findViewById(R.id.evan_stack_button);
+        ImageButton code = (ImageButton) view.findViewById(R.id.evan_code_academy_button);
+        Picasso.with(getActivity()).load(R.drawable.evan_headshot).fit().centerCrop().into(mainImg);
         Picasso.with(getActivity()).load(R.drawable.stackoverflow_logo_evan).resize(400, 325).into(stack);
         Picasso.with(getActivity()).load(R.drawable.linked_in_logo).resize(500, 150).into(linked);
         Picasso.with(getActivity()).load(R.drawable.githug_logo).resize(400,150).into(github);
         Picasso.with(getActivity()).load(R.drawable.gmail_logo_evan).resize(400,150).into(gmail);
+        Picasso.with(getActivity()).load(R.drawable.code_academy_logo_evan).resize(550, 125).into(code);
         linked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,8 +76,14 @@ public class MeetEvanFragment extends Fragment {
             }
         });
 
-
-        Picasso.with(getActivity()).load(R.drawable.evan_headshot).fit().centerCrop().into(mainImg);
+        code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.codecademy.com/fellere"));
+                startActivity(browserIntent);
+            }
+        });
+        
 
         return view;
     }

@@ -8,9 +8,16 @@
     tools:context="com.example.jaz020.clientoneamfam.MeetEvanFragment" >
 
     <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0px"
+        android:layout_weight="80"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+    <FrameLayout
+        android:layout_width="0px"
+        android:layout_height="fill_parent"
         android:layout_weight="40">
     
     <ImageView
@@ -32,9 +39,9 @@
 
     </FrameLayout>
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="45">
+        android:layout_width="0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="60">
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,17 +57,17 @@
             android:layout_height="wrap_content"
             android:text="@string/about_evan_two"
             android:id="@+id/textView3"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:layout_below="@+id/textView4"
             android:layout_alignStart="@+id/textView4" />
     </RelativeLayout>
 
-
+    </LinearLayout>
     <HorizontalScrollView
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="15"
+        android:layout_weight="20"
         android:id="@+id/horizontalScrollView"
         android:layout_gravity="center_horizontal"
         android:background="@color/light_gray">
