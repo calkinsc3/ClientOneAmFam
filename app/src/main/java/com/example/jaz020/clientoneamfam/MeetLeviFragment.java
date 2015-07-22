@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 /**
@@ -31,12 +30,11 @@ public class MeetLeviFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_meet_levi, container, false);
 
         initailizeTabs(view);
-        handleClicks();
 
         return view;
     }
 
-    private void initailizeTabs(View view){
+    private void initailizeTabs(final View view){
         tabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         tabHost.setup();
 
@@ -72,6 +70,8 @@ public class MeetLeviFragment extends Fragment {
                         TextView label2 = (TextView)ll_view.findViewById(R.id.label2);
                         TextView information = (TextView)ll_view.findViewById(R.id.information);
                         TextView information2 = (TextView)ll_view.findViewById(R.id.information2);
+                        TextView github = (TextView)ll_view.findViewById(R.id.github);
+                        TextView cademy = (TextView)ll_view.findViewById(R.id.codecademy);
 
                         label.setText("Technical Skills: ");
                         information.setText("Android Studio, Java, Swift, jQuery, AngularJS, JavaScript" +
@@ -79,6 +79,9 @@ public class MeetLeviFragment extends Fragment {
                         label2.setText("Additional Skills: ");
                         information2.setText("Problem Solving, Critical Thinking, Teamwork, Customer Service," +
                                 "Dependable, Consistent, and Versatile");
+
+                        github.setVisibility(View.VISIBLE);
+                        cademy.setVisibility(View.VISIBLE);
                         return ll_view;
                     }
                 });
@@ -106,14 +109,5 @@ public class MeetLeviFragment extends Fragment {
         tabHost.addTab(aboutTab);
         tabHost.addTab(skillsTab);
         tabHost.addTab(contactTab);
-    }
-
-    private void handleClicks(){
-        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String tabId) {
-                Toast.makeText(getActivity(), "in tab changed", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

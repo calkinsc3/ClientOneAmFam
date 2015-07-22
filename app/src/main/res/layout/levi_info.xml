@@ -25,13 +25,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/information"
-        android:paddingTop="15dp" />
+        android:layout_marginTop="15dp" />
     <TextView
         android:id="@+id/information2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/information"
-        android:layout_toRightOf="@id/label2"/>
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/label2" />
+
+    <TextView
+        android:id="@+id/github"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/information2"
+        android:autoLink="web"
+        android:text="Github: https://github.com/turtlebro89"
+        android:textIsSelectable="true"
+        android:typeface="normal"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/codecademy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/github"
+        android:autoLink="web"
+        android:text="CodeCademy: https://www.codecademy.com/turtlebro89"
+        android:textIsSelectable="true"
+        android:typeface="normal"
+        android:visibility="invisible"
+        />
 
 
 </RelativeLayout>
