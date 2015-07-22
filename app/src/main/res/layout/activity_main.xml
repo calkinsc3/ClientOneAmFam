@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+
     <!-- The main content view -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 
     <LinearLayout
         android:id="@+id/main_drawer_linear_layout"

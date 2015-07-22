@@ -30,6 +30,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     List<ParseObject> objectsToDisplay;
     String cardType;
+
     RVAdapter(String cardType, List<ParseObject> objectsToDisplay) {
         this.cardType = cardType;
         this.objectsToDisplay = objectsToDisplay;
@@ -70,7 +71,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
                         ivh.image.setVisibility(View.VISIBLE);
 
-                            /* Load picture into current card's image view */
+                        /* Load picture into current card's image view */
                         Picasso.with(Singleton.getContext())
                                 .load(url)
                                 .fit()
@@ -85,8 +86,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 BigDecimal parsed = new BigDecimal(cost).setScale(2, BigDecimal.ROUND_FLOOR);
                 String formattedCost = NumberFormat.getCurrencyInstance().format(parsed);
 
+                String description = currentObject.getString("Description");
+
                 ivh.cost.setText(formattedCost);
-                ivh.description.setText(currentObject.getString("Description"));
+                ivh.description.setText(description);
 
                 /* Handle card click */
                 ivh.getCardView().setOnClickListener(new View.OnClickListener() {
@@ -135,7 +138,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
                                 ivh.image.setVisibility(View.VISIBLE);
 
-                            /* Load picture into current card's image view */
+                                /* Load picture into current card's image view */
                                 Picasso.with(Singleton.getContext())
                                         .load(url)
                                         .fit()
@@ -168,8 +171,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                         Singleton.setCurrentClaim(currentObject);
 
                         Fragment fragment = new ClaimScreenFragment();
-//
-//
                         Tools.replaceFragment(R.id.fragment_container, fragment,
                                 Singleton.getFragmentManager(), true);
                     }
@@ -181,7 +182,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             default:
                 Log.e("CardRVAdapter", cardType + " passed in as argument.");
                 break;
-
         }
     }
 
