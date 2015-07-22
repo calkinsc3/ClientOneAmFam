@@ -66,10 +66,6 @@ public class Settings extends Fragment {
     }
 
     private void setTextViews(){
-
-        //TODO version textview
-        //TODO format phoneNumber
-
         ParseUser currUser = ParseUser.getCurrentUser();
 
         String versionName;
