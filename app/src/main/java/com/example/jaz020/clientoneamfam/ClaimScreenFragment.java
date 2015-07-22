@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -61,6 +62,8 @@ public class ClaimScreenFragment extends Fragment {
     private EditText damages;
     private EditText comment;
 
+    private LinearLayout uploadsLayout;
+
     private RecyclerView claimsView;
 
     private ImageButton addImage;
@@ -77,7 +80,6 @@ public class ClaimScreenFragment extends Fragment {
     private ArrayList<Uri> images;
 
     private boolean hasImages;
-    private boolean userHasSavedPolicy;
 
     /**
      * Instantiates a new Claim screen fragment.
@@ -111,8 +113,6 @@ public class ClaimScreenFragment extends Fragment {
      * @param view the view connected to the fragment
      */
     private void initializeVariables(View view){
-        userHasSavedPolicy = false;
-
         policy = (TextView)view.findViewById(R.id.policyNumber);
 
         damages = (EditText)view.findViewById(R.id.claimDamages);
@@ -123,6 +123,8 @@ public class ClaimScreenFragment extends Fragment {
         addImage = (ImageButton)view.findViewById(R.id.addUploadButton);
 
         policySpinner = (Spinner)view.findViewById(R.id.policySpinner);
+
+        uploadsLayout = (LinearLayout)view.findViewById(R.id.uploadsLayout);
 
         llm = new LinearLayoutManager(getActivity().getApplicationContext());
 
@@ -151,9 +153,9 @@ public class ClaimScreenFragment extends Fragment {
             getAndSetParseIDs();
             makeFieldsEditable();
             setHasOptionsMenu(true);
+            uploadsLayout.setVisibility(View.GONE);
         }  else {
             currentClaim = Singleton.getCurrentClaim();
-            userHasSavedPolicy = true;
             claimWasSelectedPopulateViews();
             hideSpinner();
         }
@@ -210,19 +212,14 @@ public class ClaimScreenFragment extends Fragment {
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userHasSavedPolicy) {
-                    //INTENT FOR MOVING TO GALLERY
-                    Intent intent = new Intent()
-                            .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                            .setType("image/*")
-                            .setAction(Intent.ACTION_GET_CONTENT);
+                //INTENT FOR MOVING TO GALLERY
+                Intent intent = new Intent()
+                        .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                        .setType("image/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
 
-                    //WILL START A CHOOSER ACTIVITY WITH GALLERY AND OTHER OPTIONS IN IT
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture(s)"), 0);
-                } else {
-                    Toast.makeText(getActivity(), "You must save your claim before adding photos!",
-                            Toast.LENGTH_SHORT).show();
-                }
+                //WILL START A CHOOSER ACTIVITY WITH GALLERY AND OTHER OPTIONS IN IT
+                startActivityForResult(Intent.createChooser(intent, "Select Picture(s)"), 0);
             }
         });
     }
@@ -397,9 +394,9 @@ public class ClaimScreenFragment extends Fragment {
             currentClaim.put("Damages", Double.valueOf(damages));
             currentClaim.put("Comment", comment.getText().toString());
             currentClaim.put("PolicyID", policySpinner.getSelectedItem().toString());
+
             try {
                 currentClaim.save();
-                userHasSavedPolicy = true;
             } catch (com.parse.ParseException e) {
                 Log.e("Error creating claim", e.toString());
             }
@@ -409,6 +406,8 @@ public class ClaimScreenFragment extends Fragment {
             currentClaim.put("UploadIDs", uploadIDs);
             currentClaim.saveInBackground();
         }
+
+        uploadsLayout.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -418,7 +417,11 @@ public class ClaimScreenFragment extends Fragment {
     private void saveImages(){
         for(int i = 0; images.size() > i; i++){
             try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(images.get(i)));
+                Bitmap bitmap = BitmapFactory
+                        .decodeStream(getActivity()
+                                .getContentResolver()
+                                .openInputStream(images.get(i)));
+
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] imageBytes = stream.toByteArray();
