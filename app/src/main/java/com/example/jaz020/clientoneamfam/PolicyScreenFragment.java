@@ -67,6 +67,8 @@ public class PolicyScreenFragment extends Fragment {
 
     private ImageButton addUploads;
 
+    private LinearLayout uploadsLayout;
+
     private RecyclerView uploadsList;
 
     private LinearLayoutManager llm;
@@ -81,6 +83,7 @@ public class PolicyScreenFragment extends Fragment {
     private ImageRVAdapter imageAdapter;
 
     private LinearLayout address2;
+
 
     /**
      * Instantiates a new Policy screen fragment.
@@ -179,6 +182,7 @@ public class PolicyScreenFragment extends Fragment {
         if(args.getBoolean("ISNEW", false)){
             makeFieldsEditable();
             setHasOptionsMenu(true);
+            uploadsLayout.setVisibility(View.GONE);
         } else if(args.getBoolean("ISEDIT", false)) {
             currentPolicy = Singleton.getCurrentPolicy();
             makeFieldsEditable();
@@ -248,6 +252,7 @@ public class PolicyScreenFragment extends Fragment {
         addUploads = (ImageButton)view.findViewById(R.id.addUploadButton);
         uploads = new ArrayList<>();
         uploadsList = (RecyclerView)view.findViewById(R.id.uploadsList);
+        uploadsLayout = (LinearLayout)view.findViewById(R.id.uploadsLayout);
         llm = new LinearLayoutManager(getActivity().getApplicationContext());
 
         uploadsList.setHasFixedSize(true);
@@ -371,31 +376,44 @@ public class PolicyScreenFragment extends Fragment {
         policyCost = policyCost.replace("$","");
         policyCost = policyCost.replace(",","");
 
+
         if(args.getBoolean("ISNEW", false) && !policyWasCreated){
             currentPolicy = new ParseObject("Policy");
             currentPolicy.put("AgentID", ParseUser.getCurrentUser().getString("AgentID"));
             currentPolicy.put("ClientID", ParseUser.getCurrentUser().getObjectId());
             currentPolicy.put("Accepted", true);
         }
+
         currentPolicy.put("Description", policyDescription.getText().toString());
         currentPolicy.put("Cost", Double.valueOf(policyCost));
         currentPolicy.put("Address", policyAddress.getText().toString());
         currentPolicy.put("City", city.getText().toString());
-        currentPolicy.put("Zip", zip.getText().toString());
+        currentPolicy.put("Zip", Double.valueOf(zip.getText().toString()));
         currentPolicy.put("State", stateSpinner.getSelectedItem().toString());
 
-        currentPolicy.saveEventually();
-
+        try {
+            currentPolicy.save();
+            policyWasCreated = true;
+            Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
+        } catch(com.parse.ParseException e){
+            Log.e("Save Error", e.toString());
+        }
         Singleton.setCurrentPolicy(currentPolicy);
+
+        uploadsLayout.setVisibility(View.VISIBLE);
     }
 
     /**
-     * saves all images associated with this Policy. Re-attaches adapter to the Recycler view
+     * Saves all images associated with this Policy. Re-attaches adapter to the Recycler view
      */
     private void saveImages(){
         for(int i = 0; images.size() > i; i++){
             try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(images.get(i)));
+                Bitmap bitmap = BitmapFactory
+                        .decodeStream(getActivity()
+                                .getContentResolver()
+                                .openInputStream(images.get(i)));
+
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] imageBytes = stream.toByteArray();
@@ -495,7 +513,7 @@ public class PolicyScreenFragment extends Fragment {
             case R.id.optional_action:
                 if(validateFields()) {
                     savePolicyInformation();
-                    Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
                 }
                 if (hasImages) {
                     saveImageComments();
