@@ -5,6 +5,7 @@ package com.example.jaz020.clientoneamfam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -111,6 +112,8 @@ public class RegisterFragment extends Fragment {
 
             }
         });
+
+        phone_entry.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
     }
 
