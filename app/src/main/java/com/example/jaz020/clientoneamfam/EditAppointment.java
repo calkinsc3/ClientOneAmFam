@@ -177,13 +177,13 @@ public class EditAppointment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
-                        startDateCalendar.set(Calendar.HOUR, selectedHour);
+                        startDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         startDateCalendar.set(Calendar.MINUTE, selectedMinute);
                         Tools.updateTimeEntry(start_time_entry, startDateCalendar);
                     }
                 },
 
-                startDateCalendar.get(Calendar.HOUR),
+                startDateCalendar.get(Calendar.HOUR_OF_DAY),
                 startDateCalendar.get(Calendar.MINUTE), false);
 
         endTimePicker = new TimePickerDialog(getActivity(),
@@ -192,13 +192,13 @@ public class EditAppointment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
-                        endDateCalendar.set(Calendar.HOUR, selectedHour);
+                        endDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         endDateCalendar.set(Calendar.MINUTE, selectedMinute);
                         Tools.updateTimeEntry(end_time_entry, endDateCalendar);
 
                     }
                 },
-                endDateCalendar.get(Calendar.HOUR),
+                endDateCalendar.get(Calendar.HOUR_OF_DAY),
                 endDateCalendar.get(Calendar.MINUTE), false);
 
         start_date_entry.setOnClickListener(new View.OnClickListener() {
