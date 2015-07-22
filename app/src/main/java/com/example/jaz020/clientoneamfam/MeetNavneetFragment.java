@@ -47,43 +47,12 @@ public class MeetNavneetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_meet_navneet, container, false);
-
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        // Check the orientation of the device.
-//        // The fragment has different layouts for the different device orientations.
-//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_portrait_layout);
-//            backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout_portrait);
-//
-//            imageThumb = (ImageButton) view.findViewById(R.id.picture_portrait);
-//            expandedImage = (ImageView) view.findViewById(R.id.expanded_image_portrait);
-//
-//            nameText = (TextView) view.findViewById(R.id.name_navneet_portrait);
-//            descriptionText = (TextView) view.findViewById(R.id.descriptionText_portrait);
-//
-//            emailButton = (Button) view.findViewById(R.id.emailNavneetButton_portrait);
-//
-//            rootView.setVisibility(View.VISIBLE);
-//        } else {
-//            rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_landscape_layout);
-//            backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout_landscape);
-//
-//            imageThumb = (ImageButton) view.findViewById(R.id.picture_landscape);
-//            expandedImage = (ImageView) view.findViewById(R.id.expanded_image_landscape);
-//
-//            nameText = (TextView) view.findViewById(R.id.name_navneet_landscape);
-//            descriptionText = (TextView) view.findViewById(R.id.descriptionText_landscape);
-//
-//            emailButton = (Button) view.findViewById(R.id.emailNavneetButton_landscape);
-//
-//            rootView.setVisibility(View.VISIBLE);
-//        }
 
         initializeFields();
 
