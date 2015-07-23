@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.jaz020.clientoneamfam.MyAgentFragment"
+    style="@style/base_clouds"
     android:weightSum="100">
 <RelativeLayout
     android:layout_width="fill_parent"

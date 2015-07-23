@@ -3,9 +3,24 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+
     </style>
 
     <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+
+    <style name="base_clouds" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="android:background">@drawable/clouds</item>
+
+    </style>
+
+    <style name="cloud_button" parent="AppTheme">
+
+        <item name="android:background">@drawable/cloud_button</item>
+        <item name="android:scaleType">centerCrop</item>
 
     </style>
 
