@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,26 +25,26 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
     private String[] internNames;
     private HashMap<String, Integer> internPictureMap;
 
-    private View view;
-    private ViewGroup viewGroup;
     private LinearLayout backgroundView;
     private ImageView expandedImage;
     private TextView internTitleText;
 
-    private RecyclerView rv;
+    FrameLayout frameLayout;
+
+    private RecyclerView recyclerView;
 
     InternsRVAdapter(String[] internNames, HashMap<String, Integer> internPictureMap,
-                     View view, LinearLayout backgroundView, ImageView expandedImage,
-                     TextView internTitleText, RecyclerView rv) {
+                     LinearLayout backgroundView, ImageView expandedImage, TextView internTitleText,
+                     RecyclerView recyclerView, FrameLayout frameLayout) {
         this.internNames = internNames;
         this.internPictureMap = internPictureMap;
 
-        this.view = view;
         this.backgroundView = backgroundView;
         this.expandedImage = expandedImage;
         this.internTitleText = internTitleText;
 
-        this.rv = rv;
+        this.frameLayout = frameLayout;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -58,8 +59,6 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.intern_card, viewGroup, false);
-
-        this.viewGroup = viewGroup;
 
         return new ViewHolder(v);
     }
@@ -110,7 +109,7 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
             @Override
             public void onClick(View v) {
                 new ImageZoom(internPictureMap.get(internNames[i]), vh.image, expandedImage,
-                        internTitleText, null, backgroundView, rv);
+                        internTitleText, frameLayout, backgroundView, recyclerView);
             }
         });
     }

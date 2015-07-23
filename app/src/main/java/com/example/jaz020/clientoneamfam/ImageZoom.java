@@ -8,10 +8,8 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -34,17 +32,17 @@ public class ImageZoom {
     private TextView nameText;
     private FrameLayout rootView;
     private LinearLayout backgroundView;
-    private RecyclerView rv;
+    private RecyclerView recyclerView;
 
     public ImageZoom(int imageID, ImageButton imageThumb, ImageView expandedImage, TextView nameText,
-                     FrameLayout rootView, LinearLayout backgroundView, RecyclerView rv) {
+                     FrameLayout rootView, LinearLayout backgroundView, RecyclerView recyclerView) {
         this.imageID = imageID;
         this.imageThumb = imageThumb;
         this.expandedImage = expandedImage;
         this.nameText = nameText;
         this.rootView = rootView;
         this.backgroundView = backgroundView;
-        this.rv = rv;
+        this.recyclerView = recyclerView;
 
         zoomImageFromThumb();
     }
@@ -74,7 +72,7 @@ public class ImageZoom {
         // bounds, since that's the origin for the positioning animation properties (X, Y).
         imageThumb.getGlobalVisibleRect(startBounds);
 
-        if (rootView != null) {
+        if (recyclerView == null) {
             if (Singleton.getContext().getResources().getConfiguration().orientation ==
                     Configuration.ORIENTATION_PORTRAIT) {
                 rootView.findViewById(R.id.navneet_fragment_portrait_layout)
@@ -84,7 +82,7 @@ public class ImageZoom {
                         .getGlobalVisibleRect(finalBounds, globalOffset);
             }
         } else {
-            backgroundView.getGlobalVisibleRect(finalBounds, globalOffset);
+            rootView.findViewById(R.id.flayout).getGlobalVisibleRect(finalBounds, globalOffset);
         }
 
         startBounds.offset(-globalOffset.x, -globalOffset.y);
@@ -126,8 +124,8 @@ public class ImageZoom {
         backgroundView.setBackgroundColor(Color.BLACK);
         nameText.setTextColor(Color.DKGRAY);
 
-        if (rv != null) {
-            rv.setVisibility(View.GONE);
+        if (recyclerView != null) {
+            recyclerView.setVisibility(View.GONE);
         }
 
         expandedImage.setVisibility(View.VISIBLE);
@@ -206,8 +204,8 @@ public class ImageZoom {
                         backgroundView.setBackgroundColor(Color.TRANSPARENT);
                         nameText.setTextColor(Color.BLACK);
 
-                        if (rv != null) {
-                            rv.setVisibility(View.VISIBLE);
+                        if (recyclerView != null) {
+                            recyclerView.setVisibility(View.VISIBLE);
                         }
 
                         expandedImage.setVisibility(View.GONE);
@@ -221,8 +219,8 @@ public class ImageZoom {
                         backgroundView.setBackgroundColor(Color.TRANSPARENT);
                         nameText.setTextColor(Color.BLACK);
 
-                        if (rv != null) {
-                            rv.setVisibility(View.VISIBLE);
+                        if (recyclerView != null) {
+                            recyclerView.setVisibility(View.VISIBLE);
                         }
 
                         expandedImage.setVisibility(View.GONE);

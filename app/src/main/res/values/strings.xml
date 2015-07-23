@@ -24,23 +24,22 @@
     <string name="amfam_logo">AmFam Logo</string>
 
     <string name="my_agent">My Agent</string>
-    <string name="find_an_agent">Find An Agent</string>
+    <string name="find_an_agent">Find an Agent</string>
     <string name="my_policies">My Policies</string>
     <string name="my_claims">My Claims</string>
     <string name="settings">Settings</string>
+    <string name="meet_the_interns">Meet the Interns</string>
 
     <string name="navneet">Navneet Reddy</string>
 
     <string-array name="drawerItems">
         <item>Home</item>
         <item>My Agent</item>
-        <item>Find An Agent</item>
+        <item>Find an Agent</item>
         <item>My Policies</item>
         <item>My Claims</item>
         <item>Settings</item>
     </string-array>
-
-    <string name="meet_the_interns">Meet the Interns</string>
 
     <string-array name="intern_names">
         <item>Evan Feller</item>
@@ -106,8 +105,6 @@
 
     <string name="title_activity_login">Login</string>
 
-
-
     <string name="register_button_text">Register New User</string>
     <string name="policies">Policies</string>
     <string name="agent">Agent</string>
@@ -137,7 +134,6 @@
     <string name="logout">Logout</string>
     <string name="entryError">You must enter a value!</string>
 
-
     <string name="email_support">Email Support</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
@@ -165,9 +161,7 @@
     <string name="about_evan_one">I am a second year intern at American Family Insurance this summer, and in my last year of schooling at the University of Wisconsin - Platteville majoring in Software Engineering with a minor in Mathematics.</string>
     <string name="about_evan_two">Languages &amp; Skills : C++, Java, Android, UML Diagrams, Project Management Experience, Leadership, People Skills/Public Speaking, Object-Oriented Analysis and Design, Software Quality Assurance Techniques, Real Time Embedded Systems in both C and Assembly, Microprocessor programming, SQL Databases, Ruby, ADA, Javascript, AngularJS, JQuery, HTML/CSS, Visual Basic</string>
     
-    
     <string name="email_james">Email James</string>
-    
 
     <string name="about_james">****DONT WORRY GUYS, ILL CHANGE THE PIC BEFORE THE PRESENTATOIN**** My most prominent objective is respect. I believe that in order for a team to work properly, each team member must have a mutual respect for their co-workers, as well as superiors and subordinates. A team that has full trust and respect amongst themselves can overcome most barriers and obstacles, allowing them to accomplish great things.</string>
     <string name="connect_with_james">Connect with James:</string>

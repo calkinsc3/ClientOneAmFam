@@ -7,12 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -34,6 +34,7 @@ public class MeetInternsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.internsRecyclerView);
+        FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.flayout);
         LinearLayout backgroundView = (LinearLayout) view.findViewById(R.id.backgroundLinearLayout);
         ImageView expandedImage = (ImageView) view.findViewById(R.id.expanded_image_intern_list);
         TextView internTitleText = (TextView) view.findViewById(R.id.internTitleText);
@@ -47,7 +48,7 @@ public class MeetInternsFragment extends Fragment {
 
          /* Attach adapter to recycler view */
         InternsRVAdapter adapter = new InternsRVAdapter(internNames, internPictureMap,
-                view, backgroundView, expandedImage, internTitleText, rv);
+                backgroundView, expandedImage, internTitleText, rv, frameLayout);
         rv.setAdapter(adapter);
     }
 
