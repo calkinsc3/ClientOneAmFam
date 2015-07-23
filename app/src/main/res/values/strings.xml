@@ -176,4 +176,9 @@
     <string name="phone_colon">Phone:</string>
     <string name="address_colon">Address:</string>
     <string name="username_colon">Username:</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="intern_name">Intern Name</string>
+    <string name="intern_picture">Intern Picture</string>
 </resources>
