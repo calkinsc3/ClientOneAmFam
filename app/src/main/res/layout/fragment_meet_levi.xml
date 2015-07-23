@@ -1,14 +1,91 @@
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jaz020.clientoneamfam.MeetLeviFragment" >
+    android:background="#b8c5ff"
+    android:padding="15dp"
+    tools:context="com.example.jaz020.clientoneamfam.MeetLeviFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Levi Lavender" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="left|top"
+        android:background="#00ffffff"
+        android:src="@drawable/levi" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/imageView"
+        android:text="Levi Lavender"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#010101"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:text="Mobile Application Development Intern in Development Unit 1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_toEndOf="@+id/imageView"
+        android:autoLink="web"
+        android:text="www.linkedin.com/in/levilavender"
+        android:textColor="#7cc0ff"
+        android:textIsSelectable="true"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView5"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="5dp"
+        android:text="Baraboo, Wisconsin" />
+
+    <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@android:id/tabhost"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/imageView">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TabWidget android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal"
+                />
+
+            <FrameLayout android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"/>
+
+        </LinearLayout>
+
+    </TabHost>
+
+</RelativeLayout>
