@@ -40,8 +40,8 @@ public class MeetNavneetFragment extends Fragment {
     private TextView descriptionText;
     private Button emailButton;
 
-    private Animator currentAnimator;
-    private int animationDuration;
+//    private Animator currentAnimator;
+//    private int animationDuration;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,13 +131,13 @@ public class MeetNavneetFragment extends Fragment {
     }
 
     private void imageClickListener() {
-        animationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+//        animationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         imageThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new ImageZoom(R.drawable.navneet, imageThumb, expandedImage, nameText,
-                        rootView,backgroundView, null, null);
+                        rootView, backgroundView, null);
 
 //                zoomImageFromThumb(imageThumb, R.drawable.navneet);
             }

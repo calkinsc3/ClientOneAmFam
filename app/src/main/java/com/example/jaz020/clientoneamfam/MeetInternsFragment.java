@@ -55,9 +55,9 @@ public class MeetInternsFragment extends Fragment {
         internNames = getResources().getStringArray(R.array.intern_names);
 
         internPictureMap = new HashMap<>();
-        internPictureMap.put(internNames[0], R.drawable.evan_headshot);
-        internPictureMap.put(internNames[1], R.drawable.levi);
+        internPictureMap.put(internNames[0], R.drawable.card_evan);
+        internPictureMap.put(internNames[1], R.drawable.card_levi);
         internPictureMap.put(internNames[2], R.drawable.navneet);
-        internPictureMap.put(internNames[3], R.drawable.james_world_party_time_excellent);
+        internPictureMap.put(internNames[3], R.drawable.card_james);
     }
 }

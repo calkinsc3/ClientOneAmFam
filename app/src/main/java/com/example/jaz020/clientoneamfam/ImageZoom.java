@@ -34,21 +34,16 @@ public class ImageZoom {
     private TextView nameText;
     private FrameLayout rootView;
     private LinearLayout backgroundView;
-    private ViewGroup viewGroup;
-
     private RecyclerView rv;
 
     public ImageZoom(int imageID, ImageButton imageThumb, ImageView expandedImage, TextView nameText,
-                     FrameLayout rootView, LinearLayout backgroundView, ViewGroup viewGroup,
-                     RecyclerView rv) {
+                     FrameLayout rootView, LinearLayout backgroundView, RecyclerView rv) {
         this.imageID = imageID;
         this.imageThumb = imageThumb;
         this.expandedImage = expandedImage;
         this.nameText = nameText;
         this.rootView = rootView;
         this.backgroundView = backgroundView;
-        this.viewGroup = viewGroup;
-
         this.rv = rv;
 
         zoomImageFromThumb();
@@ -128,19 +123,13 @@ public class ImageZoom {
         // the background will fade to transparent black.
         imageThumb.setAlpha(0f);
         backgroundView.setAlpha(.7f);
-        backgroundView.setBackgroundColor(Color.GREEN);
+        backgroundView.setBackgroundColor(Color.BLACK);
         nameText.setTextColor(Color.DKGRAY);
 
-//        if (viewGroup != null) {
-//            for (int x = 0; x < viewGroup.getChildCount(); x++) {
-//                CardView cv = (CardView) viewGroup.getChildAt(x);
-//
-//                cv.setCardBackgroundColor(Color.BLACK);
-//                cv.setClickable(false);
-//            }
-//        }
+        if (rv != null) {
+            rv.setVisibility(View.GONE);
+        }
 
-        rv.setVisibility(View.GONE);
         expandedImage.setVisibility(View.VISIBLE);
         expandedImage.setAlpha(1f);
 
@@ -217,16 +206,10 @@ public class ImageZoom {
                         backgroundView.setBackgroundColor(Color.TRANSPARENT);
                         nameText.setTextColor(Color.BLACK);
 
-                        if (viewGroup != null) {
-                            for (int x = 0; x < viewGroup.getChildCount(); x++) {
-                                CardView cv = (CardView) viewGroup.getChildAt(x);
-
-                                cv.setCardBackgroundColor(Color.WHITE);
-                                cv.setClickable(true);
-                            }
+                        if (rv != null) {
+                            rv.setVisibility(View.VISIBLE);
                         }
 
-                        rv.setVisibility(View.VISIBLE);
                         expandedImage.setVisibility(View.GONE);
                         currentAnimator = null;
                     }
@@ -238,16 +221,10 @@ public class ImageZoom {
                         backgroundView.setBackgroundColor(Color.TRANSPARENT);
                         nameText.setTextColor(Color.BLACK);
 
-                        if (viewGroup != null) {
-                            for (int x = 0; x < viewGroup.getChildCount(); x++) {
-                                CardView cv = (CardView) viewGroup.getChildAt(x);
-
-                                cv.setCardBackgroundColor(Color.WHITE);
-                                cv.setClickable(true);
-                            }
+                        if (rv != null) {
+                            rv.setVisibility(View.VISIBLE);
                         }
 
-                        rv.setVisibility(View.VISIBLE);
                         expandedImage.setVisibility(View.GONE);
                         currentAnimator = null;
                     }
