@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -35,8 +36,11 @@ public class ImageZoom {
     private LinearLayout backgroundView;
     private ViewGroup viewGroup;
 
+    private RecyclerView rv;
+
     public ImageZoom(int imageID, ImageButton imageThumb, ImageView expandedImage, TextView nameText,
-                     FrameLayout rootView, LinearLayout backgroundView, ViewGroup viewGroup) {
+                     FrameLayout rootView, LinearLayout backgroundView, ViewGroup viewGroup,
+                     RecyclerView rv) {
         this.imageID = imageID;
         this.imageThumb = imageThumb;
         this.expandedImage = expandedImage;
@@ -44,6 +48,8 @@ public class ImageZoom {
         this.rootView = rootView;
         this.backgroundView = backgroundView;
         this.viewGroup = viewGroup;
+
+        this.rv = rv;
 
         zoomImageFromThumb();
     }
@@ -83,7 +89,7 @@ public class ImageZoom {
                         .getGlobalVisibleRect(finalBounds, globalOffset);
             }
         } else {
-
+            backgroundView.getGlobalVisibleRect(finalBounds, globalOffset);
         }
 
         startBounds.offset(-globalOffset.x, -globalOffset.y);
@@ -94,6 +100,7 @@ public class ImageZoom {
         // stretching during the animation. Also calculate the start scaling
         // factor (the end scaling factor is always 1.0).
         float startScale;
+
         if ((float) finalBounds.width() / finalBounds.height()
                 > (float) startBounds.width() / startBounds.height()) {
 
@@ -121,17 +128,21 @@ public class ImageZoom {
         // the background will fade to transparent black.
         imageThumb.setAlpha(0f);
         backgroundView.setAlpha(.7f);
-        backgroundView.setBackgroundColor(Color.BLACK);
+        backgroundView.setBackgroundColor(Color.GREEN);
         nameText.setTextColor(Color.DKGRAY);
 
-        if (viewGroup != null) {
-            for (int x = 0; x < viewGroup.getChildCount(); x++) {
-                viewGroup.getChildAt(x).setBackgroundColor(Color.BLACK);
-                viewGroup.setClickable(false);
-            }
-        }
+//        if (viewGroup != null) {
+//            for (int x = 0; x < viewGroup.getChildCount(); x++) {
+//                CardView cv = (CardView) viewGroup.getChildAt(x);
+//
+//                cv.setCardBackgroundColor(Color.BLACK);
+//                cv.setClickable(false);
+//            }
+//        }
 
+        rv.setVisibility(View.GONE);
         expandedImage.setVisibility(View.VISIBLE);
+        expandedImage.setAlpha(1f);
 
         // Set the pivot point for SCALE_X and SCALE_Y transformations to the
         // top-left corner of the zoomed-in view (the default is the center of the view).
@@ -171,6 +182,7 @@ public class ImageZoom {
         // Upon clicking the zoomed-in image, it should zoom back down
         // to the original bounds and show the thumbnail instead of the expanded image.
         final float startScaleFinal = startScale;
+
         expandedImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -207,11 +219,14 @@ public class ImageZoom {
 
                         if (viewGroup != null) {
                             for (int x = 0; x < viewGroup.getChildCount(); x++) {
-                                viewGroup.getChildAt(x).setBackgroundColor(Color.WHITE);
-                                viewGroup.setClickable(true);
+                                CardView cv = (CardView) viewGroup.getChildAt(x);
+
+                                cv.setCardBackgroundColor(Color.WHITE);
+                                cv.setClickable(true);
                             }
                         }
 
+                        rv.setVisibility(View.VISIBLE);
                         expandedImage.setVisibility(View.GONE);
                         currentAnimator = null;
                     }
@@ -225,11 +240,14 @@ public class ImageZoom {
 
                         if (viewGroup != null) {
                             for (int x = 0; x < viewGroup.getChildCount(); x++) {
-                                viewGroup.getChildAt(x).setBackgroundColor(Color.WHITE);
-                                viewGroup.setClickable(true);
+                                CardView cv = (CardView) viewGroup.getChildAt(x);
+
+                                cv.setCardBackgroundColor(Color.WHITE);
+                                cv.setClickable(true);
                             }
                         }
 
+                        rv.setVisibility(View.VISIBLE);
                         expandedImage.setVisibility(View.GONE);
                         currentAnimator = null;
                     }

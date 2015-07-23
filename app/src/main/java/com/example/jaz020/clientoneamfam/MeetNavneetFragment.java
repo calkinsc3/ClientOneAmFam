@@ -136,8 +136,8 @@ public class MeetNavneetFragment extends Fragment {
         imageThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                new ImageZoom(R.drawable.navneet, imageThumb, expandedImage, nameText,
-//                        rootView,backgroundView);
+                new ImageZoom(R.drawable.navneet, imageThumb, expandedImage, nameText,
+                        rootView,backgroundView, null, null);
 
 //                zoomImageFromThumb(imageThumb, R.drawable.navneet);
             }

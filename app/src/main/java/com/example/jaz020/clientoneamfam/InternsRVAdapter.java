@@ -1,5 +1,6 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,9 +30,11 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
     private ImageView expandedImage;
     private TextView internTitleText;
 
+    private RecyclerView rv;
+
     InternsRVAdapter(String[] internNames, HashMap<String, Integer> internPictureMap,
                      View view, LinearLayout backgroundView, ImageView expandedImage,
-                     TextView internTitleText) {
+                     TextView internTitleText, RecyclerView rv) {
         this.internNames = internNames;
         this.internPictureMap = internPictureMap;
 
@@ -39,6 +42,8 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
         this.backgroundView = backgroundView;
         this.expandedImage = expandedImage;
         this.internTitleText = internTitleText;
+
+        this.rv = rv;
     }
 
     @Override
@@ -62,6 +67,7 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder vh, final int i) {
         vh.name.setText(internNames[i]);
+        vh.image.setBackgroundColor(Color.TRANSPARENT);
 
         /* Load picture into current card's image view */
         Picasso.with(Singleton.getContext())
@@ -104,7 +110,7 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
             @Override
             public void onClick(View v) {
                 new ImageZoom(internPictureMap.get(internNames[i]), vh.image, expandedImage,
-                        internTitleText, null, backgroundView, viewGroup);
+                        internTitleText, null, backgroundView, viewGroup, rv);
             }
         });
     }
