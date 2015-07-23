@@ -61,11 +61,18 @@
                 android:id="@+id/myUploadsButton"
                 android:layout_gravity="center_horizontal" />
 
-            <ExpandableListView
-                android:id="@+id/expandable_intern_list"
+            <Button
                 android:layout_width="fill_parent"
-                android:layout_height="112dp" >
-            </ExpandableListView>
+                android:layout_height="wrap_content"
+                android:text="@string/meet_the_interns"
+                android:id="@+id/meetInternsButton"
+                android:layout_gravity="center_horizontal" />
+
+            <!--<ExpandableListView-->
+                <!--android:id="@+id/expandable_intern_list"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="112dp" >-->
+            <!--</ExpandableListView>-->
 
         </LinearLayout>
 
