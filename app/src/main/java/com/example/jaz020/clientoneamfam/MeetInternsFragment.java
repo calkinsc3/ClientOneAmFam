@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,16 +33,21 @@ public class MeetInternsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.internsRecyclerView);
+        LinearLayout backgroundView = (LinearLayout) view.findViewById(R.id.backgroundLinearLayout);
+        ImageView expandedImage = (ImageView) view.findViewById(R.id.expanded_image_intern_list);
+        TextView internTitleText = (TextView) view.findViewById(R.id.internTitleText);
+
         setInterns();
 
         /* Set up the recycler view */
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.internsRecyclerView);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(llm);
 
          /* Attach adapter to recycler view */
-        InternsRVAdapter adapter = new InternsRVAdapter(internNames, internPictureMap);
+        InternsRVAdapter adapter = new InternsRVAdapter(internNames, internPictureMap,
+                view, backgroundView, expandedImage, internTitleText, rv);
         rv.setAdapter(adapter);
     }
 
@@ -47,9 +55,9 @@ public class MeetInternsFragment extends Fragment {
         internNames = getResources().getStringArray(R.array.intern_names);
 
         internPictureMap = new HashMap<>();
-        internPictureMap.put(internNames[0], R.drawable.evan_headshot);
-        internPictureMap.put(internNames[1], R.drawable.levi);
+        internPictureMap.put(internNames[0], R.drawable.card_evan);
+        internPictureMap.put(internNames[1], R.drawable.card_levi);
         internPictureMap.put(internNames[2], R.drawable.navneet);
-        internPictureMap.put(internNames[3], R.drawable.james_world_party_time_excellent);
+        internPictureMap.put(internNames[3], R.drawable.card_james);
     }
 }
