@@ -19,8 +19,9 @@
 
     <style name="cloud_button" parent="AppTheme">
 
-        <item name="android:background">@drawable/cloud_button</item>
-        <item name="android:scaleType">centerCrop</item>
+        <item name="android:background">@drawable/cloud_3</item>
+        <item name="android:color">@android:color/transparent</item>
+        <item name="android:scaleType">fitXY</item>
 
     </style>
 

@@ -28,46 +28,54 @@
             android:orientation="vertical">
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+style="@style/cloud_button"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/my_agent"
                 android:id="@+id/clientsButton"
                 android:layout_gravity="center_horizontal" />
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/find_an_agent"
                 android:id="@+id/claimsButton"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                style="@style/cloud_button"
+                />
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/cloud_button"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/my_policies"
                 android:id="@+id/scheduleButton"
                 android:layout_gravity="center_horizontal" />
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/cloud_button"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/my_claims"
                 android:id="@+id/settingsButton"
                 android:layout_gravity="center_horizontal" />
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/cloud_button"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/settings"
                 android:id="@+id/myUploadsButton"
                 android:layout_gravity="center_horizontal" />
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/cloud_button"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/meet_the_interns"
                 android:id="@+id/meetInternsButton"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                />
 
             <!--<ExpandableListView-->
                 <!--android:id="@+id/expandable_intern_list"-->
