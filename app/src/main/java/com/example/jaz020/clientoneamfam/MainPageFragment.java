@@ -36,11 +36,11 @@ public class MainPageFragment extends Fragment {
     Button myClaims;
     Button settings;
     Button meetTheInterns;
-    
-    private ExpandableListView drawerExpandableList;
 
-    private List<String> meetInternsHeader;
-    private HashMap<String, List<String>> internNames;
+//    private ExpandableListView drawerExpandableList;
+//
+//    private List<String> meetInternsHeader;
+//    private HashMap<String, List<String>> internNames;
 
     //PARSE KEYS
     private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
@@ -68,7 +68,7 @@ public class MainPageFragment extends Fragment {
 //        drawerExpandableList.setAdapter(drawerExpandableListAdapter);
 
         buttonClickListeners();
-        expandableListClickListener();
+//        expandableListClickListener();
 
         try {
             Tools.setMyAgent();
@@ -79,7 +79,7 @@ public class MainPageFragment extends Fragment {
             Parse.initialize(getActivity(), APPLICATION_ID, CLIENT_KEY);
         }
 
-            return rootView;
+        return rootView;
     }
 
     private void buttonClickListeners() {
