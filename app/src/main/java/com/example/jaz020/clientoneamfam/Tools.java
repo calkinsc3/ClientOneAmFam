@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,13 +33,12 @@ public class Tools {
     public static void replaceFragment(int container_id, Fragment fragment, FragmentManager fManager, boolean addToBackStack) {
 
         FragmentTransaction fTransaction = fManager.beginTransaction();
-//        fTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,0,0);
+        fTransaction.setCustomAnimations(R.anim.right_to_left, R.anim.left_to_right);
         fTransaction.replace(container_id, fragment);
         if (addToBackStack) fTransaction.addToBackStack(null);
 
         fTransaction.commit();
 
-        //refresh options menu
     }
 
     public static void setMyAgent() throws ParseException{

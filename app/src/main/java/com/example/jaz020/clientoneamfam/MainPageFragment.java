@@ -2,12 +2,19 @@ package com.example.jaz020.clientoneamfam;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -19,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
 
 
 /**
@@ -36,6 +44,11 @@ public class MainPageFragment extends Fragment {
     Button myClaims;
     Button settings;
     Button meetTheInterns;
+
+    Display display;
+    Point size = new Point();
+
+    private static final long CLOUD_SPEED = 500;
 
 //    private ExpandableListView drawerExpandableList;
 //
@@ -57,7 +70,11 @@ public class MainPageFragment extends Fragment {
         settings = (Button) rootView.findViewById(R.id.myUploadsButton);
         meetTheInterns = (Button) rootView.findViewById(R.id.meetInternsButton);
 
+        display = getActivity().getWindowManager().getDefaultDisplay();
+        display.getSize(size);
+
         Singleton.getMyAgent();
+
 
 //        setExpandDrawerLists();
 //
@@ -79,6 +96,8 @@ public class MainPageFragment extends Fragment {
             Parse.initialize(getActivity(), APPLICATION_ID, CLIENT_KEY);
         }
 
+//        Animator anim = ViewAnimationUtils.
+
         return rootView;
     }
 
@@ -86,50 +105,136 @@ public class MainPageFragment extends Fragment {
         myAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
-                        getFragmentManager(), true);
+                SlideAnimation sa = new SlideAnimation(myAgent.getX(), size.x, myAgent);
+               sa.setInterpolator(new AccelerateInterpolator());
+                sa.setDuration(CLOUD_SPEED);
+                myAgent.startAnimation(sa);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        // Start your app main activity
+                        Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
+                                getFragmentManager(), true);
+
+                    }
+                }, CLOUD_SPEED);
+
             }
         });
 
         findAnAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri gmmIntentUri = Uri.parse("geo:0,0?q=american+family+agents");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+                SlideAnimation sa = new SlideAnimation(findAnAgent.getX(), size.x, findAnAgent);
+                sa.setInterpolator(new AccelerateInterpolator());
+                sa.setDuration(CLOUD_SPEED);
+                findAnAgent.startAnimation(sa);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        // Start your app main activity
+                        Uri gmmIntentUri = Uri.parse("geo:0,0?q=american+family+agents");
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        startActivity(mapIntent);
+                    }
+                }, CLOUD_SPEED);
+
             }
         });
 
         myPolicies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
-                        getFragmentManager(), true);
+                SlideAnimation sa = new SlideAnimation(myPolicies.getX(), size.x, myPolicies);
+                sa.setInterpolator(new AccelerateInterpolator());
+                sa.setDuration(CLOUD_SPEED);
+                myPolicies.startAnimation(sa);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        // Start your app main activity
+                        Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
+                                getFragmentManager(), true);
+
+                    }
+                }, CLOUD_SPEED);
+
             }
         });
 
         myClaims.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
-                Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
-                        getFragmentManager(), true);
+                SlideAnimation sa = new SlideAnimation(myClaims.getX(), size.x, myClaims);
+                sa.setInterpolator(new AccelerateInterpolator());
+                sa.setDuration(CLOUD_SPEED);
+                myClaims.startAnimation(sa);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        // Start your app main activity
+                        Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
+                                getFragmentManager(), true);
+
+                    }
+                }, CLOUD_SPEED);
+
             }
         });
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.replaceFragment(R.id.fragment_container, new Settings(),
-                        getFragmentManager(), true);
+                SlideAnimation sa = new SlideAnimation(settings.getX(), size.x, settings);
+                sa.setInterpolator(new AccelerateInterpolator());
+                sa.setDuration(CLOUD_SPEED);
+                settings.startAnimation(sa);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        // Start your app main activity
+                        Tools.replaceFragment(R.id.fragment_container, new Settings(),
+                                getFragmentManager(), true);
+
+                    }
+                }, CLOUD_SPEED);
             }
         });
 
         meetTheInterns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.replaceFragment(R.id.fragment_container, new MeetInternsFragment(),
-                        getFragmentManager(), true);
+                SlideAnimation sa = new SlideAnimation(meetTheInterns.getX(), size.x, meetTheInterns);
+                sa.setInterpolator(new AccelerateInterpolator());
+                sa.setDuration(CLOUD_SPEED);
+                meetTheInterns.startAnimation(sa);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        // Start your app main activity
+                        Tools.replaceFragment(R.id.fragment_container, new MeetInternsFragment(),
+                                getFragmentManager(), true);
+
+                    }
+                }, CLOUD_SPEED);
             }
         });
     }
