@@ -5,7 +5,6 @@
     android:padding="@dimen/padding_interns"
     >
 
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"

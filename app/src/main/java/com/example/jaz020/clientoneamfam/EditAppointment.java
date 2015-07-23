@@ -387,6 +387,18 @@ public class EditAppointment extends Fragment {
             }
         });
 
+        saveToGoogle();
+
+    }
+
+    private void saveToGoogle(){
+
+        Date startDate = startDateCalendar.getTime();
+        Date endDate = endDateCalendar.getTime();
+        String comments = comments_entry.getText().toString();
+        String title = meeting_entry.getText().toString();
+
+
         /**
          * SAVE TO GOOGLE CALENDAR
          */
@@ -412,7 +424,6 @@ public class EditAppointment extends Fragment {
             Toast.makeText(getActivity(), "Appointment not saved to google Calendar", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     /**
      * Gets the User's google calendar from google.
@@ -622,6 +633,7 @@ public class EditAppointment extends Fragment {
         switch (item.getItemId()) {
             case R.id.optional_action:
                 saveAppointment();
+                saveToGoogle();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

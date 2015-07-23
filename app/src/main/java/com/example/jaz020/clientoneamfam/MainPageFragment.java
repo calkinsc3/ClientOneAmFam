@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
+import com.parse.Parse;
+import com.parse.ParseException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,6 +41,10 @@ public class MainPageFragment extends Fragment {
     private List<String> meetInternsHeader;
     private HashMap<String, List<String>> internNames;
 
+    //PARSE KEYS
+    private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
+    private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
@@ -59,8 +66,17 @@ public class MainPageFragment extends Fragment {
 
         buttonClickListeners();
         expandableListClickListener();
-        Tools.setMyAgent();
-        return rootView;
+
+        try {
+            Tools.setMyAgent();
+        }
+        catch (ParseException e){
+            //INITIALIZE PARSE
+            Parse.enableLocalDatastore(getActivity());
+            Parse.initialize(getActivity(), APPLICATION_ID, CLIENT_KEY);
+        }
+
+            return rootView;
     }
 
     private void setExpandDrawerLists() {

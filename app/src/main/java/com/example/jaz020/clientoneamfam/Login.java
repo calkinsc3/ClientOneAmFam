@@ -44,12 +44,9 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if(savedInstanceState == null) {
-            //INITIALIZE PARSE
-            Parse.enableLocalDatastore(this);
-            Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
-
-        }
+        //INITIALIZE PARSE
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
         sharedPreferences = getSharedPreferences("AmFam", 0);
 
