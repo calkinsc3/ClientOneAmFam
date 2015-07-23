@@ -32,6 +32,7 @@ public class Tools {
     public static void replaceFragment(int container_id, Fragment fragment, FragmentManager fManager, boolean addToBackStack) {
 
         FragmentTransaction fTransaction = fManager.beginTransaction();
+//        fTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,0,0);
         fTransaction.replace(container_id, fragment);
         if (addToBackStack) fTransaction.addToBackStack(null);
 
