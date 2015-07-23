@@ -9,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class EditAppointment extends Fragment {
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
             CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
     };
+
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
     private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
@@ -339,7 +341,7 @@ public class EditAppointment extends Fragment {
     /**
      * Saves the current appointment (new or old) and uploads it to the user's Google Calendar
      */
-    public void saveAppointment(){
+    private void saveAppointment(){
         final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "", "", true);
         ParseObject appointmentToSave = new ParseObject("Meeting");
 
@@ -365,6 +367,7 @@ public class EditAppointment extends Fragment {
         appointmentToSave.put("StartDate", startDate);
         appointmentToSave.put("EndDate", endDate);
         appointmentToSave.put("Comment", comments);
+
         // TODO ??
         appointmentToSave.put("Accepted", true);
 
@@ -383,6 +386,18 @@ public class EditAppointment extends Fragment {
                 }
             }
         });
+
+        saveToGoogle();
+
+    }
+
+    private void saveToGoogle(){
+
+        Date startDate = startDateCalendar.getTime();
+        Date endDate = endDateCalendar.getTime();
+        String comments = comments_entry.getText().toString();
+        String title = meeting_entry.getText().toString();
+
 
         /**
          * SAVE TO GOOGLE CALENDAR
@@ -416,7 +431,7 @@ public class EditAppointment extends Fragment {
      * @return an array of information regarding the user's calendar
      *         it is put into the array in the format outlined by the google calendar fields
      */
-    public String[] getCalendar(){
+    private String[] getCalendar(){
 
         // Run query
         Cursor cur;
@@ -459,7 +474,6 @@ public class EditAppointment extends Fragment {
         attendees_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 getPossibleAttendees();
             }
@@ -607,9 +621,9 @@ public class EditAppointment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //TODO make save button show up
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
         menu.findItem(R.id.optional_action).setVisible(true);
+        menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         super.onCreateOptionsMenu(menu, inflater);
 
     }
@@ -619,6 +633,7 @@ public class EditAppointment extends Fragment {
         switch (item.getItemId()) {
             case R.id.optional_action:
                 saveAppointment();
+                saveToGoogle();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

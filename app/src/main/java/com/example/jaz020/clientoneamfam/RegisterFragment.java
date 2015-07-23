@@ -196,56 +196,128 @@ public class RegisterFragment extends Fragment {
 
     }
 
+    private boolean validateAllEntries(){
+
+        String username = username_entry.getText().toString();
+        String password = password_entry.getText().toString();
+        String repassword = password_reentry.getText().toString();
+        String street = street_entry.getText().toString();
+        String city = city_entry.getText().toString();
+        String state = state_spinner.getSelectedItem().toString();
+        String zip = zip_entry.getText().toString();
+        String name = name_entry.getText().toString();
+        String phone = phone_entry.getText().toString();
+        String email = email_entry.getText().toString();
+
+
+
+        if(username.length() < 1){
+            username_entry.setError("You must enter a username.");
+            return false;
+        }
+
+
+        if(password.length() < 1){
+            password_entry.setError("Please enter a password");
+            return false;
+        }
+
+        if(password_reentry.getError() != null || repassword.length() < 1){
+            password_reentry.setError("Passwords do not match");
+            return false;
+        }
+
+        if(street.length() < 1){
+            street_entry.setError("You must enter your address.");
+            return false;
+        }
+
+        if(city.length() < 1){
+            city_entry.setError("You must enter your city.");
+            return false;
+        }
+
+        if(state.length() > 2){
+            Toast.makeText(getActivity(), "Please select a state.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(zip.length() != 5){
+            zip_entry.setError("Enter a valid zip-code.");
+            return false;
+        }
+
+        if(name.length() < 1){
+            name_entry.setError("You must enter your name.");
+            return false;
+        }
+
+
+        //TODO make it check for exact ammounts (xxx-xxxx or xxx-xxx-xxxx or 1-xxx-xxx-xxxx)
+        if(phone.length() < 8 || phone.length() > 8 && phone.length() < 14){
+            phone_entry.setError("Please enter a phone number");
+            return false;
+        }
+
+        //check for valid email
+        if (email.length() < 1) {
+            email_entry.setError("Please enter a valid email address");
+            return false;
+        }
+
+
+        return true;
+    }
     /**
      * Performs validation of all field entries and signs up a new user
      *
      */
     private void registerUser(){
 
-        String phoneNumber = phone_entry.getText().toString();
-        phoneNumber = phoneNumber.replace("(","");
-        phoneNumber = phoneNumber.replace(")","");
-        phoneNumber = phoneNumber.replace("-","");
-        phoneNumber = phoneNumber.replace(" ","");
+        if(validateAllEntries()) {
+            String phoneNumber = phone_entry.getText().toString();
+            phoneNumber = phoneNumber.replace("(", "");
+            phoneNumber = phoneNumber.replace(")", "");
+            phoneNumber = phoneNumber.replace("-", "");
+            phoneNumber = phoneNumber.replace(" ", "");
 
-        String agentID = agentList.get(agent_spinner.getSelectedItemPosition()).getObjectId();
+            final String agentID = agentList.get(agent_spinner.getSelectedItemPosition()).getObjectId();
 
-        ParseUser newUser = new ParseUser();
+            ParseUser newUser = new ParseUser();
 
-        String zip = zip_entry.getText().toString();
-
-        //TODO validate all entries
-        newUser.setUsername(username_entry.getText().toString());
-        newUser.put("Address", street_entry.getText().toString());
-        newUser.put("City", city_entry.getText().toString());
-        newUser.put("State", state_spinner.getSelectedItem().toString());
-        newUser.put("Name", name_entry.getText().toString());
-        newUser.put("AgentID",agentID);
-        newUser.put("accountType", "Client");
-        newUser.setEmail(email_entry.getText().toString());
-
-        if(password_entry.getError() == null){
+            //TODO validate all entries
+            newUser.setUsername(username_entry.getText().toString());
+            newUser.put("Address", street_entry.getText().toString());
+            newUser.put("City", city_entry.getText().toString());
+            newUser.put("State", state_spinner.getSelectedItem().toString());
+            newUser.put("Name", name_entry.getText().toString());
+            newUser.put("AgentID", agentID);
+            newUser.put("accountType", "Client");
+            newUser.setEmail(email_entry.getText().toString());
             newUser.setPassword(password_entry.getText().toString());
-        }
-
-        if(zip.length() > 0 ) {
             newUser.put("Zip", Double.valueOf(zip_entry.getText().toString()));
-        }
-
-        if(phoneNumber.length() > 0) {
             newUser.put("phoneNumber", Double.valueOf(phoneNumber));
+
+            newUser.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        signUpSuccess();
+                    } else {
+                        String message = e.getMessage();
+
+                        if(message.contains("email")){
+                            email_entry.setError("Please enter a valid email address");
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Could Not Create New User: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+            });
         }
 
-        newUser.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    signUpSuccess();
-                } else {
-                    Toast.makeText(getActivity(), "Could Not Create New User: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
     }
 
