@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -21,9 +23,22 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
     private String[] internNames;
     private HashMap<String, Integer> internPictureMap;
 
-    InternsRVAdapter(String[] internNames, HashMap<String, Integer> internPictureMap) {
+    private View view;
+    private ViewGroup viewGroup;
+    private LinearLayout backgroundView;
+    private ImageView expandedImage;
+    private TextView internTitleText;
+
+    InternsRVAdapter(String[] internNames, HashMap<String, Integer> internPictureMap,
+                     View view, LinearLayout backgroundView, ImageView expandedImage,
+                     TextView internTitleText) {
         this.internNames = internNames;
         this.internPictureMap = internPictureMap;
+
+        this.view = view;
+        this.backgroundView = backgroundView;
+        this.expandedImage = expandedImage;
+        this.internTitleText = internTitleText;
     }
 
     @Override
@@ -38,11 +53,14 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.intern_card, viewGroup, false);
+
+        this.viewGroup = viewGroup;
+
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder vh, int i) {
+    public void onBindViewHolder(final ViewHolder vh, final int i) {
         vh.name.setText(internNames[i]);
 
         /* Load picture into current card's image view */
@@ -81,6 +99,14 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
                 }
             }
         });
+
+        vh.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ImageZoom(internPictureMap.get(internNames[i]), vh.image, expandedImage,
+                        internTitleText, null, backgroundView, viewGroup);
+            }
+        });
     }
 
     @Override
@@ -92,7 +118,7 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
 
         CardView cv;
 
-        ImageView image;
+        ImageButton image;
         TextView name;
 
         ViewHolder(View view) {
@@ -100,7 +126,7 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
 
             cv = (CardView) view.findViewById(R.id.intern_card_view);
 
-            image = (ImageView) view.findViewById(R.id.internPicture);
+            image = (ImageButton) view.findViewById(R.id.internPicture);
             name = (TextView) view.findViewById(R.id.internName);
         }
 
