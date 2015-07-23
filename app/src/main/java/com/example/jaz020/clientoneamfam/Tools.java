@@ -40,18 +40,20 @@ public class Tools {
         //refresh options menu
     }
 
-    public static void setMyAgent(){
-        ParseUser client = ParseUser.getCurrentUser();
-        final String agentID = client.getString("AgentID");
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereEqualTo("objectId", agentID);
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> list, ParseException e) {
-                if ( e == null && list.size() > 0)
-                    Singleton.setMyAgent(list.get(0));
-            }
-        });
+    public static void setMyAgent() throws ParseException{
+
+            ParseUser client = ParseUser.getCurrentUser();
+            final String agentID = client.getString("AgentID");
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereEqualTo("objectId", agentID);
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> list, ParseException e) {
+                    if (e == null && list.size() > 0)
+                        Singleton.setMyAgent(list.get(0));
+                }
+            });
+
     }
 
     public static void logout(Context context) {
@@ -75,21 +77,6 @@ public class Tools {
     }
 
     public static void updateTimeEntry(EditText editText, Calendar calendar) {
-
-//        String minutes = String.valueOf(calendar.get(Calendar.MINUTE));
-//        String am_pm;
-//
-//        if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
-//            am_pm = "am";
-//        } else {
-//            am_pm = "pm";
-//        }
-//
-//        if (minutes.length() < 2) {
-//            minutes += "0";
-//        }
-//
-//        editText.setText(calendar.get(Calendar.HOUR) + ":" + minutes + " " + am_pm);
 
         String timeFormat = "h:mm a";
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.US);

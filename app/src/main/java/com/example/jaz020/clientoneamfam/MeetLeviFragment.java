@@ -29,12 +29,12 @@ public class MeetLeviFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meet_levi, container, false);
 
-        initailizeTabs(view);
+        initializeTabsAndContent(view);
 
         return view;
     }
 
-    private void initailizeTabs(final View view){
+    private void initializeTabsAndContent(final View view){
         tabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         tabHost.setup();
 
@@ -48,13 +48,13 @@ public class MeetLeviFragment extends Fragment {
                 // do all the stuff you need to do to your view
                 TextView info = (TextView)ll_view.findViewById(R.id.basicInfo);
 
-                info.setText("Levi Lavender is one semester away from graduating from Madison Area " +
-                        "Technical College with a degree in Mobile Application Development with an " +
-                        "emphasis on Android. He has experience with Android Studio, Java, JavaScript," +
-                        " HTML, CSS, XML, Swift, JQuery, AngularJS, and Oracle SQL. He is am currently " +
-                        "interning with American Family Insurance developing internal applications " +
-                        "for Android Devices. He currently holds a Associates Degree from the " +
-                        "University of Wisconsin Baraboo/Sauk County.");
+                info.setText("Levi Lavender currently holds a Associates Degree from the " +
+                        "University of Wisconsin Baraboo/Sauk County. He is one semester away from " +
+                        "graduating from Madison Area Technical College with a degree in Mobile " +
+                        "Application Development with an emphasis on Android. He has experience with" +
+                        " Android Studio, Java, JavaScript, HTML, CSS, XML, Swift, JQuery, AngularJS," +
+                        " and Oracle SQL. He is am currently interning with American Family Insurance" +
+                        " developing internal applications for Android Devices. ");
 
                 return ll_view;
             }
@@ -77,7 +77,7 @@ public class MeetLeviFragment extends Fragment {
                         information.setText("Android Studio, Java, Swift, jQuery, AngularJS, JavaScript" +
                                 "Oracle SQL, HTML,CSS, and XML");
                         label2.setText("Additional Skills: ");
-                        information2.setText("Problem Solving, Critical Thinking, Teamwork, Customer Service," +
+                        information2.setText("Problem Solver, Critical Thinking, Teamwork, Customer Service," +
                                 "Dependable, Consistent, and Versatile");
 
                         github.setVisibility(View.VISIBLE);
