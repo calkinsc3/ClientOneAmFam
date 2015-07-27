@@ -1,29 +1,29 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/flayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/clouds"
     android:orientation="vertical"
-    tools:context="com.example.jaz020.clientoneamfam.MeetInternsFragment">
+    style="@style/base_clouds"
+    android:id="@+id/flayout"
+    tools:context="com.example.jaz020.clientoneamfam.MeetInternsFragment" >
 
     <LinearLayout
-        android:id="@+id/backgroundLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:id="@+id/backgroundLinearLayout" >
 
         <TextView
-            android:id="@+id/internTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:paddingBottom="10dp"
-            android:paddingTop="20dp"
-            android:text="@string/interns_title"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:text="@string/interns_title"
+            android:id="@+id/internTitleText"
+            android:layout_gravity="center_horizontal|top" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/internsRecyclerView"
@@ -38,8 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:contentDescription="@string/expanded_image"
         android:padding="@dimen/padding_interns"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:contentDescription="@string/expanded_image" />
 
 </FrameLayout>

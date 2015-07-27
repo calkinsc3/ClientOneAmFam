@@ -1,35 +1,31 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.renderscript.Sampler;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
 import com.parse.Parse;
 import com.parse.ParseException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 
 
 /**
+ *
  * Created by nsr009 on 6/16/2015.
  */
 public class MainPageFragment extends Fragment {
@@ -58,6 +54,7 @@ public class MainPageFragment extends Fragment {
     //PARSE KEYS
     private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
     private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,10 +102,14 @@ public class MainPageFragment extends Fragment {
         myAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlideAnimation sa = new SlideAnimation(myAgent.getX(), size.x, myAgent);
-               sa.setInterpolator(new AccelerateInterpolator());
-                sa.setDuration(CLOUD_SPEED);
-                myAgent.startAnimation(sa);
+//                SlideAnimation sa = new SlideAnimation(myAgent.getX(), size.x, myAgent);
+//               sa.setInterpolator(new AccelerateInterpolator());
+//                sa.setDuration(CLOUD_SPEED);
+//                myAgent.startAnimation(sa);
+
+                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
+                anim.setDuration(CLOUD_SPEED + 500);
+                myAgent.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
 
@@ -128,10 +129,10 @@ public class MainPageFragment extends Fragment {
         findAnAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlideAnimation sa = new SlideAnimation(findAnAgent.getX(), size.x, findAnAgent);
-                sa.setInterpolator(new AccelerateInterpolator());
-                sa.setDuration(CLOUD_SPEED);
-                findAnAgent.startAnimation(sa);
+
+                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
+                anim.setDuration(CLOUD_SPEED + 500);
+                findAnAgent.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
 
@@ -152,10 +153,9 @@ public class MainPageFragment extends Fragment {
         myPolicies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlideAnimation sa = new SlideAnimation(myPolicies.getX(), size.x, myPolicies);
-                sa.setInterpolator(new AccelerateInterpolator());
-                sa.setDuration(CLOUD_SPEED);
-                myPolicies.startAnimation(sa);
+                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
+                anim.setDuration(CLOUD_SPEED + 500);
+                myPolicies.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
 
@@ -174,10 +174,9 @@ public class MainPageFragment extends Fragment {
 
         myClaims.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SlideAnimation sa = new SlideAnimation(myClaims.getX(), size.x, myClaims);
-                sa.setInterpolator(new AccelerateInterpolator());
-                sa.setDuration(CLOUD_SPEED);
-                myClaims.startAnimation(sa);
+                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
+                anim.setDuration(CLOUD_SPEED + 500);
+                myClaims.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
 
@@ -197,10 +196,11 @@ public class MainPageFragment extends Fragment {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlideAnimation sa = new SlideAnimation(settings.getX(), size.x, settings);
-                sa.setInterpolator(new AccelerateInterpolator());
-                sa.setDuration(CLOUD_SPEED);
-                settings.startAnimation(sa);
+//
+
+                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
+                anim.setDuration(CLOUD_SPEED + 500);
+                settings.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
 
@@ -219,10 +219,11 @@ public class MainPageFragment extends Fragment {
         meetTheInterns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlideAnimation sa = new SlideAnimation(meetTheInterns.getX(), size.x, meetTheInterns);
-                sa.setInterpolator(new AccelerateInterpolator());
-                sa.setDuration(CLOUD_SPEED);
-                meetTheInterns.startAnimation(sa);
+//
+
+                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
+                anim.setDuration(CLOUD_SPEED + 500);
+                meetTheInterns.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
 
@@ -238,7 +239,15 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
-//
+
+
+    @Override
+    public void onResume() {
+        super.onCreate(null);
+
+    }
+
+    //
 //    private void expandableListClickListener() {
 //        drawerExpandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 //            @Override

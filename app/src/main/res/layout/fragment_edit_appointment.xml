@@ -15,6 +15,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:background="@color/cloudy_white"
                 android:id="@+id/meeting_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
                 />
 
             <EditText
+                android:background="@color/cloudy_white"
                 android:id="@+id/meeting_entry"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -29,12 +31,15 @@
                 android:inputType="text" />
 
             <TextView
+                android:background="@color/cloudy_white"
+                android:layout_marginTop="10dp"
                 android:id="@+id/attendees_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/attendees_title" />
 
             <EditText
+                android:background="@color/cloudy_white"
                 android:id="@+id/attendees_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,30 +47,38 @@
                 android:inputType="textMultiLine" />
 
             <TextView
+                android:background="@color/cloudy_white"
+                android:layout_marginTop="10dp"
                 android:id="@+id/location_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/location_title" />
 
             <EditText
+                android:background="@color/cloudy_white"
                 android:id="@+id/location_entry"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
 
             <TextView
+                android:layout_marginTop="10dp"
+                android:background="@color/cloudy_white"
                 android:id="@+id/comments_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/comments_title" />
 
             <EditText
+                android:background="@color/cloudy_white"
                 android:id="@+id/comments_entry"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine" />
 
             <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/cloudy_white"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -101,6 +114,8 @@
 
 
             <LinearLayout
+                android:background="@color/cloudy_white"
+                android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
