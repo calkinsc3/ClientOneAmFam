@@ -2,6 +2,7 @@ package com.example.jaz020.clientoneamfam;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -72,8 +73,6 @@ public class MeetNavneetFragment extends Fragment {
             descriptionText = (TextView) view.findViewById(R.id.descriptionText_portrait);
 
             emailButton = (Button) view.findViewById(R.id.emailNavneetButton_portrait);
-
-            rootView.setVisibility(View.VISIBLE);
         } else {
             rootView = (FrameLayout) view.findViewById(R.id.navneet_fragment_landscape_layout);
             backgroundView = (LinearLayout) view.findViewById(R.id.navneet_fragment_linear_layout_landscape);
@@ -85,9 +84,10 @@ public class MeetNavneetFragment extends Fragment {
             descriptionText = (TextView) view.findViewById(R.id.descriptionText_landscape);
 
             emailButton = (Button) view.findViewById(R.id.emailNavneetButton_landscape);
-
-            rootView.setVisibility(View.VISIBLE);
         }
+
+        imageThumb.setBackgroundColor(Color.TRANSPARENT);
+        rootView.setVisibility(View.VISIBLE);
     }
 
     private void setDescription() {

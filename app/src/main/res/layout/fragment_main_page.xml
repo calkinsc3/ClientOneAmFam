@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <Button
-style="@style/cloud_button"
+                style="@style/cloud_button"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="@string/my_agent"
