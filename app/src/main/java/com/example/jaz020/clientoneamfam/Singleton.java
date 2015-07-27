@@ -17,6 +17,7 @@ public class Singleton {
     private static FragmentManager fragmentManager;
     private static Context context;
     private static ParseUser myAgent;
+    private static int tempLocation;
 
     private Singleton() {
     }
@@ -41,11 +42,11 @@ public class Singleton {
         Singleton.currentClaim = currentClaim;
     }
 
+    public static ParseUser getMyAgent(){ return Singleton.myAgent; }
+
     public static void setMyAgent(ParseUser agent){
         Singleton.myAgent = agent;
     }
-
-    public static ParseUser getMyAgent(){ return Singleton.myAgent; }
 
     public static FragmentManager getFragmentManager() {
         return fragmentManager;
@@ -63,4 +64,11 @@ public class Singleton {
         Singleton.context = context;
     }
 
+    public static int getTempLocation() {
+        return tempLocation;
+    }
+
+    public static void setTempLocation(int tempLocation) {
+        Singleton.tempLocation = tempLocation;
+    }
 }
