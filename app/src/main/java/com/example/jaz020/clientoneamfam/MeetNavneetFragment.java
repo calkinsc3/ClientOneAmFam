@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +33,10 @@ public class MeetNavneetFragment extends Fragment {
     private ImageView expandedImage;
     private TextView nameText;
     private TextView descriptionText;
+    private TextView jobTitleText;
+    private TextView jobTeamText;
+    private TextView linkedinText;
+    private TextView githubText;
     private Button emailButton;
 
     @Override
@@ -71,6 +77,10 @@ public class MeetNavneetFragment extends Fragment {
 
             nameText = (TextView) view.findViewById(R.id.name_navneet_portrait);
             descriptionText = (TextView) view.findViewById(R.id.descriptionText_portrait);
+            jobTitleText = (TextView) view.findViewById(R.id.navneet_job_title_portrait);
+            jobTeamText = (TextView) view.findViewById(R.id.navneet_job_team_portrait);
+            linkedinText = (TextView) view.findViewById(R.id.navneet_linkedin_portrait);
+            githubText = (TextView) view.findViewById(R.id.navneet_github_portrait);
 
             emailButton = (Button) view.findViewById(R.id.emailNavneetButton_portrait);
         } else {
@@ -82,6 +92,10 @@ public class MeetNavneetFragment extends Fragment {
 
             nameText = (TextView) view.findViewById(R.id.name_navneet_landscape);
             descriptionText = (TextView) view.findViewById(R.id.descriptionText_landscape);
+            jobTitleText = (TextView) view.findViewById(R.id.navneet_job_title_landscape);
+            jobTeamText = (TextView) view.findViewById(R.id.navneet_job_team_landscape);
+            linkedinText = (TextView) view.findViewById(R.id.navneet_linkedin_landscape);
+            githubText = (TextView) view.findViewById(R.id.navneet_github_landscape);
 
             emailButton = (Button) view.findViewById(R.id.emailNavneetButton_landscape);
         }
@@ -122,8 +136,20 @@ public class MeetNavneetFragment extends Fragment {
         imageThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ImageZoom(R.drawable.navneet, imageThumb, expandedImage, nameText,
-                        rootView, backgroundView, null);
+//                nameText.setBackgroundColor(Color.TRANSPARENT);
+//                jobTitleText.setBackgroundColor(Color.TRANSPARENT);
+//                jobTeamText.setBackgroundColor(Color.TRANSPARENT);
+//                linkedinText.setBackgroundColor(Color.TRANSPARENT);
+//                githubText.setBackgroundColor(Color.TRANSPARENT);
+
+                new ImageZoom(R.drawable.navneet, imageThumb, expandedImage, nameText, jobTitleText,
+                        jobTeamText, linkedinText, githubText, rootView, backgroundView, null);
+
+//                nameText.setBackgroundColor(Color.WHITE);
+//                jobTitleText.setBackgroundColor(Color.WHITE);
+//                jobTeamText.setBackgroundColor(Color.WHITE);
+//                linkedinText.setBackgroundColor(Color.WHITE);
+//                githubText.setBackgroundColor(Color.WHITE);
             }
         });
     }
