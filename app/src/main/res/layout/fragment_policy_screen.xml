@@ -9,6 +9,7 @@
         android:id="@+id/descriptionLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -28,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionLayout"
+        android:background="#ffffff"
         android:orientation="horizontal">
 
         <TextView
@@ -49,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/costLayout"
+        android:background="#ffffff"
         android:orientation="horizontal">
 
         <TextView
@@ -70,6 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/addressLayout"
+        android:background="#ffffff"
         android:orientation="horizontal"
         android:weightSum="6">
 
@@ -121,7 +125,8 @@
         android:id="@+id/uploadsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/address2Layout">
+        android:layout_below="@id/address2Layout"
+        android:background="#ffffff">
 
         <TextView
             android:layout_width="wrap_content"
@@ -148,7 +153,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/uploadsLayout"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
 
 </RelativeLayout>
