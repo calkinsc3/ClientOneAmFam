@@ -6,11 +6,10 @@
     tools:context="com.example.jaz020.clientoneamfam.PolicyScreenFragment">
 
     <LinearLayout
-        android:background="@color/cloudy_white"
         android:id="@+id/descriptionLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="@color/cloudy_white"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -26,13 +25,12 @@
             android:inputType="text"/>
     </LinearLayout>
     <LinearLayout
-        android:background="@color/cloudy_white"
-        android:layout_marginTop="10dp"
         android:id="@+id/costLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionLayout"
-        android:background="#ffffff"
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white"
         android:orientation="horizontal">
 
         <TextView
@@ -50,13 +48,12 @@
             android:inputType="number"/>
     </LinearLayout>
     <LinearLayout
-        android:background="@color/cloudy_white"
-        android:layout_marginTop="10dp"
         android:id="@+id/addressLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/costLayout"
-        android:background="#ffffff"
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white"
         android:orientation="horizontal">
 
         <TextView
@@ -74,13 +71,12 @@
             android:inputType="textPostalAddress"/>
     </LinearLayout>
     <LinearLayout
-        android:background="@color/cloudy_white"
-        android:layout_marginTop="10dp"
         android:id="@+id/address2Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/addressLayout"
-        android:background="#ffffff"
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white"
         android:orientation="horizontal"
         android:weightSum="6">
 
@@ -133,7 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/address2Layout"
-        android:background="#ffffff">
+        android:background="@color/cloudy_white">
 
         <TextView
             android:layout_width="wrap_content"

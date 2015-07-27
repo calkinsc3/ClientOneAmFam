@@ -7,10 +7,9 @@
 
     <LinearLayout
         android:id="@+id/policyLayout"
-        android:background="@color/cloudy_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="@color/cloudy_white"
         android:orientation="horizontal">
 
         <TextView
@@ -27,12 +26,11 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/damagesLayout"
-        android:background="@color/cloudy_white"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/policyLayout"
-        android:background="#ffffff">
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,13 +49,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/cloudy_white"
-        android:layout_marginTop="10dp"
         android:id="@+id/commentsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/damagesLayout"
-        android:background="#ffffff">
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,13 +72,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/cloudy_white"
-        android:layout_marginTop="10dp"
         android:id="@+id/uploadsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/commentsLayout"
-        android:background="#ffffff">
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white" >
 
         <TextView
             android:layout_width="wrap_content"
