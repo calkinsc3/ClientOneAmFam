@@ -112,10 +112,13 @@ public class MeetNavneetFragment extends Fragment {
 
         String description =
                 "Navneet is currently a student at the University of Wisconsin - Madison studying" +
-                " Computer Sciences.\n\nSkills:\n  Languages: Java, C++, C, XML, JSON" +
-                "\n  Operating Systems: Linux, Unix, OS X, Windows\n  Software: Android Studio, " +
-                "Eclipse, Xcode\n\nIn his free time, Navneet loves to referee soccer, watch " +
-                "sports, and write personal applications.";
+                " Computer Sciences." +
+                "\n\nSkills:" +
+                "\n  Languages: Java, C++, C, XML, JSON" +
+                "\n  Operating Systems: Linux, Unix, OS X, Windows" +
+                "\n  Software: Android Studio, Eclipse, Xcode" +
+                "\n\nIn his free time, Navneet loves to referee soccer, watch  sports, and " +
+                "write personal applications.";
 
         descriptionText.setText(description);
     }

@@ -134,31 +134,7 @@ public class ImageZoom {
             startBounds.bottom += deltaHeight;
         }
 
-        // Hide the thumbnail and show the zoomed-in view. When the animation begins,
-        // it will position the zoomed-in view in the place of the thumbnail and
-        // the background will fade to transparent black.
-        imageThumb.setAlpha(0f);
-        backgroundView.setAlpha(.7f);
-        backgroundView.setBackgroundColor(Color.BLACK);
-
-        nameText.setTextColor(Color.DKGRAY);
-        nameText.setBackgroundColor(Color.TRANSPARENT);
-
-        if (recyclerView != null) {
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            emailButton.setAlpha(.5f);
-
-            aboutText.setBackgroundColor(Color.TRANSPARENT);
-            descriptionText.setBackgroundColor(Color.TRANSPARENT);
-            jobTitleText.setBackgroundColor(Color.TRANSPARENT);
-            jobTeamText.setBackgroundColor(Color.TRANSPARENT);
-            linkedinText.setBackgroundColor(Color.TRANSPARENT);
-            githubText.setBackgroundColor(Color.TRANSPARENT);
-        }
-
-        expandedImage.setVisibility(View.VISIBLE);
-        expandedImage.setAlpha(1f);
+        prepareVisibilitiesForAnimation();
 
         // Set the pivot point for SCALE_X and SCALE_Y transformations to the
         // top-left corner of the zoomed-in view (the default is the center of the view).
@@ -241,6 +217,34 @@ public class ImageZoom {
                 currentAnimator = set;
             }
         });
+    }
+
+    private void prepareVisibilitiesForAnimation() {
+        // Hide the thumbnail and show the zoomed-in view. When the animation begins,
+        // it will position the zoomed-in view in the place of the thumbnail and
+        // the background will fade to transparent black.
+        imageThumb.setAlpha(0f);
+        backgroundView.setAlpha(.7f);
+        backgroundView.setBackgroundColor(Color.BLACK);
+
+        nameText.setTextColor(Color.DKGRAY);
+        nameText.setBackgroundColor(Color.TRANSPARENT);
+
+        if (recyclerView != null) {
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            emailButton.setAlpha(.5f);
+
+            aboutText.setBackgroundColor(Color.TRANSPARENT);
+            descriptionText.setBackgroundColor(Color.TRANSPARENT);
+            jobTitleText.setBackgroundColor(Color.TRANSPARENT);
+            jobTeamText.setBackgroundColor(Color.TRANSPARENT);
+            linkedinText.setBackgroundColor(Color.TRANSPARENT);
+            githubText.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        expandedImage.setVisibility(View.VISIBLE);
+        expandedImage.setAlpha(1f);
     }
 
     protected void endAnimation() {
