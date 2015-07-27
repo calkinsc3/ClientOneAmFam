@@ -108,8 +108,9 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
         vh.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ImageZoom(internPictureMap.get(internNames[i]), vh.image, expandedImage,
-                        internTitleText, null, null, null, null, frameLayout, backgroundView, recyclerView);
+                new ImageZoom(internPictureMap.get(internNames[i]), vh.image, expandedImage, null,
+                        internTitleText, null, null, null, null, null, null,
+                        frameLayout, backgroundView, recyclerView);
             }
         });
     }

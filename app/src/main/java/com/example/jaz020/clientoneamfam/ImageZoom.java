@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,26 +30,34 @@ public class ImageZoom {
     private int imageID;
     private ImageButton imageThumb;
     private ImageView expandedImage;
+    private Button emailButton;
     private TextView nameText;
     private TextView jobTitleText;
     private TextView jobTeamText;
     private TextView linkedinText;
     private TextView githubText;
+    private TextView aboutText;
+    private TextView descriptionText;
     private FrameLayout rootView;
     private LinearLayout backgroundView;
     private RecyclerView recyclerView;
 
-    public ImageZoom(int imageID, ImageButton imageThumb, ImageView expandedImage, TextView nameText,
-                     TextView jobTitleText, TextView jobTeamText, TextView linkedinText, TextView githubText,
-                     FrameLayout rootView, LinearLayout backgroundView, RecyclerView recyclerView) {
+    public ImageZoom(int imageID, ImageButton imageThumb, ImageView expandedImage,
+                     Button emailButton, TextView nameText, TextView jobTitleText,
+                     TextView jobTeamText, TextView linkedinText, TextView githubText,
+                     TextView aboutText, TextView descriptionText, FrameLayout rootView,
+                     LinearLayout backgroundView, RecyclerView recyclerView) {
         this.imageID = imageID;
         this.imageThumb = imageThumb;
         this.expandedImage = expandedImage;
+        this.emailButton = emailButton;
         this.nameText = nameText;
         this.jobTitleText = jobTitleText;
         this.jobTeamText = jobTeamText;
         this.linkedinText = linkedinText;
         this.githubText = githubText;
+        this.aboutText = aboutText;
+        this.descriptionText = descriptionText;
         this.rootView = rootView;
         this.backgroundView = backgroundView;
         this.recyclerView = recyclerView;
@@ -131,12 +140,17 @@ public class ImageZoom {
         imageThumb.setAlpha(0f);
         backgroundView.setAlpha(.7f);
         backgroundView.setBackgroundColor(Color.BLACK);
+
         nameText.setTextColor(Color.DKGRAY);
         nameText.setBackgroundColor(Color.TRANSPARENT);
 
         if (recyclerView != null) {
             recyclerView.setVisibility(View.GONE);
         } else {
+            emailButton.setAlpha(.5f);
+
+            aboutText.setBackgroundColor(Color.TRANSPARENT);
+            descriptionText.setBackgroundColor(Color.TRANSPARENT);
             jobTitleText.setBackgroundColor(Color.TRANSPARENT);
             jobTeamText.setBackgroundColor(Color.TRANSPARENT);
             linkedinText.setBackgroundColor(Color.TRANSPARENT);
@@ -233,16 +247,28 @@ public class ImageZoom {
         imageThumb.setAlpha(1f);
         backgroundView.setAlpha(1f);
         backgroundView.setBackgroundColor(Color.TRANSPARENT);
+
         nameText.setTextColor(Color.BLACK);
-        nameText.setBackgroundColor(Color.WHITE);
+        nameText.setBackgroundColor(Singleton.getContext()
+                .getResources().getColor(R.color.cloudy_white));
 
         if (recyclerView != null) {
             recyclerView.setVisibility(View.VISIBLE);
         } else {
-            jobTitleText.setBackgroundColor(Color.WHITE);
-            jobTeamText.setBackgroundColor(Color.WHITE);
-            linkedinText.setBackgroundColor(Color.WHITE);
-            githubText.setBackgroundColor(Color.WHITE);
+            emailButton.setAlpha(1f);
+
+            aboutText.setBackgroundColor(Singleton.getContext()
+                    .getResources().getColor(R.color.cloudy_white));
+            descriptionText.setBackgroundColor(Singleton.getContext()
+                    .getResources().getColor(R.color.cloudy_white));
+            jobTitleText.setBackgroundColor(Singleton.getContext()
+                    .getResources().getColor(R.color.cloudy_white));
+            jobTeamText.setBackgroundColor(Singleton.getContext()
+                    .getResources().getColor(R.color.cloudy_white));
+            linkedinText.setBackgroundColor(Singleton.getContext()
+                    .getResources().getColor(R.color.cloudy_white));
+            githubText.setBackgroundColor(Singleton.getContext()
+                    .getResources().getColor(R.color.cloudy_white));
         }
 
         expandedImage.setVisibility(View.GONE);

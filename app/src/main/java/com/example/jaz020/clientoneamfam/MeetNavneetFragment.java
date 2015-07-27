@@ -33,6 +33,7 @@ public class MeetNavneetFragment extends Fragment {
     private ImageView expandedImage;
     private TextView nameText;
     private TextView descriptionText;
+    private TextView aboutText;
     private TextView jobTitleText;
     private TextView jobTeamText;
     private TextView linkedinText;
@@ -77,6 +78,7 @@ public class MeetNavneetFragment extends Fragment {
 
             nameText = (TextView) view.findViewById(R.id.name_navneet_portrait);
             descriptionText = (TextView) view.findViewById(R.id.descriptionText_portrait);
+            aboutText = (TextView) view.findViewById(R.id.navneet_about_portrait);
             jobTitleText = (TextView) view.findViewById(R.id.navneet_job_title_portrait);
             jobTeamText = (TextView) view.findViewById(R.id.navneet_job_team_portrait);
             linkedinText = (TextView) view.findViewById(R.id.navneet_linkedin_portrait);
@@ -92,6 +94,7 @@ public class MeetNavneetFragment extends Fragment {
 
             nameText = (TextView) view.findViewById(R.id.name_navneet_landscape);
             descriptionText = (TextView) view.findViewById(R.id.descriptionText_landscape);
+            aboutText = (TextView) view.findViewById(R.id.navneet_about_landscape);
             jobTitleText = (TextView) view.findViewById(R.id.navneet_job_title_landscape);
             jobTeamText = (TextView) view.findViewById(R.id.navneet_job_team_landscape);
             linkedinText = (TextView) view.findViewById(R.id.navneet_linkedin_landscape);
@@ -136,20 +139,9 @@ public class MeetNavneetFragment extends Fragment {
         imageThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                nameText.setBackgroundColor(Color.TRANSPARENT);
-//                jobTitleText.setBackgroundColor(Color.TRANSPARENT);
-//                jobTeamText.setBackgroundColor(Color.TRANSPARENT);
-//                linkedinText.setBackgroundColor(Color.TRANSPARENT);
-//                githubText.setBackgroundColor(Color.TRANSPARENT);
-
-                new ImageZoom(R.drawable.navneet, imageThumb, expandedImage, nameText, jobTitleText,
-                        jobTeamText, linkedinText, githubText, rootView, backgroundView, null);
-
-//                nameText.setBackgroundColor(Color.WHITE);
-//                jobTitleText.setBackgroundColor(Color.WHITE);
-//                jobTeamText.setBackgroundColor(Color.WHITE);
-//                linkedinText.setBackgroundColor(Color.WHITE);
-//                githubText.setBackgroundColor(Color.WHITE);
+                new ImageZoom(R.drawable.navneet, imageThumb, expandedImage, emailButton, nameText,
+                        jobTitleText, jobTeamText, linkedinText, githubText, aboutText,
+                        descriptionText, rootView, backgroundView, null);
             }
         });
     }

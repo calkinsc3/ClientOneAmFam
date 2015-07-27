@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:background="#ffffff"
+                        android:background="@color/cloudy_white"
                         android:id="@+id/name_navneet_portrait"
                         android:text="@string/navneet"
                         android:textStyle="bold" />
@@ -62,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="7dp"
-                        android:background="#ffffff"
+                        android:background="@color/cloudy_white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/navneet_job_title_portrait"
                         android:text="@string/job_title"
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="12dp"
-                        android:background="#ffffff"
+                        android:background="@color/cloudy_white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/navneet_linkedin_portrait"
                         android:text="@string/linkedin_navneet"
@@ -93,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="2dp"
-                        android:background="#ffffff"
+                        android:background="@color/cloudy_white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/navneet_github_portrait"
                         android:text="@string/github_navneet"
@@ -108,13 +108,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
+                android:background="@color/cloudy_white"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/navneet_about_portrait"
                 android:text="@string/about_navneet" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
+                android:background="@color/cloudy_white"
                 android:id="@+id/descriptionText_portrait" />
 
             <RelativeLayout
@@ -190,7 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:background="#ffffff"
+                        android:background="@color/cloudy_white"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/name_navneet_landscape"
@@ -210,7 +213,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="5dp"
-                                android:background="#ffffff"
+                                android:background="@color/cloudy_white"
                                 android:layout_gravity="center_horizontal"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:id="@+id/navneet_job_title_landscape"
@@ -221,7 +224,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="2dp"
-                                android:background="#ffffff"
+                                android:background="@color/cloudy_white"
                                 android:layout_gravity="center_horizontal"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:id="@+id/navneet_job_team_landscape"
@@ -232,7 +235,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="5dp"
-                                android:background="#ffffff"
+                                android:background="@color/cloudy_white"
                                 android:layout_gravity="center_horizontal"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:id="@+id/navneet_linkedin_landscape"
@@ -244,7 +247,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="2dp"
-                                android:background="#ffffff"
+                                android:background="@color/cloudy_white"
                                 android:layout_gravity="center_horizontal"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:id="@+id/navneet_github_landscape"
@@ -271,8 +274,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/cloudy_white"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/about_navneet"
+                    android:id="@+id/navneet_about_landscape"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp" />
 
@@ -284,6 +289,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:scrollbars="vertical"
+                    android:background="@color/cloudy_white"
                     android:id="@+id/descriptionText_landscape" />
 
                 <RelativeLayout
