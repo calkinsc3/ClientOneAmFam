@@ -29,6 +29,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -52,6 +54,7 @@ import java.util.List;
 public class ClaimScreenFragment extends Fragment {
 
     private final int NEW_IMAGE = 0;
+    private final int REPLACE_IMAGE = 1;
 
     LinearLayoutManager llm;
 
@@ -219,7 +222,7 @@ public class ClaimScreenFragment extends Fragment {
                         .setAction(Intent.ACTION_GET_CONTENT);
 
                 //WILL START A CHOOSER ACTIVITY WITH GALLERY AND OTHER OPTIONS IN IT
-                startActivityForResult(Intent.createChooser(intent, "Select Picture(s)"), 0);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture(s)"), NEW_IMAGE);
             }
         });
     }
@@ -509,11 +512,10 @@ public class ClaimScreenFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
+            ClipData clipData = data.getClipData();
+            Uri targetUri;
             switch (requestCode) {
                 case NEW_IMAGE:
-
-                    ClipData clipData = data.getClipData();
-                    Uri targetUri;
                     images = new ArrayList<>();
 
                     if(clipData != null){
@@ -531,6 +533,21 @@ public class ClaimScreenFragment extends Fragment {
                     }
                     saveImages();
                     break;
+                case REPLACE_IMAGE:
+                    //get target Uri
+                    final Uri singleImage = data.getData();
+                    //remove previous image
+                    uploads.get(Singleton.getTempLocation()).deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                images.add(singleImage);
+
+                                saveImages();
+                            }
+                        }
+                    });
+
                 default:
                     Log.d("Error: ", "Reached default in upload");
             }
@@ -625,6 +642,24 @@ public class ClaimScreenFragment extends Fragment {
             if(vHolder.claimImage != null) {
                 Picasso.with(getActivity()).load(currentObject.getParseFile("Media").getUrl())
                         .fit().centerInside().into(vHolder.claimImage);
+                if(!args.getBoolean("ISNEW", false)) {
+                    vHolder.claimImage.setLongClickable(true);
+                    vHolder.claimImage.setFocusable(true);
+                    vHolder.claimImage.setFocusableInTouchMode(true);
+                    vHolder.claimImage.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+
+                            Singleton.setTempLocation(vHolder.index);
+
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REPLACE_IMAGE);
+                            return false;
+                        }
+                    });
+                }
             }
             if(args.getBoolean("ISNEW", false)) {
                 vHolder.trash.setVisibility(View.VISIBLE);

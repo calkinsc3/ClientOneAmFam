@@ -9,6 +9,7 @@
         android:id="@+id/policyLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/cloudy_white"
         android:orientation="horizontal">
 
         <TextView
@@ -27,7 +28,9 @@
         android:id="@+id/damagesLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/policyLayout">
+        android:layout_below="@id/policyLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,7 +52,9 @@
         android:id="@+id/commentsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/damagesLayout">
+        android:layout_below="@id/damagesLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,7 +75,9 @@
         android:id="@+id/uploadsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/commentsLayout">
+        android:layout_below="@id/commentsLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/cloudy_white" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,7 +105,8 @@
         android:id="@+id/claimUploadsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/uploadsLayout">
+        android:layout_below="@+id/uploadsLayout"
+        android:layout_marginTop="10dp">
 
 
     </android.support.v7.widget.RecyclerView>

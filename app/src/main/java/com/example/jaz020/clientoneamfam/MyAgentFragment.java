@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,6 +38,7 @@ public class MyAgentFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private final long CLOUD_SPEED = 500;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +47,7 @@ public class MyAgentFragment extends Fragment {
         TextView agentAddress1 = (TextView) view.findViewById(R.id.AgentAddress1TextView);
         TextView agentAddress2 = (TextView) view.findViewById(R.id.AgentAddress2TextView);
         TextView agentPhone = (TextView) view.findViewById(R.id.AgentPhoneTextView);
-        Button agentScheduleButton = (Button) view.findViewById(R.id.AgentScheduleButton);
+        final Button agentScheduleButton = (Button) view.findViewById(R.id.AgentScheduleButton);
         ImageView agentImg = (ImageView) view.findViewById(R.id.agentImage);
         ImageButton agentDirection = (ImageButton) view.findViewById(R.id.agentDirectionsButton);
         ImageButton agentCall = (ImageButton) view.findViewById(R.id.agentCallButton);
@@ -58,10 +62,24 @@ public class MyAgentFragment extends Fragment {
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Open Scheduling Here", Toast.LENGTH_SHORT).show();
+
+                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
+                anim.setDuration(CLOUD_SPEED + 500);
+                agentScheduleButton.startAnimation(anim);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        // Start your app main activity
+                        Tools.replaceFragment(R.id.fragment_container, new EditAppointment(), getFragmentManager(), true);
+
+                    }
+                }, CLOUD_SPEED);
 
 
-                Tools.replaceFragment(R.id.fragment_container, new EditAppointment(), getFragmentManager(), true);
+
             }
         });
 

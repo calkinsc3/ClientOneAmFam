@@ -30,6 +30,8 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -51,6 +53,7 @@ public class PolicyScreenFragment extends Fragment {
 
 
     private final int NEW_IMAGE = 0;
+    private final int REPLACE_IMAGE = 1;
 
     private boolean policyWasCreated;
     private boolean hasImages;
@@ -478,6 +481,23 @@ public class PolicyScreenFragment extends Fragment {
                     }
                     saveImages();
                     break;
+                case REPLACE_IMAGE:
+                    images = new ArrayList<>();
+                    //get target Uri
+                    final Uri singleUri = data.getData();
+
+                    uploads.get(Singleton.getTempLocation()).deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                images.add(singleUri);
+
+                                saveImages();
+                            }
+                        }
+                    });
+
+                    break;
                 default:
                     Log.d("Error: ", "Reached default in upload");
             }
@@ -588,6 +608,24 @@ public class PolicyScreenFragment extends Fragment {
             }
             if(vHolder.policyImage != null){
                 Picasso.with(getActivity()).load(currentObject.getParseFile("Media").getUrl()).fit().centerInside().into(vHolder.policyImage);
+                if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
+                    vHolder.policyImage.setFocusableInTouchMode(true);
+                    vHolder.policyImage.setFocusable(true);
+                    vHolder.policyImage.setLongClickable(true);
+
+                    vHolder.policyImage.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            Singleton.setTempLocation(vHolder.index);
+
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REPLACE_IMAGE);
+                            return false;
+                        }
+                    });
+                }
             }
             if(vHolder.trash != null){
                 if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
