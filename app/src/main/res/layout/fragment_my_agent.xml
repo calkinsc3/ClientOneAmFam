@@ -5,39 +5,42 @@
     tools:context="com.example.jaz020.clientoneamfam.MyAgentFragment"
     style="@style/base_clouds"
     android:weightSum="100">
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="0px"
-    android:layout_weight="30">
-
-    <ImageView
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/agentImage"
-        android:src="@drawable/contact_img"
-        android:scaleType="centerCrop"
-        android:paddingBottom="9px"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/myAgentSpacing"/>
+        android:layout_height="0px"
+        android:layout_weight="30">
 
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/agentEmailingButton"
-        android:src="@android:drawable/ic_dialog_email"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/agentImage"
+            android:src="@drawable/contact_img"
+            android:scaleType="centerCrop"
+            android:paddingBottom="9px"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/myAgentSpacing"/>
 
-</RelativeLayout>
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/agentEmailingButton"
+            android:src="@android:drawable/ic_dialog_email"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
     <Space
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="5"/>
     <LinearLayout
+        android:background="@color/cloudy_white"
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="10"
@@ -61,6 +64,7 @@
             android:layout_weight="5"/>
 
         <LinearLayout
+            android:background="@color/cloudy_white"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="60"
@@ -109,6 +113,7 @@
         android:layout_weight="2"/>
 
     <LinearLayout
+        android:background="@color/cloudy_white"
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="10"
@@ -131,13 +136,13 @@
             android:layout_height="fill_parent"
             android:layout_weight="5"/>
 
-            <TextView
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="60"
-                android:id="@+id/AgentPhoneTextView"
-                android:text="( 555 ) - 555 - 5555"
-                android:gravity="center_vertical"/>
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="60"
+            android:id="@+id/AgentPhoneTextView"
+            android:text="( 555 ) - 555 - 5555"
+            android:gravity="center_vertical"/>
 
         <Space
             android:layout_width="0px"
@@ -165,6 +170,7 @@
         android:layout_weight="2"/>
 
     <LinearLayout
+        android:background="@color/cloudy_white"
         android:layout_width="fill_parent"
         android:orientation="horizontal"
         android:layout_height="0px"
@@ -186,6 +192,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:background="@color/cloudy_white"
         android:layout_width="fill_parent"
         android:orientation="horizontal"
         android:layout_height="0px"
@@ -223,6 +230,7 @@
             android:layout_weight="20"/>
 
         <Button
+            style="@style/cloud_button"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="60"
@@ -234,6 +242,5 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="20"/>
-
     </LinearLayout>
 </LinearLayout>
