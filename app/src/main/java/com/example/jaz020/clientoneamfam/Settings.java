@@ -3,11 +3,14 @@ package com.example.jaz020.clientoneamfam;
 
 import android.app.Fragment;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -42,6 +45,10 @@ public class Settings extends Fragment {
 
     Button logout_button;
 
+    Point size = new Point();
+    private final long CLOUD_SPEED = 500;
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
@@ -58,7 +65,25 @@ public class Settings extends Fragment {
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.logout(getActivity());
+
+                SlideAnimation sa = new SlideAnimation(logout_button.getX(), size.x, logout_button);
+                sa.setInterpolator(new AccelerateInterpolator());
+                sa.setDuration(CLOUD_SPEED);
+                logout_button.startAnimation(sa);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Tools.logout(getActivity());
+
+                    }
+                }, CLOUD_SPEED);
+
+
+
+
+
             }
         });
 

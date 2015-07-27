@@ -1,5 +1,7 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,7 +25,6 @@ public class SlideAnimation extends Animation {
         mEnd = toX;
         myView = v;
 
-
         setInterpolator(new LinearInterpolator());
 
         float duration = Math.abs(mEnd - mStart) / SPEED;
@@ -34,9 +35,7 @@ public class SlideAnimation extends Animation {
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         super.applyTransformation(interpolatedTime, t);
 
-
         float offset = (mEnd - mStart) * interpolatedTime + mStart;
-//        int mOffset = (int) offset;
         myView.setX(offset);
     }
 

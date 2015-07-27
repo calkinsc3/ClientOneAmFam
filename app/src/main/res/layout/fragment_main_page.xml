@@ -5,9 +5,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp">
+    >
 
     <ImageView
+        android:padding="30dp"
         android:id="@+id/amfamlogo"
         android:layout_width="fill_parent"
         android:layout_height="130dp"
@@ -78,9 +79,9 @@
                 />
 
             <!--<ExpandableListView-->
-                <!--android:id="@+id/expandable_intern_list"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="112dp" >-->
+            <!--android:id="@+id/expandable_intern_list"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="112dp" >-->
             <!--</ExpandableListView>-->
 
         </LinearLayout>
