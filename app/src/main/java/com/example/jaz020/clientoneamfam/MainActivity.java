@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
         drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1,
+                R.layout.basic_list_item,
                 getResources().getStringArray(R.array.drawerItems)));
 
         setExpandDrawerLists();

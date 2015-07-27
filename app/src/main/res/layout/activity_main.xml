@@ -15,11 +15,11 @@
 
     <LinearLayout
         android:id="@+id/main_drawer_linear_layout"
-        android:layout_width="240dp"
+        android:layout_width="220dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="start"
-        android:background="#111"
+        android:background="@color/cloudy_white"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" >
@@ -27,12 +27,12 @@
         <!-- The navigation drawer -->
         <ListView
             android:id="@+id/left_drawer"
-            android:layout_width="240dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content" />
 
         <ExpandableListView
             android:id="@+id/expandable_intern_list"
-            android:layout_width="240dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content" >
         </ExpandableListView>
 

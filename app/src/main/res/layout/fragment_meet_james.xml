@@ -7,8 +7,6 @@
     style="@style/base_clouds"
     tools:context="com.example.jaz020.clientoneamfam.MeetJamesFragment" >
 
-
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -19,41 +17,104 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/cloud_top_left"
-                android:background="#00ffffff"
-                />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/james_ziglinski"
-                />
-
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/james_world_party_time_excellent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/james_ziglinski"
                     />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Skills: Android, Java, HTML/CSS, C, matlab, AngularJS"
+                    android:background="@color/cloudy_white"
+                    android:layout_marginTop="10dp"
+                    android:text="University of Wisconsin - Madison"
+                    />
 
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cloudy_white"
+                    android:text="Majoring in Computer Science &amp; Mathematics"
+                    />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cloudy_white"
+                    android:layout_marginTop="10dp"
+                    android:text="Ockham Enterprises, LLC"
+                    />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cloudy_white"
+                    android:text="Co-Founder &amp; VP of Technology"
+                    />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cloudy_white"
+                    android:text="Co-Founder of Wristbank"
                     />
 
             </LinearLayout>
 
+            <ViewFlipper
+                android:id="@+id/view_flipper"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:src="@drawable/james_world_party_time_excellent"
+                    />
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:src="@drawable/james_skiing"
+                    />
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:src="@drawable/boating_group"
+                    />
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:src="@drawable/north_coast_group"
+                    />
+
+            </ViewFlipper>
+
+
+
             <TextView
-                android:layout_marginStart="@dimen/padding_interns"
+                android:background="@color/cloudy_white"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Skills: Android, Java, HTML/CSS, C, matlab, AngularJS"
+
+                />
+
+            <TextView
+                android:background="@color/cloudy_white"
+                android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_james"
@@ -61,6 +122,7 @@
 
 
             <TextView
+                android:background="@color/cloudy_white"
                 android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -128,9 +190,10 @@
             </HorizontalScrollView>
 
             <Button
+                style="@style/cloud_button"
                 android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/email_james"
                 />
 
