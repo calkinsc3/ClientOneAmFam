@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:id="@+id/cardImage"
                 android:contentDescription="@string/policy_claim_card_image" />
 
