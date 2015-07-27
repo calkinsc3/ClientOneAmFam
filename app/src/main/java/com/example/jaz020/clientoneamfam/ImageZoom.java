@@ -30,16 +30,25 @@ public class ImageZoom {
     private ImageButton imageThumb;
     private ImageView expandedImage;
     private TextView nameText;
+    private TextView jobTitleText;
+    private TextView jobTeamText;
+    private TextView linkedinText;
+    private TextView githubText;
     private FrameLayout rootView;
     private LinearLayout backgroundView;
     private RecyclerView recyclerView;
 
     public ImageZoom(int imageID, ImageButton imageThumb, ImageView expandedImage, TextView nameText,
+                     TextView jobTitleText, TextView jobTeamText, TextView linkedinText, TextView githubText,
                      FrameLayout rootView, LinearLayout backgroundView, RecyclerView recyclerView) {
         this.imageID = imageID;
         this.imageThumb = imageThumb;
         this.expandedImage = expandedImage;
         this.nameText = nameText;
+        this.jobTitleText = jobTitleText;
+        this.jobTeamText = jobTeamText;
+        this.linkedinText = linkedinText;
+        this.githubText = githubText;
         this.rootView = rootView;
         this.backgroundView = backgroundView;
         this.recyclerView = recyclerView;
@@ -123,9 +132,15 @@ public class ImageZoom {
         backgroundView.setAlpha(.7f);
         backgroundView.setBackgroundColor(Color.BLACK);
         nameText.setTextColor(Color.DKGRAY);
+        nameText.setBackgroundColor(Color.TRANSPARENT);
 
         if (recyclerView != null) {
             recyclerView.setVisibility(View.GONE);
+        } else {
+            jobTitleText.setBackgroundColor(Color.TRANSPARENT);
+            jobTeamText.setBackgroundColor(Color.TRANSPARENT);
+            linkedinText.setBackgroundColor(Color.TRANSPARENT);
+            githubText.setBackgroundColor(Color.TRANSPARENT);
         }
 
         expandedImage.setVisibility(View.VISIBLE);
@@ -199,32 +214,12 @@ public class ImageZoom {
                 set.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        imageThumb.setAlpha(1f);
-                        backgroundView.setAlpha(1f);
-                        backgroundView.setBackgroundColor(Color.TRANSPARENT);
-                        nameText.setTextColor(Color.BLACK);
-
-                        if (recyclerView != null) {
-                            recyclerView.setVisibility(View.VISIBLE);
-                        }
-
-                        expandedImage.setVisibility(View.GONE);
-                        currentAnimator = null;
+                        endAnimation();
                     }
 
                     @Override
                     public void onAnimationCancel(Animator animation) {
-                        imageThumb.setAlpha(1f);
-                        backgroundView.setAlpha(1f);
-                        backgroundView.setBackgroundColor(Color.TRANSPARENT);
-                        nameText.setTextColor(Color.BLACK);
-
-                        if (recyclerView != null) {
-                            recyclerView.setVisibility(View.VISIBLE);
-                        }
-
-                        expandedImage.setVisibility(View.GONE);
-                        currentAnimator = null;
+                        endAnimation();
                     }
                 });
 
@@ -232,5 +227,25 @@ public class ImageZoom {
                 currentAnimator = set;
             }
         });
+    }
+
+    protected void endAnimation() {
+        imageThumb.setAlpha(1f);
+        backgroundView.setAlpha(1f);
+        backgroundView.setBackgroundColor(Color.TRANSPARENT);
+        nameText.setTextColor(Color.BLACK);
+        nameText.setBackgroundColor(Color.WHITE);
+
+        if (recyclerView != null) {
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            jobTitleText.setBackgroundColor(Color.WHITE);
+            jobTeamText.setBackgroundColor(Color.WHITE);
+            linkedinText.setBackgroundColor(Color.WHITE);
+            githubText.setBackgroundColor(Color.WHITE);
+        }
+
+        expandedImage.setVisibility(View.GONE);
+        currentAnimator = null;
     }
 }
