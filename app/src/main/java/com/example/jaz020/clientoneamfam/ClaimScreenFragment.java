@@ -310,17 +310,13 @@ public class ClaimScreenFragment extends Fragment {
      */
     private void queryParseForUploads(){
         uploads = new ArrayList<>();
-        ArrayList uploadIDs = (ArrayList)currentClaim.getList("UploadIDs");
-        if(uploadIDs != null) {
-            for (int i = 0; uploadIDs.size() > i; i++) {
-                ParseQuery imageQuery = new ParseQuery("Upload");
-                imageQuery.whereEqualTo("objectId", uploadIDs.get(i).toString());
-                try {
-                    uploads.add((ParseObject) imageQuery.find().get(0));
-                } catch (com.parse.ParseException e) {
-                    Log.e("Upload Error", e.toString());
-                }
-            }
+
+        ParseQuery imageQuery = new ParseQuery("Upload");
+        imageQuery.whereEqualTo("ClaimID", currentClaim.getObjectId());
+        try {
+            uploads.addAll(imageQuery.find());
+        } catch (ParseException e){
+            Log.d("Upload Query Error", e.toString());
         }
     }
 
