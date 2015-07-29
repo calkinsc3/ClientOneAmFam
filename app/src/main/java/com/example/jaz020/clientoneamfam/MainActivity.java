@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +26,7 @@ public class MainActivity extends Activity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ExpandableListView drawerExpandableList;
+    private ActionBarDrawerToggle drawerToggle;
 
     private List<String> meetInternsHeader;
     private HashMap<String, List<String>> internNames;
@@ -39,20 +41,16 @@ public class MainActivity extends Activity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
-        drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
-                R.layout.basic_list_item,
-                getResources().getStringArray(R.array.drawerItems)));
 
-        setExpandDrawerLists();
-
-        ExpandableListAdapter drawerExpandableListAdapter =
-                new ExpandableListAdapter(this.getApplicationContext(),
-                        meetInternsHeader, internNames);
-        drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
-        drawerExpandableList.setAdapter(drawerExpandableListAdapter);
+        setUpDrawer();
 
         // Sets the Up Navigation enabled only if fragments are on backStack
-       enableUpAction();
+        //enableUpAction();
+
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
@@ -73,6 +71,44 @@ public class MainActivity extends Activity {
                     getFragmentManager(), true);
         }
     }
+
+    private void setUpDrawer(){
+
+        drawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                drawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_launcher,
+                R.string.james_ziglinski,  /* "open drawer" description */
+                R.string.connect_with_james  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+            }
+        };
+
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
+                R.layout.basic_list_item,
+                getResources().getStringArray(R.array.drawerItems)));
+
+        setExpandDrawerLists();
+
+        ExpandableListAdapter drawerExpandableListAdapter =
+                new ExpandableListAdapter(this.getApplicationContext(),
+                        meetInternsHeader, internNames);
+        drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
+        drawerExpandableList.setAdapter(drawerExpandableListAdapter);
+    }
+
 
     private void setExpandDrawerLists() {
         List<String> internNamesList = new ArrayList<>();
@@ -223,7 +259,7 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        return true; 
+        return true;
     }
 
     @Override
@@ -233,8 +269,12 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         //noinspection SimplifiableIfStatement
-        switch(id) {
+        switch (id) {
             case R.id.action_settings:
                 Tools.replaceFragment(R.id.fragment_container, new Settings(), getFragmentManager(), true);
                 return true;
@@ -242,12 +282,9 @@ public class MainActivity extends Activity {
             case R.id.action_logout:
                 Tools.logout(this);
                 return true;
-            case android.R.id.home:
-                onBackPressed();
-                return true;
         }
 
-       return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

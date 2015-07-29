@@ -52,9 +52,16 @@ public class MeetJamesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initializeButtons(view);
-        setUpFlipper(view);
 
         setListeners();
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setUpFlipper();
+            }
+        }).start();
     }
 
     private void initializeButtons(View view){
@@ -67,12 +74,10 @@ public class MeetJamesFragment extends Fragment {
         google_button = (ImageButton) view.findViewById(R.id.google_plus_button);
 
         email_james_button = (Button) view.findViewById(R.id.email_james_button);
-
-
+        viewFlipper = (ViewFlipper) view.findViewById(R.id.view_flipper);
     }
 
-    private void setUpFlipper(View view){
-        viewFlipper = (ViewFlipper) view.findViewById(R.id.view_flipper);
+    private void setUpFlipper(){
 
         viewFlipper.setAutoStart(true);
         viewFlipper.setFlipInterval(4000);
