@@ -1,5 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:outline="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.jaz020.clientoneamfam.MyAgentFragment"
@@ -29,8 +32,25 @@
             android:layout_height="60dp"
             android:id="@+id/agentEmailingButton"
             android:src="@android:drawable/ic_dialog_email"
+            android:contentDescription="@string/email"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true" />
+
+        <com.example.jaz020.clientoneamfam.TextOutlineView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/agentName"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="25sp"
+            android:padding="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/agentEmailingButton"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            outline:strokeColor="#ffffff"
+            outline:strokeJoinStyle="miter"
+            outline:strokeWidth="2px" />
 
     </RelativeLayout>
 
