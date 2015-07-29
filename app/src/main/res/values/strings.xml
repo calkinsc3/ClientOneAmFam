@@ -49,7 +49,7 @@
     </string-array>
 
     <string-array name="states">
-        <item>Select a State</item>
+        <item>ST</item>
         <item>AL</item>
         <item>AK</item>
         <item>AZ</item>
@@ -100,7 +100,6 @@
         <item>WV</item>
         <item>WI</item>
         <item>WY</item>
-
     </string-array>
 
     <string name="title_activity_login">Login</string>
