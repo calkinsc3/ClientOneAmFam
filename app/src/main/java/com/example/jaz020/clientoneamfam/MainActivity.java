@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
         //enableUpAction();
 
         getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
 
 
         // Set the navigation drawer navigation
