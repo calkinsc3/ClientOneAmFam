@@ -65,10 +65,14 @@ public class EditAppointment extends Fragment {
     private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
     private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
     private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
+
     static List<Integer> mSelectedUsers;
     static String[] attendeesList;
     static boolean[] checkedUserIDs;
+
     AlertDialog.Builder builder;
+
+    private EditText attendees_entry;
     EditText meeting_entry;
     EditText location_entry;
     EditText start_time_entry;
@@ -76,15 +80,11 @@ public class EditAppointment extends Fragment {
     EditText end_time_entry;
     EditText end_date_entry;
     EditText comments_entry;
-    Calendar startDateCalendar;
-    Calendar endDateCalendar;
+
     //the current users calendarInfo
     String[] calendarInfo;
-    // Variables for edit invitees alert dialog.
-    private EditText attendees_entry;
-    public EditAppointment() {
-        // Required empty public constructor
-    }
+    Calendar startDateCalendar;
+    Calendar endDateCalendar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,16 +116,11 @@ public class EditAppointment extends Fragment {
         checkedUserIDs = new boolean[0];
         builder = new AlertDialog.Builder(getActivity());
 
-//        if (MeetingListFragment.selectedAppointment != null) {
-//                loadSelectedMeeting();
-//        }
-
         loadUserInfo();
 
         editInvitees();
 
         setListeners();
-
     }
 
     private DatePickerDialog startDatePicker;
@@ -137,19 +132,16 @@ public class EditAppointment extends Fragment {
      * Sets all the Listeners for edittexts and datePickers
      */
     public void setListeners(){
-
         startDatePicker = new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
 
 
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
                         startDateCalendar.set(Calendar.YEAR, year);
                         startDateCalendar.set(Calendar.MONTH, monthOfYear);
                         startDateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         Tools.updateDateEntry(start_date_entry, startDateCalendar);
-
                     }
                 },
                 startDateCalendar.get(Calendar.YEAR),
@@ -161,12 +153,10 @@ public class EditAppointment extends Fragment {
 
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
                         endDateCalendar.set(Calendar.YEAR, year);
                         endDateCalendar.set(Calendar.MONTH, monthOfYear);
                         endDateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         Tools.updateDateEntry(end_date_entry, endDateCalendar);
-
                     }
                 },
                 endDateCalendar.get(Calendar.YEAR),
@@ -178,13 +168,11 @@ public class EditAppointment extends Fragment {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-
                         startDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         startDateCalendar.set(Calendar.MINUTE, selectedMinute);
                         Tools.updateTimeEntry(start_time_entry, startDateCalendar);
                     }
                 },
-
                 startDateCalendar.get(Calendar.HOUR_OF_DAY),
                 startDateCalendar.get(Calendar.MINUTE), false);
 
@@ -193,11 +181,9 @@ public class EditAppointment extends Fragment {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-
                         endDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         endDateCalendar.set(Calendar.MINUTE, selectedMinute);
                         Tools.updateTimeEntry(end_time_entry, endDateCalendar);
-
                     }
                 },
                 endDateCalendar.get(Calendar.HOUR_OF_DAY),
@@ -206,33 +192,27 @@ public class EditAppointment extends Fragment {
         start_date_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!startDatePicker.isShowing()){
                     startDatePicker.show();
                 }
-
             }
         });
 
         end_date_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!endDatePicker.isShowing()){
                     endDatePicker.show();
                 }
-
             }
         });
 
         start_time_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!startTimePicker.isShowing()) {
                     startTimePicker.show();
                 }
-
             }
         });
 
@@ -244,7 +224,6 @@ public class EditAppointment extends Fragment {
                 }
             }
         });
-
     }
 
 //    /**
@@ -300,8 +279,6 @@ public class EditAppointment extends Fragment {
 //    }
 
     private void loadUserInfo(){
-
-
         //load current date into datePickers
         startDateCalendar.setTime(Calendar.getInstance().getTime());
         endDateCalendar.setTime(Calendar.getInstance().getTime());
@@ -311,8 +288,6 @@ public class EditAppointment extends Fragment {
         Tools.updateDateEntry(start_date_entry, startDateCalendar);
         Tools.updateDateEntry(end_date_entry, endDateCalendar);
 
-
-
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNotEqualTo("accountType", "Office");
 
@@ -321,21 +296,32 @@ public class EditAppointment extends Fragment {
 
             attendeesList = new String[possibleAttendees.size()];
         }catch (Exception e){
-
+            e.printStackTrace();
         }
 
+        try {
+            ParseUser currUser = ParseUser.getCurrentUser();
+            String currUserName = currUser.getString("Name");
 
-        ParseUser currUser = ParseUser.getCurrentUser();
+            ParseQuery<ParseUser> agentQuery = ParseUser.getQuery();
+            ParseUser agent = agentQuery.get(currUser.getString("AgentID"));
+            String agentName = agent.getString("Name");
 
-        String attendeeName = currUser.getString("Name");
+            if (currUserName == null || currUserName.equals("")) {
+                currUserName = currUser.getString("username");
+            }
 
-        if (attendeeName == null || attendeeName.equals("")) {
-            attendeeName = currUser.getString("username");
+            if (agentName == null || agentName.equals("")) {
+                agentName = agent.getString("username");
+            }
+
+            attendees_entry.setText(currUserName + ", " + agentName);
+
+            attendeesList[0] = currUser.getObjectId();
+            attendeesList[1] = agent.getObjectId();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        attendees_entry.setText(attendeeName);
-        attendeesList[0] = currUser.getObjectId();
-
     }
 
     /**
@@ -350,7 +336,6 @@ public class EditAppointment extends Fragment {
 //        } else {
 //            appointmentToSave = new ParseObject("Meeting");
 //        }
-
 
         //TODO entry validations
         // Save input from user to parse database.
@@ -374,7 +359,6 @@ public class EditAppointment extends Fragment {
         appointmentToSave.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-
                 progressDialog.dismiss();
 
                 if (e == null) {
@@ -388,16 +372,13 @@ public class EditAppointment extends Fragment {
         });
 
         saveToGoogle();
-
     }
 
     private void saveToGoogle(){
-
         Date startDate = startDateCalendar.getTime();
         Date endDate = endDateCalendar.getTime();
         String comments = comments_entry.getText().toString();
         String title = meeting_entry.getText().toString();
-
 
         /**
          * SAVE TO GOOGLE CALENDAR
@@ -432,7 +413,6 @@ public class EditAppointment extends Fragment {
      *         it is put into the array in the format outlined by the google calendar fields
      */
     private String[] getCalendar(){
-
         // Run query
         Cursor cur;
         ContentResolver cr = getActivity().getContentResolver();
@@ -469,12 +449,9 @@ public class EditAppointment extends Fragment {
      * Edit invitees editText on click listener.
      */
     private void editInvitees() {
-
-
         attendees_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getPossibleAttendees();
             }
         });
@@ -624,8 +601,8 @@ public class EditAppointment extends Fragment {
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
         menu.findItem(R.id.optional_action).setVisible(true);
         menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        super.onCreateOptionsMenu(menu, inflater);
 
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -635,6 +612,7 @@ public class EditAppointment extends Fragment {
                 saveAppointment();
                 saveToGoogle();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
