@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,7 +58,7 @@ public class MyAgentFragment extends Fragment {
         agentName.setText(agent.getString("Name"));
         agentAddress1.setText(agent.getString("Address"));
         agentAddress2.setText(agent.getString("City") + "," + agent.getString("State")+ " " + agent.getNumber("Zip").toString());
-        agentPhone.setText("( " + phoneNum.substring(0, 3) + " ) - " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
+        agentPhone.setText("( " + phoneNum.substring(0, 3) + " ) " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
 
         Picasso.with(getActivity()).load(agent.getParseFile("AgentPhoto").getUrl()).fit().centerCrop().into(agentImg);
 
