@@ -1,4 +1,5 @@
 package com.example.jaz020.clientoneamfam;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ public class Splash extends Activity implements Runnable {
         setContentView(R.layout.activity_splash);
 
         mThread = new Thread(this);
-
         mThread.start();
     }
 
