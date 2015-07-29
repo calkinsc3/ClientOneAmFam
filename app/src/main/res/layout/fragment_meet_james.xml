@@ -1,10 +1,10 @@
 <LinearLayout
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/base_clouds"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/base_clouds"
+    android:orientation="vertical"
     tools:context="com.example.jaz020.clientoneamfam.MeetJamesFragment" >
 
     <ScrollView
@@ -12,28 +12,28 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
-            android:padding="@dimen/padding_interns"
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_interns">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/james_ziglinski"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/cloudy_white"
                     android:layout_marginTop="10dp"
+                    android:background="@color/cloudy_white"
                     android:text="University of Wisconsin - Madison"
                     />
 
@@ -47,8 +47,8 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/cloudy_white"
                     android:layout_marginTop="10dp"
+                    android:background="@color/cloudy_white"
                     android:text="Ockham Enterprises, LLC"
                     />
 
@@ -75,57 +75,115 @@
                 android:layout_marginTop="10dp"
                 >
 
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:src="@drawable/james_world_party_time_excellent"
-                    />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:src="@drawable/james_skiing"
-                    />
+                    <ImageView
+                        android:id="@+id/image_1"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:src="@drawable/james_world_party_time_excellent" />
 
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:src="@drawable/boating_group"
-                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/cloudy_white"
+                        android:gravity="center_horizontal"
+                        android:text="Halloween 2015" />
 
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:src="@drawable/north_coast_group"
-                    />
+                </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:src="@drawable/james_skiing" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/cloudy_white"
+                        android:gravity="center_horizontal"
+                        android:text="I love to ski whenever I can." />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:src="@drawable/boating_group" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/cloudy_white"
+                        android:gravity="center_horizontal"
+                        android:text="Would spend every day on the water if I could; Wakeboarding, kneeboarding, and tubing!" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:src="@drawable/north_coast_group" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/cloudy_white"
+                        android:gravity="center_horizontal"
+                        android:text="North Coast Music Festival 2014" />
+
+                </LinearLayout>
             </ViewFlipper>
 
 
 
             <TextView
-                android:background="@color/cloudy_white"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/cloudy_white"
                 android:text="Skills: Android, Java, HTML/CSS, C, matlab, AngularJS"
 
                 />
 
             <TextView
-                android:background="@color/cloudy_white"
-                android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/cloudy_white"
                 android:text="@string/about_james"
                 />
 
 
             <TextView
-                android:background="@color/cloudy_white"
-                android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/cloudy_white"
                 android:text="@string/connect_with_james"
                 />
 
@@ -133,67 +191,68 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:background="#00ffffff"
-                    android:padding="10dp"
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="#00ffffff"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
                     <ImageButton
-                        android:background="#00ffffff"
+                        android:id="@+id/linkedin_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/linkedin_icon"
-                        android:id="@+id/linkedin_button" />
+                        android:background="#00ffffff"
+                        android:src="@drawable/linkedin_icon" />
 
                     <ImageButton
-                        android:background="#00ffffff"
+                        android:id="@+id/github_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/github_mark"
-                        android:id="@+id/github_button" />
+                        android:background="#00ffffff"
+                        android:src="@drawable/github_mark" />
 
                     <ImageButton
+                        android:id="@+id/codecademy_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
                         android:src="@drawable/codecademy_icon"
-                        android:id="@+id/codecademy_button"
                         />
 
                     <ImageButton
+                        android:id="@+id/stack_exchange_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
                         android:src="@drawable/stack_exchange_icon"
-                        android:id="@+id/stack_exchange_button"
                         />
 
                     <ImageButton
+                        android:id="@+id/facebook_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
                         android:src="@drawable/facebook_icon"
-                        android:id="@+id/facebook_button"
                         />
 
 
                     <ImageButton
+                        android:id="@+id/google_plus_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
                         android:src="@drawable/google_plus_icon"
-                        android:id="@+id/google_plus_button"
                         />
 
                 </LinearLayout>
             </HorizontalScrollView>
 
             <Button
+                android:id="@+id/email_james_button"
                 style="@style/cloud_button"
-                android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/email_james"
                 />
 

@@ -1,18 +1,18 @@
 package com.example.jaz020.clientoneamfam;
 
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ViewFlipper;
 
@@ -22,23 +22,22 @@ import android.widget.ViewFlipper;
  */
 public class MeetJamesFragment extends Fragment {
 
-    public MeetJamesFragment() {
-        // Required empty public constructor
-    }
-
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private final GestureDetector detector = new GestureDetector(new SwipeGestureDetector());
     ImageButton github_button;
     ImageButton linkedin_button;
     ImageButton facebook_button;
     ImageButton stack_exchange_button;
     ImageButton codecademy_button;
     ImageButton google_button;
+    Button email_james_button;
     ViewFlipper viewFlipper;
     Context context;
 
-    private final GestureDetector detector = new GestureDetector(new SwipeGestureDetector());
-
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    public MeetJamesFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +66,8 @@ public class MeetJamesFragment extends Fragment {
         codecademy_button = (ImageButton) view.findViewById(R.id.codecademy_button);
         google_button = (ImageButton) view.findViewById(R.id.google_plus_button);
 
+        email_james_button = (Button) view.findViewById(R.id.email_james_button);
+
 
     }
 
@@ -82,7 +83,6 @@ public class MeetJamesFragment extends Fragment {
         viewFlipper.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                viewFlipper.stopFlipping();
                 detector.onTouchEvent(event);
                 return true;
             }
@@ -145,6 +145,21 @@ public class MeetJamesFragment extends Fragment {
                 //go to github account
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://plus.google.com/u/0/103284925479978448579/posts"));
                 startActivity(intent);
+            }
+        });
+
+        email_james_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_EMAIL, "ziglinski@wisc.edu");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Message from OneAmFam Client");
+                intent.putExtra(Intent.EXTRA_TEXT, "Hi James! Would you like a job?");
+
+                startActivity(Intent.createChooser(intent, "Send Email"));
+
             }
         });
 
