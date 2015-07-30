@@ -29,6 +29,7 @@ public class MeetNavneetFragment extends Fragment {
 
     private ImageButton imageThumb;
     private ImageView expandedImage;
+
     private TextView nameText;
     private TextView descriptionText;
     private TextView aboutText;
@@ -36,6 +37,7 @@ public class MeetNavneetFragment extends Fragment {
     private TextView jobTeamText;
     private TextView linkedinText;
     private TextView githubText;
+
     private Button emailButton;
 
     @Override

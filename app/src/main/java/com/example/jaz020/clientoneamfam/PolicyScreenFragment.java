@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.ClipData;
@@ -51,7 +50,6 @@ import java.util.List;
  */
 public class PolicyScreenFragment extends Fragment {
 
-
     private final int NEW_IMAGE = 0;
     private final int REPLACE_IMAGE = 1;
 
@@ -86,15 +84,6 @@ public class PolicyScreenFragment extends Fragment {
     private ImageRVAdapter imageAdapter;
 
     private LinearLayout address2;
-
-
-    /**
-     * Instantiates a new Policy screen fragment.
-     */
-    public PolicyScreenFragment() {
-        // Required empty public constructor
-    }
-
 
     /**
      * On create view.
@@ -145,9 +134,7 @@ public class PolicyScreenFragment extends Fragment {
             private String current = "";
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -171,9 +158,7 @@ public class PolicyScreenFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -221,18 +206,23 @@ public class PolicyScreenFragment extends Fragment {
         policyDescription.setClickable(true);
         policyDescription.setFocusable(true);
         policyDescription.setFocusableInTouchMode(true);
+
         policyCost.setClickable(true);
         policyCost.setFocusable(true);
         policyCost.setFocusableInTouchMode(true);
+
         policyAddress.setClickable(true);
         policyAddress.setFocusable(true);
         policyAddress.setFocusableInTouchMode(true);
+
         city.setClickable(true);
         city.setFocusable(true);
         city.setFocusableInTouchMode(true);
+
         zip.setClickable(true);
         zip.setFocusable(true);
         zip.setFocusableInTouchMode(true);
+
         addUploads.setVisibility(View.VISIBLE);
         addUploads.setClickable(true);
 
@@ -247,23 +237,30 @@ public class PolicyScreenFragment extends Fragment {
     private void initializeFields(View view){
         hasImages = false;
         policyWasCreated = false;
+
         policyDescription = (EditText)view.findViewById(R.id.policyDescription);
         policyCost = (EditText)view.findViewById(R.id.policyCost);
         policyAddress = (EditText)view.findViewById(R.id.policyAddress);
         city = (EditText)view.findViewById(R.id.city);
         zip = (EditText)view.findViewById(R.id.zip);
+
         addUploads = (ImageButton)view.findViewById(R.id.addUploadButton);
+
         uploads = new ArrayList<>();
+
         uploadsList = (RecyclerView)view.findViewById(R.id.uploadsList);
         uploadsLayout = (LinearLayout)view.findViewById(R.id.uploadsLayout);
         llm = new LinearLayoutManager(getActivity().getApplicationContext());
 
         uploadsList.setHasFixedSize(true);
         uploadsList.setLayoutManager(llm);
+
         address2 = (LinearLayout)view.findViewById(R.id.address2Layout);
-        stateAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.states, android.R.layout.simple_spinner_dropdown_item);
+        stateAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.states, android.R.layout.simple_spinner_dropdown_item);
         stateSpinner = (Spinner)view.findViewById(R.id.stateSpinner);
         stateSpinner.setAdapter(stateAdapter);
+
         if(getArguments() != null){
             args = getArguments();
         } else {
@@ -292,6 +289,7 @@ public class PolicyScreenFragment extends Fragment {
      */
     private void setUploadsListAdapterAndComments(){
         queryParseForUploads();
+
         if(uploads.size() > 0) {
             uploadsList.setVisibility(View.VISIBLE);
             setComments();
@@ -308,6 +306,7 @@ public class PolicyScreenFragment extends Fragment {
      */
     private void setComments(){
         commentsList = new ArrayList<>();
+
         for(ParseObject upload : uploads){
             if(upload.getString("Comment") != null) {
                 commentsList.add(upload.getString("Comment"));
@@ -329,7 +328,6 @@ public class PolicyScreenFragment extends Fragment {
         } catch (com.parse.ParseException e) {
             Log.e("Upload Error", e.toString());
         }
-
     }
 
     /**
@@ -379,7 +377,6 @@ public class PolicyScreenFragment extends Fragment {
         policyCost = policyCost.replace("$","");
         policyCost = policyCost.replace(",","");
 
-
         if(args.getBoolean("ISNEW", false) && !policyWasCreated){
             currentPolicy = new ParseObject("Policy");
             currentPolicy.put("AgentID", ParseUser.getCurrentUser().getString("AgentID"));
@@ -401,6 +398,7 @@ public class PolicyScreenFragment extends Fragment {
         } catch(com.parse.ParseException e){
             Log.e("Save Error", e.toString());
         }
+
         Singleton.setCurrentPolicy(currentPolicy);
 
         uploadsLayout.setVisibility(View.VISIBLE);
@@ -410,7 +408,7 @@ public class PolicyScreenFragment extends Fragment {
      * Saves all images associated with this Policy. Re-attaches adapter to the Recycler view
      */
     private void saveImages(){
-        for(int i = 0; images.size() > i; i++){
+        for(int i = 0; images.size() > i; i++) {
             try {
                 Bitmap bitmap = BitmapFactory
                         .decodeStream(getActivity()
@@ -436,6 +434,7 @@ public class PolicyScreenFragment extends Fragment {
                 Log.e("Error Saving", e.toString());
             }
         }
+
         setUploadsListAdapterAndComments();
     }
 
@@ -446,6 +445,7 @@ public class PolicyScreenFragment extends Fragment {
         for(int i = 0; uploads.size() > i; i++){
             uploads.get(i).put("Comment", commentsList.get(i));
         }
+
         ParseObject.saveAllInBackground(uploads);
     }
 
@@ -466,8 +466,7 @@ public class PolicyScreenFragment extends Fragment {
                     Uri targetUri;
                     images = new ArrayList<>();
 
-                    if(clipData != null){
-
+                    if(clipData != null) {
                         for(int i =0; clipData.getItemCount() > i; i++) {
                             // get the target Uri
                             targetUri = clipData.getItemAt(i).getUri();
@@ -479,8 +478,10 @@ public class PolicyScreenFragment extends Fragment {
                         targetUri = data.getData();
                         images.add(targetUri);
                     }
+
                     saveImages();
                     break;
+
                 case REPLACE_IMAGE:
                     images = new ArrayList<>();
                     //get target Uri
@@ -491,13 +492,12 @@ public class PolicyScreenFragment extends Fragment {
                         public void done(ParseException e) {
                             if (e == null) {
                                 images.add(singleUri);
-
                                 saveImages();
                             }
                         }
                     });
-
                     break;
+
                 default:
                     Log.d("Error: ", "Reached default in upload");
             }
@@ -516,6 +516,7 @@ public class PolicyScreenFragment extends Fragment {
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
         menu.findItem(R.id.optional_action).setTitle("Save");
         menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -527,19 +528,19 @@ public class PolicyScreenFragment extends Fragment {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             //save action button enabled
             case R.id.optional_action:
                 if(validateFields()) {
                     savePolicyInformation();
-//                    Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
                 }
+
                 if (hasImages) {
                     saveImageComments();
                     Toast.makeText(getActivity(), "Comments Saved", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -574,14 +575,10 @@ public class PolicyScreenFragment extends Fragment {
 
             vHolder.comments.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
                 @Override
                 public void afterTextChanged(Editable s) {
@@ -604,10 +601,14 @@ public class PolicyScreenFragment extends Fragment {
                     vHolder.comments.setClickable(false);
                     vHolder.comments.setHint("");
                 }
+
                 vHolder.comments.setText(commentsList.get(vHolder.index));
             }
+
             if(vHolder.policyImage != null){
-                Picasso.with(getActivity()).load(currentObject.getParseFile("Media").getUrl()).fit().centerInside().into(vHolder.policyImage);
+                Picasso.with(getActivity()).load(currentObject.getParseFile("Media")
+                        .getUrl()).fit().centerInside().into(vHolder.policyImage);
+
                 if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
                     vHolder.policyImage.setFocusableInTouchMode(true);
                     vHolder.policyImage.setFocusable(true);
@@ -621,24 +622,28 @@ public class PolicyScreenFragment extends Fragment {
                             Intent intent = new Intent();
                             intent.setType("image/*");
                             intent.setAction(Intent.ACTION_GET_CONTENT);
-                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REPLACE_IMAGE);
+                            startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                                    REPLACE_IMAGE);
+
                             return false;
                         }
                     });
                 }
             }
+
             if(vHolder.trash != null){
                 if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
                     vHolder.trash.setVisibility(View.VISIBLE);
                     vHolder.trash.setClickable(true);
+
                     vHolder.trash.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //todo make delete picture method
                             try {
                                 uploads.get(vHolder.index).delete();
                                 commentsList.remove(vHolder.index);
-                                Toast.makeText(getActivity(), "Image removed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Image removed",
+                                        Toast.LENGTH_SHORT).show();
                                 setUploadsListAdapterAndComments();
                             } catch (com.parse.ParseException e) {
                                 Log.d("Save Error", e.toString());
@@ -647,8 +652,6 @@ public class PolicyScreenFragment extends Fragment {
                     });
                 }
             }
-
-
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -669,6 +672,5 @@ public class PolicyScreenFragment extends Fragment {
                 trash = (ImageButton)view.findViewById(R.id.deleteImageButton);
             }
         }
-
     }
 }

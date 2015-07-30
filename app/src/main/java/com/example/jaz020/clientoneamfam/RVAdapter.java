@@ -120,7 +120,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 });
 
                 break;
-        }
+            }
             /* Display cards for list of claims */
             case "Claims": {
                 ivh.image.setVisibility(View.GONE);
@@ -161,7 +161,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ivh.description.setText(currentObject.getString("Comment"));
 
                 ivh.editButton.setVisibility(View.GONE);
-
 
                 // TODO Handle clicks.
                 /* Handle card click */
