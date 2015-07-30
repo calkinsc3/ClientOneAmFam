@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -9,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -139,8 +137,6 @@ public class EditAppointment extends Fragment {
     public void setListeners(){
         startDatePicker = new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
-
-
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         startDateCalendar.set(Calendar.YEAR, year);
@@ -155,7 +151,6 @@ public class EditAppointment extends Fragment {
 
         endDatePicker =  new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
-
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         endDateCalendar.set(Calendar.YEAR, year);
@@ -170,7 +165,6 @@ public class EditAppointment extends Fragment {
 
         startTimePicker =    new TimePickerDialog(getActivity(),
                 new TimePickerDialog.OnTimeSetListener() {
-
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         startDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
@@ -183,7 +177,6 @@ public class EditAppointment extends Fragment {
 
         endTimePicker = new TimePickerDialog(getActivity(),
                 new TimePickerDialog.OnTimeSetListener() {
-
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         endDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
@@ -230,6 +223,58 @@ public class EditAppointment extends Fragment {
             }
         });
     }
+
+//    /**
+//     * Loads the information from the meeting selected on the meetingsList fragment
+//     */
+//    private void loadSelectedMeeting(){
+//        String attendees = "";
+//
+//        // Load info
+//        meeting_entry.setText(MeetingListFragment.selectedAppointment.getString("Title"));
+//        location_entry.setText(MeetingListFragment.selectedAppointment.getString("Location"));
+//        comments_entry.setText(MeetingListFragment.selectedAppointment.getString("Comment"));
+//
+//        // Load start and end date
+//        Date startDate = MeetingListFragment.selectedAppointment.getDate("StartDate");
+//        Date endDate = MeetingListFragment.selectedAppointment.getDate("EndDate");
+//
+//        startDateCalendar.setTime(startDate);
+//        endDateCalendar.setTime(endDate);
+//
+//        Tools.updateTimeEntry(start_time_entry, startDateCalendar);
+//        Tools.updateTimeEntry(end_time_entry, endDateCalendar);
+//        Tools.updateDateEntry(start_date_entry, startDateCalendar);
+//        Tools.updateDateEntry(end_date_entry, endDateCalendar);
+//
+//        //Load invitees
+//        try {
+//            ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+//
+//            JSONArray jArray = MeetingListFragment.selectedAppointment.getJSONArray("InvitedIDs");
+//            attendeesList = new String[jArray.length()];
+//
+//            for (int i = 0; i < jArray.length(); i++) {
+//                attendeesList[i] = jArray.getString(i);
+//                userQuery.whereEqualTo("objectId", jArray.getString(i));
+//
+//                String attendeeName = userQuery.get(jArray.getString(i)).getString("Name");
+//
+//                if (attendeeName == null || attendeeName.equals("")) {
+//                    attendeeName = userQuery.get(jArray.getString(i)).getString("username");
+//                }
+//
+//                if (i == 0)
+//                    attendees += attendeeName;
+//                else
+//                    attendees += (", " + attendeeName);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        attendees_entry.setText(attendees);
+//    }
 
     private void loadUserInfo(){
         //load current date into datePickers
@@ -283,6 +328,12 @@ public class EditAppointment extends Fragment {
     private void saveAppointment(){
         final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "", "", true);
         ParseObject appointmentToSave = new ParseObject("Meeting");
+
+//        if (MeetingListFragment.selectedAppointment != null) {
+//            appointmentToSave = MeetingListFragment.selectedAppointment;
+//        } else {
+//            appointmentToSave = new ParseObject("Meeting");
+//        }
 
         //TODO entry validations
         // Save input from user to parse database.
