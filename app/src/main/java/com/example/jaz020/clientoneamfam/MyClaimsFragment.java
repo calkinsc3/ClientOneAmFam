@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,12 +23,8 @@ import java.util.List;
  */
 public class MyClaimsFragment extends Fragment {
 
-
     com.github.clans.fab.FloatingActionButton fab;
     RecyclerView rv;
-    public MyClaimsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +40,6 @@ public class MyClaimsFragment extends Fragment {
         fab = (com.github.clans.fab.FloatingActionButton) view.findViewById(R.id.fab);
         rv = (RecyclerView) view.findViewById(R.id.claims_recycler_view);
 
-
          /* Set up the recycler view */
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
         rv.setHasFixedSize(true);
@@ -57,11 +51,9 @@ public class MyClaimsFragment extends Fragment {
 
         getClaims();
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
                 Bundle testBundle = new Bundle();
                 ClaimScreenFragment claim = new ClaimScreenFragment();
                 testBundle.putBoolean("ISNEW", true);
@@ -69,11 +61,9 @@ public class MyClaimsFragment extends Fragment {
                 Tools.replaceFragment(R.id.fragment_container, claim, getFragmentManager(), true);
             }
         });
-
     }
 
-    private void getClaims(){
-
+    private void getClaims() {
         try {
             String currOID = ParseUser.getCurrentUser().getObjectId();
 
@@ -94,18 +84,16 @@ public class MyClaimsFragment extends Fragment {
 
                 List<ParseObject> claims = claimQuery.find();
 
-                if(!claims.isEmpty()){
+                if(!claims.isEmpty()) {
                     /* Attach adapter to recycler view */
                     RVAdapter adapter = new RVAdapter("Claims", claims);
                     rv.setAdapter(adapter);
-                }else{
+                } else {
                     Toast.makeText(getActivity(), "No Claims Found", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
-
-        }catch (ParseException e){
+        } catch (ParseException e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

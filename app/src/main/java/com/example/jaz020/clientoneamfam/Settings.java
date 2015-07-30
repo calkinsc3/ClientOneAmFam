@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -16,19 +15,11 @@ import android.widget.TextView;
 
 import com.parse.ParseUser;
 
-import java.util.Locale;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Settings extends Fragment {
-
-
-    public Settings() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,12 +37,11 @@ public class Settings extends Fragment {
     Button logout_button;
 
     Point size = new Point();
-    private final long CLOUD_SPEED = 500;
 
+    private final long CLOUD_SPEED = 500;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
-
         version_text_view = (TextView) view.findViewById(R.id.version_text_view);
         username_text_view = (TextView) view.findViewById(R.id.username_text_view);
         address_text_view = (TextView) view.findViewById(R.id.address_text_view);
@@ -65,47 +55,37 @@ public class Settings extends Fragment {
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SlideAnimation sa = new SlideAnimation(logout_button.getX(), size.x, logout_button);
                 sa.setInterpolator(new AccelerateInterpolator());
                 sa.setDuration(CLOUD_SPEED);
                 logout_button.startAnimation(sa);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         Tools.logout(getActivity());
-
                     }
                 }, CLOUD_SPEED);
-
-
-
-
-
             }
         });
-
-
     }
 
     private void setTextViews(){
         ParseUser currUser = ParseUser.getCurrentUser();
 
         String versionName;
+
         try {
             versionName = getActivity().getPackageManager()
                     .getPackageInfo(getActivity().getPackageName(), 0).versionName;
-        }
-        catch(PackageManager.NameNotFoundException e){
+        } catch(PackageManager.NameNotFoundException e) {
            versionName = "Could not retrieve version: " + e.getMessage();
         }
+
         String username = currUser.getUsername();
         String address = currUser.getString("Address") + "\n" + currUser.getString("City") + ", " +
                 currUser.getString("State") + " " + currUser.getNumber("Zip").toString();
         String phone = currUser.getNumber("phoneNumber").toString();
-
 
         phone = PhoneNumberUtils.formatNumber(phone);
         String email = currUser.getEmail();
@@ -115,10 +95,5 @@ public class Settings extends Fragment {
         address_text_view.setText(address);
         phone_text_view.setText(phone);
         email_text_view.setText(email);
-
-
-
     }
-
-
 }

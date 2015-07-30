@@ -14,17 +14,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 
 /**
@@ -57,10 +49,13 @@ public class MyAgentFragment extends Fragment {
 
         agentName.setText(agent.getString("Name"));
         agentAddress1.setText(agent.getString("Address"));
-        agentAddress2.setText(agent.getString("City") + "," + agent.getString("State")+ " " + agent.getNumber("Zip").toString());
-        agentPhone.setText("( " + phoneNum.substring(0, 3) + " ) " + phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
+        agentAddress2.setText(agent.getString("City") + "," +
+                agent.getString("State")+ " " + agent.getNumber("Zip").toString());
+        agentPhone.setText("( " + phoneNum.substring(0, 3) + " ) " +
+                phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
 
-        Picasso.with(getActivity()).load(agent.getParseFile("AgentPhoto").getUrl()).fit().centerCrop().into(agentImg);
+        Picasso.with(getActivity()).load(agent.getParseFile("AgentPhoto")
+                .getUrl()).fit().centerCrop().into(agentImg);
 
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +65,6 @@ public class MyAgentFragment extends Fragment {
                 agentScheduleButton.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         // This method will be executed once the timer is over
@@ -94,7 +88,6 @@ public class MyAgentFragment extends Fragment {
                 String statestr = Singleton.getMyAgent().getString("State");
 
                 Uri gmnIntentUri = Uri.parse("google.navigation:q=" + addrstr + ",+" + citystr + "+" + statestr);
-                //Uri gmnIntentUri = Uri.parse("google.navigation:q=6917+Ramsey+Road,+Middleton+Wisconsin"); My home address to test
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmnIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
 
@@ -105,7 +98,8 @@ public class MyAgentFragment extends Fragment {
         agentCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Singleton.getMyAgent().getNumber("phoneNumber").toString()));
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
+                        Singleton.getMyAgent().getNumber("phoneNumber").toString()));
                 startActivity(intent);
             }
         });

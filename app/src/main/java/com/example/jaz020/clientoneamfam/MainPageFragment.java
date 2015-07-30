@@ -19,7 +19,6 @@ import com.parse.ParseException;
 
 
 /**
- *
  * Created by nsr009 on 6/16/2015.
  */
 public class MainPageFragment extends Fragment {
@@ -63,8 +62,7 @@ public class MainPageFragment extends Fragment {
 
         try {
             Tools.setMyAgent();
-        }
-        catch (ParseException e){
+        } catch (ParseException e) {
             //INITIALIZE PARSE
             Parse.enableLocalDatastore(getActivity());
             Parse.initialize(getActivity(), APPLICATION_ID, CLIENT_KEY);
@@ -82,14 +80,12 @@ public class MainPageFragment extends Fragment {
                 myAgent.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         // This method will be executed once the timer is over
                         // Start your app main activity
                         Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
                                 getFragmentManager(), true);
-
                     }
                 }, CLOUD_SPEED);
             }
@@ -103,7 +99,6 @@ public class MainPageFragment extends Fragment {
                 findAnAgent.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         // This method will be executed once the timer is over
@@ -125,14 +120,12 @@ public class MainPageFragment extends Fragment {
                 myPolicies.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         // This method will be executed once the timer is over
                         // Start your app main activity
                         Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
                                 getFragmentManager(), true);
-
                     }
                 }, CLOUD_SPEED);
             }
@@ -145,14 +138,12 @@ public class MainPageFragment extends Fragment {
                 myClaims.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         // This method will be executed once the timer is over
                         // Start your app main activity
                         Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
                                 getFragmentManager(), true);
-
                     }
                 }, CLOUD_SPEED);
             }
@@ -166,14 +157,12 @@ public class MainPageFragment extends Fragment {
                 settings.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         // This method will be executed once the timer is over
                         // Start your app main activity
                         Tools.replaceFragment(R.id.fragment_container, new Settings(),
                                 getFragmentManager(), true);
-
                     }
                 }, CLOUD_SPEED);
             }
@@ -187,14 +176,12 @@ public class MainPageFragment extends Fragment {
                 meetTheInterns.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
-
                     @Override
                     public void run() {
                         // This method will be executed once the timer is over
                         // Start your app main activity
                         Tools.replaceFragment(R.id.fragment_container, new MeetInternsFragment(),
                                 getFragmentManager(), true);
-
                     }
                 }, CLOUD_SPEED);
             }

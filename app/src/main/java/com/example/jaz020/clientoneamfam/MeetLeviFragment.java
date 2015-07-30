@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,10 +18,6 @@ public class MeetLeviFragment extends Fragment {
     TabHost.TabSpec tab1;
     TabHost.TabSpec tab2;
     TabHost.TabSpec tab3;
-
-    public MeetLeviFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
