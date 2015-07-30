@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -9,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -139,8 +137,6 @@ public class EditAppointment extends Fragment {
     public void setListeners(){
         startDatePicker = new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
-
-
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         startDateCalendar.set(Calendar.YEAR, year);
@@ -155,7 +151,6 @@ public class EditAppointment extends Fragment {
 
         endDatePicker =  new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
-
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         endDateCalendar.set(Calendar.YEAR, year);
@@ -170,7 +165,6 @@ public class EditAppointment extends Fragment {
 
         startTimePicker =    new TimePickerDialog(getActivity(),
                 new TimePickerDialog.OnTimeSetListener() {
-
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         startDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
@@ -183,7 +177,6 @@ public class EditAppointment extends Fragment {
 
         endTimePicker = new TimePickerDialog(getActivity(),
                 new TimePickerDialog.OnTimeSetListener() {
-
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         endDateCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
