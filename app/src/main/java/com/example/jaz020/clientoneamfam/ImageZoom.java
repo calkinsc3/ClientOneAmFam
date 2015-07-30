@@ -28,9 +28,12 @@ public class ImageZoom {
     private int animationDuration;
 
     private int imageID;
+
     private ImageButton imageThumb;
     private ImageView expandedImage;
+
     private Button emailButton;
+
     private TextView nameText;
     private TextView jobTitleText;
     private TextView jobTeamText;
@@ -38,6 +41,7 @@ public class ImageZoom {
     private TextView githubText;
     private TextView aboutText;
     private TextView descriptionText;
+
     private FrameLayout rootView;
     private LinearLayout backgroundView;
     private RecyclerView recyclerView;
@@ -48,9 +52,12 @@ public class ImageZoom {
                      TextView aboutText, TextView descriptionText, FrameLayout rootView,
                      LinearLayout backgroundView, RecyclerView recyclerView) {
         this.imageID = imageID;
+
         this.imageThumb = imageThumb;
         this.expandedImage = expandedImage;
+
         this.emailButton = emailButton;
+
         this.nameText = nameText;
         this.jobTitleText = jobTitleText;
         this.jobTeamText = jobTeamText;
@@ -58,6 +65,7 @@ public class ImageZoom {
         this.githubText = githubText;
         this.aboutText = aboutText;
         this.descriptionText = descriptionText;
+
         this.rootView = rootView;
         this.backgroundView = backgroundView;
         this.recyclerView = recyclerView;

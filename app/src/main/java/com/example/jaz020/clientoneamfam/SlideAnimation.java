@@ -1,12 +1,10 @@
 package com.example.jaz020.clientoneamfam;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
+
 
 /**
  * Created by jaz020 on 7/23/2015.
@@ -20,7 +18,6 @@ public class SlideAnimation extends Animation {
     private View myView;
 
     public SlideAnimation(float fromX, float toX , View v) {
-
         mStart = fromX;
         mEnd = toX;
         myView = v;
@@ -38,5 +35,4 @@ public class SlideAnimation extends Animation {
         float offset = (mEnd - mStart) * interpolatedTime + mStart;
         myView.setX(offset);
     }
-
 }

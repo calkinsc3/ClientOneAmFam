@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,31 +18,31 @@ import com.squareup.picasso.Picasso;
  */
 public class MeetEvanFragment extends Fragment {
 
-    public MeetEvanFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meet_evan, container, false);
 
         ImageView mainImg = (ImageView) view.findViewById(R.id.mainImage);
+
         ImageButton linked = (ImageButton) view.findViewById(R.id.evan_linked_button);
         ImageButton github = (ImageButton) view.findViewById(R.id.evan_github_button);
         ImageButton gmail = (ImageButton) view.findViewById(R.id.evan_gmail_button);
         ImageButton stack = (ImageButton) view.findViewById(R.id.evan_stack_button);
         ImageButton code = (ImageButton) view.findViewById(R.id.evan_code_academy_button);
+
         Picasso.with(getActivity()).load(R.drawable.evan_headshot).fit().centerCrop().into(mainImg);
         Picasso.with(getActivity()).load(R.drawable.stackoverflow_logo_evan).resize(400, 325).into(stack);
         Picasso.with(getActivity()).load(R.drawable.linked_in_logo).resize(500, 150).into(linked);
         Picasso.with(getActivity()).load(R.drawable.githug_logo).resize(400,150).into(github);
         Picasso.with(getActivity()).load(R.drawable.gmail_logo_evan).resize(400,150).into(gmail);
         Picasso.with(getActivity()).load(R.drawable.code_academy_logo_evan).resize(550, 125).into(code);
+
         linked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.linkedin.com/in/evfeller"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://www.linkedin.com/in/evfeller"));
                 startActivity(browserIntent);
             }
         });
@@ -51,7 +50,8 @@ public class MeetEvanFragment extends Fragment {
         github.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.github.com/fellere"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://www.github.com/fellere"));
                 startActivity(browserIntent);
             }
         });
@@ -71,7 +71,8 @@ public class MeetEvanFragment extends Fragment {
         stack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://stackoverflow.com/users/3803190/evan-feller"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://stackoverflow.com/users/3803190/evan-feller"));
                 startActivity(browserIntent);
             }
         });
@@ -79,11 +80,11 @@ public class MeetEvanFragment extends Fragment {
         code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.codecademy.com/fellere"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.codecademy.com/fellere"));
                 startActivity(browserIntent);
             }
         });
-        
 
         return view;
     }

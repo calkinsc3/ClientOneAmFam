@@ -1,6 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ public class Login extends AppCompatActivity {
     private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
     private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
 
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -35,9 +33,7 @@ public class Login extends AppCompatActivity {
      */
     ViewPager mViewPager;
 
-
     SharedPreferences sharedPreferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +60,10 @@ public class Login extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
-
     private void loginSuccess() {
         Intent intent = new Intent(this, Splash.class);
         startActivity(intent);
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -87,13 +81,12 @@ public class Login extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
 
             switch (position){
-
                 case 0:
                     return new LoginFragment();
-
                 case 1:
                     return new RegisterFragment();
             }
+
             return null;
         }
 
@@ -114,5 +107,4 @@ public class Login extends AppCompatActivity {
             return null;
         }
     }
-
 }

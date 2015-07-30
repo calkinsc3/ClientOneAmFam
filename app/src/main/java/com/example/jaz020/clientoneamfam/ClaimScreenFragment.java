@@ -44,6 +44,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * The claim scree fragment holds the information pertaining to each Claim if a claim was chosen. If
  * the AddClaim button was pressed it will enable the user to create a new claim from a list of possible
@@ -83,13 +84,6 @@ public class ClaimScreenFragment extends Fragment {
     private ArrayList<Uri> images;
 
     private boolean hasImages;
-
-    /**
-     * Instantiates a new Claim screen fragment.
-     */
-    public ClaimScreenFragment() {
-        // Required empty public constructor
-    }
 
     /**
      * On create view.
@@ -235,9 +229,7 @@ public class ClaimScreenFragment extends Fragment {
             private String current = "";
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -261,9 +253,7 @@ public class ClaimScreenFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -323,15 +313,16 @@ public class ClaimScreenFragment extends Fragment {
     /**
      * if uploads contains content re-attach new adapter. If non set the RecyclerView to invisible
      */
-    private void setUploadListAdapterAndComments(){
-
+    private void setUploadListAdapterAndComments() {
         queryParseForUploads();
 
         if(uploads.size() > 0) {
             setComments();
             ImageRVAdapter adapter = new ImageRVAdapter(uploads);
+
             claimsView.setAdapter(adapter);
             claimsView.setVisibility(View.VISIBLE);
+
             hasImages = true;
         } else {
             claimsView.setVisibility(View.INVISIBLE);
@@ -343,6 +334,7 @@ public class ClaimScreenFragment extends Fragment {
      */
     private void setComments(){
         commentsList = new ArrayList<>();
+
         for(ParseObject upload : uploads){
             if(upload.getString("Comment") != null) {
                 commentsList.add(upload.getString("Comment"));
@@ -424,11 +416,14 @@ public class ClaimScreenFragment extends Fragment {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] imageBytes = stream.toByteArray();
+
                 ParseFile image = new ParseFile("Photo.jpg", imageBytes, "jpeg");
                 image.save();
 
                 ParseObject mediaUpload = new ParseObject("Upload");
-                Toast.makeText(getActivity(), policySpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), policySpinner.getSelectedItem().toString(),
+                        Toast.LENGTH_SHORT).show();
+
                 mediaUpload.put("PolicyID", policySpinner.getSelectedItem().toString());
                 mediaUpload.put("ClaimID", currentClaim.getObjectId());
                 mediaUpload.put("UserID", ParseUser.getCurrentUser().getObjectId());
@@ -469,6 +464,7 @@ public class ClaimScreenFragment extends Fragment {
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
         menu.findItem(R.id.optional_action).setTitle("Save");
         menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -480,7 +476,6 @@ public class ClaimScreenFragment extends Fragment {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             //save action button enabled
             case R.id.optional_action:
@@ -493,6 +488,7 @@ public class ClaimScreenFragment extends Fragment {
                     Toast.makeText(getActivity(), "Comments Saved", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -529,6 +525,7 @@ public class ClaimScreenFragment extends Fragment {
                     }
                     saveImages();
                     break;
+
                 case REPLACE_IMAGE:
                     //get target Uri
                     final Uri singleImage = data.getData();
@@ -554,7 +551,6 @@ public class ClaimScreenFragment extends Fragment {
      * The type Image rV adapter.
      */
     public class ImageRVAdapter extends RecyclerView.Adapter<ImageRVAdapter.ViewHolder>{
-
         /**
          * The Objects to display.
          */
@@ -599,14 +595,10 @@ public class ClaimScreenFragment extends Fragment {
 
             vHolder.comments.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
                 @Override
                 public void afterTextChanged(Editable s) {
@@ -635,9 +627,11 @@ public class ClaimScreenFragment extends Fragment {
                     vHolder.comments.setText(commentsList.get(i));
                 }
             }
+
             if(vHolder.claimImage != null) {
                 Picasso.with(getActivity()).load(currentObject.getParseFile("Media").getUrl())
                         .fit().centerInside().into(vHolder.claimImage);
+
                 if(!args.getBoolean("ISNEW", false)) {
                     vHolder.claimImage.setLongClickable(true);
                     vHolder.claimImage.setFocusable(true);
@@ -651,12 +645,16 @@ public class ClaimScreenFragment extends Fragment {
                             Intent intent = new Intent();
                             intent.setType("image/*");
                             intent.setAction(Intent.ACTION_GET_CONTENT);
-                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REPLACE_IMAGE);
+
+                            startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                                    REPLACE_IMAGE);
+
                             return false;
                         }
                     });
                 }
             }
+
             if(args.getBoolean("ISNEW", false)) {
                 vHolder.trash.setVisibility(View.VISIBLE);
                 vHolder.trash.setClickable(true);
@@ -668,7 +666,9 @@ public class ClaimScreenFragment extends Fragment {
                             uploadIDs.remove(vHolder.index);
                             uploads.get(vHolder.index).delete();
                             commentsList.remove(vHolder.index);
+
                             Toast.makeText(getActivity(), "Image removed", Toast.LENGTH_SHORT).show();
+
                             setUploadListAdapterAndComments();
                         } catch (com.parse.ParseException e) {
                             Log.d("Save Error", e.toString());
@@ -676,8 +676,6 @@ public class ClaimScreenFragment extends Fragment {
                     }
                 });
             }
-
-
         }
 
         /**
@@ -685,26 +683,10 @@ public class ClaimScreenFragment extends Fragment {
          */
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            /**
-             * The Cv.
-             */
             CardView cv;
-
-            /**
-             * The Claim image.
-             */
             ImageButton claimImage;
-            /**
-             * The Comments.
-             */
             MultiAutoCompleteTextView comments;
-            /**
-             * The Trash.
-             */
             ImageButton trash;
-            /**
-             * The Index.
-             */
             int index;
 
             /**
@@ -721,6 +703,5 @@ public class ClaimScreenFragment extends Fragment {
                 trash = (ImageButton)view.findViewById(R.id.deleteImageButton);
             }
         }
-
     }
 }

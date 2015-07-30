@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffffff"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    style="@style/base_clouds"
+    >
 
     <ImageView
         android:layout_width="fill_parent"

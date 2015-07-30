@@ -34,9 +34,12 @@ public class LoginFragment extends Fragment {
 
     EditText username_entry;
     EditText password_entry;
+
     CheckBox username_checkbox;
     CheckBox login_checkbox;
+
     Button login_button;
+
     SharedPreferences sharedPreferences;
 
     @Override
@@ -47,8 +50,10 @@ public class LoginFragment extends Fragment {
 
         username_entry = (EditText) view.findViewById(R.id.username_entry);
         password_entry = (EditText) view.findViewById(R.id.password_entry);
+
         username_checkbox = (CheckBox) view.findViewById(R.id.remember_username_checkbox);
         login_checkbox = (CheckBox) view.findViewById(R.id.stay_logged_in_checkbox);
+
         login_button = (Button) view.findViewById(R.id.login_button);
 
         //set checkboxes and username if the user has data saved
@@ -61,7 +66,8 @@ public class LoginFragment extends Fragment {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "", "Signing in to Parse.com", true);
+                final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
+                        "", "Signing in to Parse.com", true);
 
                 final String username = username_entry.getText().toString();
                 String password = password_entry.getText().toString();
@@ -82,6 +88,7 @@ public class LoginFragment extends Fragment {
                             } else {
                                 editor.remove("Username");
                             }
+
                             editor.apply();
 
                             //login successful

@@ -2,52 +2,52 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:outline="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/base_clouds"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.jaz020.clientoneamfam.MyAgentFragment"
-    style="@style/base_clouds"
-    android:weightSum="100">
+    android:weightSum="100"
+    tools:context="com.example.jaz020.clientoneamfam.MyAgentFragment">
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="30">
 
         <ImageView
+            android:id="@+id/agentImage"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/agentImage"
-            android:src="@drawable/contact_img"
-            android:scaleType="centerCrop"
-            android:paddingBottom="9px"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:paddingBottom="9px"
+            android:scaleType="centerCrop"
+            android:src="@drawable/contact_img" />
         <Space
+            android:id="@+id/myAgentSpacing"
             android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/myAgentSpacing"/>
+            android:layout_height="20dp" />
 
         <ImageButton
+            android:id="@+id/agentEmailingButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/agentEmailingButton"
-            android:src="@android:drawable/ic_dialog_email"
-            android:contentDescription="@string/email"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/email"
+            android:src="@android:drawable/ic_dialog_email" />
 
         <com.example.jaz020.clientoneamfam.TextOutlineView
+            android:id="@+id/agentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/agentName"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="25sp"
-            android:padding="15dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/agentEmailingButton"
-            android:textStyle="bold"
+            android:padding="15dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold"
             outline:strokeColor="#ffffff"
             outline:strokeJoinStyle="miter"
             outline:strokeWidth="2px" />
@@ -60,9 +60,11 @@
         android:layout_height="0px"
         android:layout_weight="5"/>
     <LinearLayout
-        android:background="@color/cloudy_white"
+        style="@style/cloud_view"
         android:layout_width="fill_parent"
         android:layout_height="0px"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:layout_weight="10"
         android:weightSum="100">
         <Space
@@ -71,12 +73,12 @@
             android:layout_weight="5"/>
 
         <ImageButton
+            android:id="@+id/agentDirectionsButton"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="10"
-            android:src="@android:drawable/ic_menu_mapmode"
             android:background="@null"
-            android:id="@+id/agentDirectionsButton"/>
+            android:src="@android:drawable/ic_menu_mapmode" />
 
         <Space
             android:layout_width="0px"
@@ -84,25 +86,24 @@
             android:layout_weight="5"/>
 
         <LinearLayout
-            android:background="@color/cloudy_white"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="60"
-            android:weightSum="2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="2">
 
             <TextView
+                android:id="@+id/AgentAddress1TextView"
                 android:layout_width="fill_parent"
                 android:layout_height="0px"
                 android:layout_weight="1"
-                android:id="@+id/AgentAddress1TextView"
                 android:text="5555 NeedAFiller Road"/>
 
             <TextView
+                android:id="@+id/AgentAddress2TextView"
                 android:layout_width="fill_parent"
                 android:layout_height="0px"
                 android:layout_weight="1"
-                android:id="@+id/AgentAddress2TextView"
                 android:text="Madison, Wisconsin 53562"/>
 
         </LinearLayout>
@@ -119,12 +120,13 @@
         android:layout_height="0px"
         android:layout_weight="2"/>
 
-    <ImageView android:layout_height="0px"
+    <ImageView
         android:layout_width="fill_parent"
+        android:layout_height="0px"
         android:layout_weight="1"
-        android:src="@drawable/grey_line"
-        android:scaleType="centerCrop"
         android:padding="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/grey_line"
         />
 
     <Space
@@ -133,9 +135,11 @@
         android:layout_weight="2"/>
 
     <LinearLayout
-        android:background="@color/cloudy_white"
+        style="@style/cloud_view"
         android:layout_width="fill_parent"
         android:layout_height="0px"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:layout_weight="10"
         android:weightSum="100">
         <Space
@@ -144,12 +148,12 @@
             android:layout_weight="5"/>
 
         <ImageButton
+            android:id="@+id/agentCallButton"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="10"
-            android:src="@android:drawable/ic_menu_call"
             android:background="@null"
-            android:id="@+id/agentCallButton"/>
+            android:src="@android:drawable/ic_menu_call" />
 
         <Space
             android:layout_width="0px"
@@ -157,12 +161,12 @@
             android:layout_weight="5"/>
 
         <TextView
+            android:id="@+id/AgentPhoneTextView"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="60"
-            android:id="@+id/AgentPhoneTextView"
-            android:text="( 555 ) - 555 - 5555"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:text="( 555 ) - 555 - 5555" />
 
         <Space
             android:layout_width="0px"
@@ -176,12 +180,13 @@
         android:layout_height="0px"
         android:layout_weight="2"/>
 
-    <ImageView android:layout_height="0px"
+    <ImageView
         android:layout_width="fill_parent"
+        android:layout_height="0px"
         android:layout_weight="1"
-        android:src="@drawable/grey_line"
-        android:scaleType="centerCrop"
         android:padding="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/grey_line"
         />
 
     <Space
@@ -190,11 +195,13 @@
         android:layout_weight="2"/>
 
     <LinearLayout
-        android:background="@color/cloudy_white"
+        style="@style/cloud_view"
         android:layout_width="fill_parent"
-        android:orientation="horizontal"
         android:layout_height="0px"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:layout_weight="7"
+        android:orientation="horizontal"
         android:weightSum="100">
 
         <Space
@@ -206,17 +213,19 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="60"
-            android:text="Hours of Operation :"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:text="Hours of Operation :" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/cloudy_white"
+        style="@style/cloud_view"
         android:layout_width="fill_parent"
-        android:orientation="horizontal"
         android:layout_height="0px"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:layout_weight="7"
+        android:orientation="horizontal"
         android:weightSum="100">
 
         <Space
@@ -228,8 +237,8 @@
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="60"
-            android:text="Mon. - Fri. : 7:00 AM - 4:30 PM"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:text="Mon. - Fri. : 7:00 AM - 4:30 PM" />
 
     </LinearLayout>
 
@@ -250,13 +259,13 @@
             android:layout_weight="20"/>
 
         <Button
+            android:id="@+id/AgentScheduleButton"
             style="@style/cloud_button"
             android:layout_width="0px"
             android:layout_height="fill_parent"
             android:layout_weight="60"
             android:padding="20dp"
-            android:text="Schedule a Meeting"
-            android:id="@+id/AgentScheduleButton"/>
+            android:text="Schedule a Meeting" />
 
         <Space
             android:layout_width="0px"

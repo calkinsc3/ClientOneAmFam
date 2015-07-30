@@ -6,6 +6,7 @@ import android.content.Context;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+
 /**
  * Created by lsl017 on 7/16/2015.
  */
@@ -19,8 +20,7 @@ public class Singleton {
     private static ParseUser myAgent;
     private static int tempLocation;
 
-    private Singleton() {
-    }
+    private Singleton() {}
 
     public static Singleton getInstance() {
         return ourInstance;

@@ -17,7 +17,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +29,6 @@ public class MyPoliciesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
         return inflater.inflate(R.layout.fragment_my_policies, container, false);
     }
 

@@ -1,7 +1,5 @@
 package com.example.jaz020.clientoneamfam;
 
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,20 +48,12 @@ public class RegisterFragment extends Fragment {
     private List<ParseUser> agentList;
     private List<String> agentNames;
 
-
-    public RegisterFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
-
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -75,7 +65,6 @@ public class RegisterFragment extends Fragment {
 
         retrieveAgentList();
 
-
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,20 +74,15 @@ public class RegisterFragment extends Fragment {
 
         password_reentry.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
                 String p1 = password_entry.getText().toString();
                 String p2 = s.toString();
-
 
                 //check if passwords match
                 if (!p1.equals(p2)) {
@@ -109,20 +93,16 @@ public class RegisterFragment extends Fragment {
 
                 //TODO anymore password checks
 
-
             }
         });
 
         phone_entry.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-
     }
 
-
     /**
-     * Qeuries parse for Agent Users and creates a list of objects, as well as a list of names
+     * Queries parse for Agent Users and creates a list of objects, as well as a list of names
      */
     private void retrieveAgentList(){
-
         //initialize agentNames
         agentNames = new ArrayList<>();
 
@@ -152,11 +132,8 @@ public class RegisterFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
-
     }
 
     /**
@@ -164,7 +141,6 @@ public class RegisterFragment extends Fragment {
      * @param view the main view of this fragment
      */
     private void initializeFields(View view){
-
         username_entry = (EditText) view.findViewById(R.id.username_entry);
         password_entry = (EditText) view.findViewById(R.id.password_entry);
         password_reentry = (EditText) view.findViewById(R.id.password_reentry);
@@ -174,30 +150,28 @@ public class RegisterFragment extends Fragment {
         street_entry = (EditText) view.findViewById(R.id.address_street);
         city_entry = (EditText) view.findViewById(R.id.address_city);
         zip_entry = (EditText) view.findViewById(R.id.zip_code);
+
         state_spinner = (Spinner) view.findViewById(R.id.state_spinner);
         agent_spinner = (Spinner) view.findViewById(R.id.agent_spinner);
+
         register_button = (Button) view.findViewById(R.id.register_button);
 
         //POPULATE STATE DROPDOWN
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.states, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         state_spinner.setAdapter(adapter);
-
     }
 
     /**
      * Populate the Agent Selection Spinner
      */
     private void populateAgentSpinner(){
-
         ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, agentNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         agent_spinner.setAdapter(adapter);
-
     }
 
     private boolean validateAllEntries(){
-
         String username = username_entry.getText().toString();
         String password = password_entry.getText().toString();
         String repassword = password_reentry.getText().toString();
@@ -209,52 +183,48 @@ public class RegisterFragment extends Fragment {
         String phone = phone_entry.getText().toString();
         String email = email_entry.getText().toString();
 
-
-
-        if(username.length() < 1){
+        if(username.length() < 1) {
             username_entry.setError("You must enter a username.");
             return false;
         }
 
-
-        if(password.length() < 1){
+        if(password.length() < 1) {
             password_entry.setError("Please enter a password");
             return false;
         }
 
-        if(password_reentry.getError() != null || repassword.length() < 1){
+        if(password_reentry.getError() != null || repassword.length() < 1) {
             password_reentry.setError("Passwords do not match");
             return false;
         }
 
-        if(street.length() < 1){
+        if(street.length() < 1) {
             street_entry.setError("You must enter your address.");
             return false;
         }
 
-        if(city.length() < 1){
+        if(city.length() < 1) {
             city_entry.setError("You must enter your city.");
             return false;
         }
 
-        if(state.length() > 2){
+        if(state.length() > 2) {
             Toast.makeText(getActivity(), "Please select a state.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if(zip.length() != 5){
+        if(zip.length() != 5) {
             zip_entry.setError("Enter a valid zip-code.");
             return false;
         }
 
-        if(name.length() < 1){
+        if(name.length() < 1) {
             name_entry.setError("You must enter your name.");
             return false;
         }
 
-
         //TODO make it check for exact ammounts (xxx-xxxx or xxx-xxx-xxxx or 1-xxx-xxx-xxxx)
-        if(phone.length() < 8 || phone.length() > 8 && phone.length() < 14){
+        if(phone.length() < 8 || phone.length() > 8 && phone.length() < 14) {
             phone_entry.setError("Please enter a phone number");
             return false;
         }
@@ -265,15 +235,14 @@ public class RegisterFragment extends Fragment {
             return false;
         }
 
-
         return true;
     }
+
     /**
      * Performs validation of all field entries and signs up a new user
      *
      */
     private void registerUser(){
-
         if(validateAllEntries()) {
             String phoneNumber = phone_entry.getText().toString();
             phoneNumber = phoneNumber.replace("(", "");
@@ -306,19 +275,16 @@ public class RegisterFragment extends Fragment {
                     } else {
                         String message = e.getMessage();
 
-                        if(message.contains("email")){
+                        if(message.contains("email")) {
                             email_entry.setError("Please enter a valid email address");
+                        } else {
+                            Toast.makeText(getActivity(), "Could Not Create New User: " +
+                                    e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                            Toast.makeText(getActivity(), "Could Not Create New User: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-
                     }
                 }
             });
         }
-
-
     }
 
     /**
@@ -333,15 +299,13 @@ public class RegisterFragment extends Fragment {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
-
-                if(parseUser != null){
+                if (parseUser != null) {
                     Intent intent = new Intent(getActivity(), Splash.class);
                     startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), "Could Not Log In: " +
+                            e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                else{
-                    Toast.makeText(getActivity(), "Could Not Log In: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
             }
         });
     }
