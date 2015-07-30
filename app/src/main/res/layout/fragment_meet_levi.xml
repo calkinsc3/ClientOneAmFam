@@ -15,7 +15,7 @@
         android:layout_height="150dp"
         android:layout_gravity="left|top"
         android:background="#00ffffff"
-        android:src="@drawable/levi" />
+        android:src="@drawable/levi_portrait" />
 
     <TextView
         android:id="@+id/textView3"

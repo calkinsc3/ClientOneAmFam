@@ -1,7 +1,7 @@
 package com.example.jaz020.clientoneamfam;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,7 +57,7 @@ public class MeetInternsFragment extends Fragment {
 
         internPictureMap = new HashMap<>();
         internPictureMap.put(internNames[0], R.drawable.card_evan);
-        internPictureMap.put(internNames[1], R.drawable.card_levi);
+        internPictureMap.put(internNames[1], R.drawable.levi_portrait);
         internPictureMap.put(internNames[2], R.drawable.navneet);
         internPictureMap.put(internNames[3], R.drawable.card_james);
     }
