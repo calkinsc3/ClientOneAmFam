@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/intern_card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    card_view:cardCornerRadius="4dp"
     android:layout_margin="5dp"
-    android:clickable="true" >
+    android:clickable="true"
+    card_view:cardBackgroundColor="@color/cloudy_white"
+    card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:paddingTop="10dp"
+        android:orientation="vertical"
         android:paddingBottom="10dp"
+        android:paddingEnd="15dp"
         android:paddingStart="15dp"
-        android:paddingEnd="15dp" >
+        android:paddingTop="10dp">
 
         <ImageButton
+            android:id="@+id/internPicture"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="#ffffff"
-            android:contentDescription="@string/intern_picture"
-            android:id="@+id/internPicture" />
+            android:contentDescription="@string/intern_picture" />
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_toEndOf="@id/internPicture" >
+            android:layout_toEndOf="@id/internPicture"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/internName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingStart="25dp"
-                android:paddingEnd="0dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:hint="@string/intern_name"
-                android:id="@+id/internName" />
+                android:paddingEnd="0dp"
+                android:paddingStart="25dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </FrameLayout>
 
