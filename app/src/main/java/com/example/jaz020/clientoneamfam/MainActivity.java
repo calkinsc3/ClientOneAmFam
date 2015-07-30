@@ -1,7 +1,6 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
 
 public class MainActivity extends Activity {
 
@@ -49,17 +49,14 @@ public class MainActivity extends Activity {
 
         /**
          * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
-         *
          */
         if (savedInstanceState == null) {
-
             Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
                     getFragmentManager(), true);
         }
     }
 
     private void setUpDrawer(){
-
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(false);
 
@@ -70,17 +67,14 @@ public class MainActivity extends Activity {
                 R.string.james_ziglinski,  /* "open drawer" description */
                 R.string.connect_with_james  /* "close drawer" description */
         ) {
-
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
             }
         };
 
@@ -97,7 +91,6 @@ public class MainActivity extends Activity {
         drawerExpandableList = (ExpandableListView) findViewById(R.id.expandable_intern_list);
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
     }
-
 
     private void setExpandDrawerLists() {
         List<String> internNamesList = new ArrayList<>();
@@ -228,7 +221,6 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
 
@@ -259,10 +251,8 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed(){
-
         if(getFragmentManager().getBackStackEntryCount() > 1){
             super.onBackPressed();
         }
-
     }
 }

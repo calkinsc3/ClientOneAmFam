@@ -24,10 +24,12 @@ import java.util.Locale;
  */
 public class Tools {
 
-    public static void replaceFragment(int container_id, Fragment fragment, FragmentManager fManager, boolean addToBackStack) {
+    public static void replaceFragment(int container_id, Fragment fragment, FragmentManager fManager,
+                                       boolean addToBackStack) {
         FragmentTransaction fTransaction = fManager.beginTransaction();
         fTransaction.setCustomAnimations(R.anim.right_to_left, R.anim.left_to_right);
         fTransaction.replace(container_id, fragment);
+
         if (addToBackStack) fTransaction.addToBackStack(null);
 
         fTransaction.commit();
@@ -36,8 +38,10 @@ public class Tools {
     public static void setMyAgent() throws ParseException{
             ParseUser client = ParseUser.getCurrentUser();
             final String agentID = client.getString("AgentID");
+
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.whereEqualTo("objectId", agentID);
+
             query.findInBackground(new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> list, ParseException e) {
@@ -58,7 +62,7 @@ public class Tools {
     }
 
     public static void updateDateEntry(EditText editText, Calendar calendar) {
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         editText.setText(sdf.format(calendar.getTime()));
@@ -70,69 +74,4 @@ public class Tools {
 
         editText.setText(sdf.format(calendar.getTime()));
     }
-
-//    public static byte[] readBytes(Context context, Uri uri) throws IOException {
-//        // this dynamically extends to take the bytes you read
-//        InputStream inputStream = context.getContentResolver().openInputStream(uri);
-//        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-//
-//        // this is storage overwritten on each iteration with bytes
-//        int bufferSize = 1024;
-//        byte[] buffer = new byte[bufferSize];
-//
-//        // we need to know how may bytes were read to write them to the byteBuffer
-//        int len = 0;
-//        while ((len = inputStream.read(buffer)) != -1) {
-//            byteBuffer.write(buffer, 0, len);
-//        }
-//
-//        // and then we can return your byte array.
-//        return byteBuffer.toByteArray();
-//    }
-//
-//    //TODO recomment
-//    /**
-//     * Formats the information of a client or a policy object to be
-//     * viewed as a list item in a TextView
-//     *
-//     * @param object The object that is to be formatted(Client or Policy)
-//     * @param mode   ClIENT or POLICY
-//     * @return
-//     */
-//    public static String buildMessage(ParseObject object, int mode) {
-//
-//        String message = "";
-//
-//        switch (mode) {
-//
-//            case Singleton.CLIENT:
-//                message = object.getString("FirstName");
-//                message += " " + object.getString("LastName") + "\n";
-//                message += object.getString("Address") + "\n";
-//                message += object.getString("City") + ", " + object.getString("State") + " " + object.getNumber("ZIP");
-//                break;
-//
-//            case Singleton.POLICY:
-//                message = object.getString("Line1") + "\n" + object.getString("Line2") + "\n" + object.getNumber("PolicyNumber");
-//                break;
-//
-//            case Singleton.CLAIM:
-//                String damages = String.valueOf(object.get("Damages"));
-//                BigDecimal parsed = new BigDecimal(damages).setScale(2,BigDecimal.ROUND_FLOOR);
-//                String formattedDamages = NumberFormat.getCurrencyInstance().format(parsed);
-//
-//                message = object.getObjectId() + "\n" + formattedDamages;
-//                break;
-//
-//            case Singleton.MEETING:
-//                message = object.getString("Title") + "\n" + object.getString("Location") + "\n" +
-//                        object.getDate("StartDate").toString() +  "\n" +
-//                        object.getDate("EndDate").toString() + "\n" +
-//                        object.getString("Comment");
-//                break;
-//
-//        }
-//
-//        return message;
-//    }
 }
