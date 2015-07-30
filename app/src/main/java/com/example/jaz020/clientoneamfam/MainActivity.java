@@ -44,13 +44,6 @@ public class MainActivity extends Activity {
 
         setUpDrawer();
 
-        // Sets the Up Navigation enabled only if fragments are on backStack
-        //enableUpAction();
-
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(false);
-
-
         // Set the navigation drawer navigation
         setDrawerItemClickListener();
 
@@ -58,14 +51,7 @@ public class MainActivity extends Activity {
          * THIS CHECK IS IN PLACE TO STOP THE APP FROM CRASHING ON ROTATE:
          *
          */
-        // TODO if MainPageFragment is removed.
         if (savedInstanceState == null) {
-
-            // TODO!!!!!
-
-            //loads the appropriate initial fragment
-//            Tools.replaceFragment(new MainFragment(), getFragmentManager(), true);
-
 
             Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
                     getFragmentManager(), true);
@@ -73,6 +59,9 @@ public class MainActivity extends Activity {
     }
 
     private void setUpDrawer(){
+
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
 
         drawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -216,25 +205,6 @@ public class MainActivity extends Activity {
         });
     }
 
-    public void enableUpAction(){
-        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                int stackHeight = getFragmentManager().getBackStackEntryCount();
-
-                if (stackHeight > 1) {
-                    // if we have something on the stack (doesn't include the current shown fragment).
-                    // >0 removes initial frag and leave a blank space...use 1 instead.
-                    getActionBar().setHomeButtonEnabled(true);
-                    getActionBar().setDisplayHomeAsUpEnabled(true);
-
-                } else {
-                    getActionBar().setDisplayHomeAsUpEnabled(false);
-                    getActionBar().setHomeButtonEnabled(false);
-                }
-            }
-        });
-    }
 
     /**
      * Moves the the down arrow on the expandable list view to the right side of the screen.
