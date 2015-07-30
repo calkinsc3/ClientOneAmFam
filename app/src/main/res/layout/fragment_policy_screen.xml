@@ -7,9 +7,9 @@
 
     <LinearLayout
         android:id="@+id/descriptionLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cloudy_white"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -26,11 +26,11 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/costLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionLayout"
         android:layout_marginTop="10dp"
-        android:background="@color/cloudy_white"
         android:orientation="horizontal">
 
         <TextView
@@ -49,11 +49,11 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/addressLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/costLayout"
         android:layout_marginTop="10dp"
-        android:background="@color/cloudy_white"
         android:orientation="horizontal">
 
         <TextView
@@ -72,11 +72,11 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/address2Layout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/addressLayout"
         android:layout_marginTop="10dp"
-        android:background="@color/cloudy_white"
         android:orientation="horizontal"
         android:weightSum="6">
 
@@ -126,10 +126,10 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/uploadsLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/address2Layout"
-        android:background="@color/cloudy_white">
+        android:layout_below="@id/address2Layout">
 
         <TextView
             android:layout_width="wrap_content"

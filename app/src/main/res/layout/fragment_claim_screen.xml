@@ -7,9 +7,9 @@
 
     <LinearLayout
         android:id="@+id/policyLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cloudy_white"
         android:orientation="horizontal">
 
         <TextView
@@ -26,13 +26,16 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/damagesLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/policyLayout"
         android:layout_marginTop="10dp"
-        android:background="@color/cloudy_white">
+
+        >
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/damages"/>
@@ -50,11 +53,13 @@
 
     <LinearLayout
         android:id="@+id/commentsLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/damagesLayout"
         android:layout_marginTop="10dp"
-        android:background="@color/cloudy_white">
+
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,11 +78,11 @@
 
     <LinearLayout
         android:id="@+id/uploadsLayout"
+        style="@style/cloud_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/commentsLayout"
-        android:layout_marginTop="10dp"
-        android:background="@color/cloudy_white" >
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
