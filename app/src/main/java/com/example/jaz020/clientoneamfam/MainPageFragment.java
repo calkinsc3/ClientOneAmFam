@@ -23,24 +23,19 @@ import com.parse.ParseException;
  */
 public class MainPageFragment extends Fragment {
 
+    private static final long CLOUD_SPEED = 500;
+    //PARSE KEYS
+    private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
+    private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
     View rootView;
-
     Button myAgent;
     Button findAnAgent;
     Button myPolicies;
     Button myClaims;
     Button settings;
     Button meetTheInterns;
-
     Display display;
     Point size = new Point();
-
-    private static final long CLOUD_SPEED = 500;
-
-    //PARSE KEYS
-    private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
-    private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +70,7 @@ public class MainPageFragment extends Fragment {
         myAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myAgent.setEnabled(false);
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
                 myAgent.startAnimation(anim);
@@ -94,6 +90,7 @@ public class MainPageFragment extends Fragment {
         findAnAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                findAnAgent.setEnabled(false);
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
                 findAnAgent.startAnimation(anim);
@@ -115,6 +112,7 @@ public class MainPageFragment extends Fragment {
         myPolicies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myPolicies.setEnabled(false);
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
                 myPolicies.startAnimation(anim);
@@ -133,6 +131,7 @@ public class MainPageFragment extends Fragment {
 
         myClaims.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                myClaims.setEnabled(false);
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
                 myClaims.startAnimation(anim);
@@ -152,6 +151,7 @@ public class MainPageFragment extends Fragment {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                settings.setEnabled(false);
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
                 settings.startAnimation(anim);
@@ -171,6 +171,7 @@ public class MainPageFragment extends Fragment {
         meetTheInterns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                meetTheInterns.setEnabled(false);
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
                 meetTheInterns.startAnimation(anim);
@@ -190,6 +191,14 @@ public class MainPageFragment extends Fragment {
 
     @Override
     public void onResume() {
+
         super.onCreate(null);
+
+        meetTheInterns.setEnabled(true);
+        settings.setEnabled(true);
+        myClaims.setEnabled(true);
+        myPolicies.setEnabled(true);
+        findAnAgent.setEnabled(true);
+        myAgent.setEnabled(true);
     }
 }
