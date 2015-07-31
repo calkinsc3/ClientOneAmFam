@@ -1,12 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
+    android:background="@color/cloudy_white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.jaz020.clientoneamfam.LoginFragment"
-    android:orientation="vertical"
-    android:background="@color/light_blue_trans"
     >
 
     <ScrollView
@@ -14,21 +15,21 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/username_entry"
-                android:hint="username"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/password_entry"
-                android:inputType="textPassword"
-                android:hint="password"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:hint="username" />
+            <EditText
+                android:id="@+id/password_entry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="password"
+                android:inputType="textPassword"
                 />
             <CheckBox
                 android:id="@+id/stay_logged_in_checkbox"
@@ -44,9 +45,9 @@
 
             <Button
                 android:id="@+id/login_button"
-                android:text="Log In"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Log In" />
 
         </LinearLayout>
 

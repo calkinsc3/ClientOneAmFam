@@ -22,49 +22,56 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/james_ziglinski"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/james_portrait"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/james_portrait" />
+
+                    <Button
+                        style="@style/cloud_button"
+                        android:layout_width="fill_parent"
+                        android:layout_height="150dp"
+                        android:layout_toEndOf="@id/james_portrait"
+                        android:text="@string/james_ziglinski"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                </RelativeLayout>
+
 
                 <TextView
+                    style="@style/cloud_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/cloudy_white"
                     android:text="University of Wisconsin - Madison"
                     />
 
                 <TextView
+                    style="@style/cloud_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/cloudy_white"
                     android:text="Majoring in Computer Science &amp; Mathematics"
                     />
 
                 <TextView
+                    style="@style/cloud_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/cloudy_white"
-                    android:text="Ockham Enterprises, LLC"
+                    android:text="Ockham Enterprises, LLC -- VP of Technology"
                     />
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/cloudy_white"
-                    android:text="Co-Founder &amp; VP of Technology"
-                    />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/cloudy_white"
-                    android:text="Co-Founder of Wristbank"
-                    />
+                <!--<TextView-->
+                <!--style="@style/cloud_view"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Co-Founder of Wristbank"-->
+                <!--/>-->
 
             </LinearLayout>
 
@@ -82,27 +89,14 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
-                        android:src="@drawable/james_portrait" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
                         android:src="@drawable/james_skiing" />
 
                     <TextView
+                        style="@style/cloud_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/cloudy_white"
                         android:gravity="center_horizontal"
                         android:text="I love to ski whenever I can." />
 
@@ -115,43 +109,64 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
                         android:src="@drawable/north_coast_group" />
 
                     <TextView
+                        style="@style/cloud_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/cloudy_white"
                         android:gravity="center_horizontal"
                         android:text="North Coast Music Festival 2014" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:src="@drawable/airsoft_gear" />
+
+                    <TextView
+                        style="@style/cloud_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="Airsoft &amp; Paintball" />
 
                 </LinearLayout>
+
             </ViewFlipper>
 
             <TextView
+                style="@style/cloud_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/cloudy_white"
-                android:text="Skills: Android, Java, HTML/CSS, C, matlab, AngularJS"
+                android:text="Skills: Android, Java, HTML/CSS, C, matlab, AngularJS, Algorithm Design &amp; Analysis, Graph Theory"
 
                 />
 
             <TextView
+                style="@style/cloud_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/cloudy_white"
                 android:text="@string/about_james"
                 />
 
 
             <TextView
+                style="@style/cloud_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/cloudy_white"
                 android:text="@string/connect_with_james"
                 />
 
@@ -170,6 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
+                        android:padding="10dp"
                         android:src="@drawable/linkedin_icon" />
 
                     <ImageButton
@@ -177,6 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
+                        android:padding="10dp"
                         android:src="@drawable/github_mark" />
 
                     <ImageButton
@@ -184,6 +201,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
+                        android:padding="10dp"
                         android:src="@drawable/codecademy_icon"
                         />
 
@@ -192,6 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
+                        android:padding="10dp"
                         android:src="@drawable/stack_exchange_icon"
                         />
 
@@ -200,6 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
+                        android:padding="10dp"
                         android:src="@drawable/facebook_icon"
                         />
 
@@ -209,6 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00ffffff"
+                        android:padding="10dp"
                         android:src="@drawable/google_plus_icon"
                         />
 

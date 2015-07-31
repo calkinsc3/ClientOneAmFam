@@ -154,8 +154,8 @@ public class MeetJamesFragment extends Fragment {
         email_james_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setType("text/plain");
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
                 intent.putExtra(Intent.EXTRA_EMAIL, "ziglinski@wisc.edu");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Message from OneAmFam Client");
                 intent.putExtra(Intent.EXTRA_TEXT, "Hi James! Would you like a job?");
