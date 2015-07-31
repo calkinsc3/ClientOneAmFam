@@ -606,8 +606,11 @@ public class PolicyScreenFragment extends Fragment {
             }
 
             if(vHolder.policyImage != null){
-                Picasso.with(getActivity()).load(currentObject.getParseFile("Media")
-                        .getUrl()).fit().centerInside().into(vHolder.policyImage);
+                Picasso.with(getActivity())
+                        .load(currentObject.getParseFile("Media").getUrl())
+                        .resize(500, 500)
+                        .centerInside()
+                        .into(vHolder.policyImage);
 
                 if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
                     vHolder.policyImage.setFocusableInTouchMode(true);

@@ -629,8 +629,11 @@ public class ClaimScreenFragment extends Fragment {
             }
 
             if(vHolder.claimImage != null) {
-                Picasso.with(getActivity()).load(currentObject.getParseFile("Media").getUrl())
-                        .fit().centerInside().into(vHolder.claimImage);
+                Picasso.with(getActivity())
+                        .load(currentObject.getParseFile("Media").getUrl())
+                        .resize(500, 500)
+                        .centerInside()
+                        .into(vHolder.claimImage);
 
                 if(!args.getBoolean("ISNEW", false)) {
                     vHolder.claimImage.setLongClickable(true);

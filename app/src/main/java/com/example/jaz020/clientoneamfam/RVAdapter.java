@@ -74,7 +74,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                         /* Load picture into current card's image view */
                         Picasso.with(Singleton.getContext())
                                 .load(url)
-                                .fit()
+                                .resize(500, 500)
                                 .centerInside()
                                 .into(ivh.image);
                     }
@@ -141,14 +141,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                                 /* Load picture into current card's image view */
                                 Picasso.with(Singleton.getContext())
                                         .load(url)
-                                        .fit()
+                                        .resize(500, 500)
                                         .centerInside()
                                         .into(ivh.image);
                             }
                         }
 
                     });
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
