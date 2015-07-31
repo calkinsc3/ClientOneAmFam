@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -127,6 +128,13 @@ public class ClaimScreenFragment extends Fragment {
 
         claimsView.setHasFixedSize(true);
         claimsView.setLayoutManager(llm);
+        claimsView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         uploads = new ArrayList<>();
         policyIDs = new ArrayList<>();
