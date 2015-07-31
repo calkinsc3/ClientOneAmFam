@@ -1,65 +1,68 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.example.jaz020.clientoneamfam.Settings"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/base_clouds"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/padding_interns"
-    style="@style/base_clouds"
+    tools:context="com.example.jaz020.clientoneamfam.Settings"
     >
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <LinearLayout
-                android:gravity="center_horizontal"
                 android:id="@+id/header_layout"
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:src="@drawable/amfam3"
+                    android:id="@+id/logo_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:id="@+id/logo_image_view"
                     android:cropToPadding="false"
-                    android:fitsSystemWindows="false" />
+                    android:fitsSystemWindows="false"
+                    android:src="@drawable/amfam3" />
 
                 <TextView
-                    android:background="@color/cloudy_white"
-                    android:hint="@string/version"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
                     android:id="@+id/version_text_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/cloudy_white"
+                    android:hint="@string/version" />
             </LinearLayout>
 
 
             <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/cloudy_white"
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:padding="10dp">
 
                 <LinearLayout
                     android:id="@+id/title_layout"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:text="@string/username_colon"
                         android:id="@+id/username_title"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/username_colon" />
 
                     <TextView
-                        android:text="@string/address_colon"
                         android:id="@+id/address_title"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/address_colon" />
 
 
 
@@ -67,10 +70,10 @@
 
                 <LinearLayout
                     android:id="@+id/text_layout"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
                     <TextView
                         android:id="@+id/username_text_view"
                         android:layout_width="fill_parent"
@@ -86,39 +89,40 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/cloudy_white"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:padding="10dp">
 
                 <LinearLayout
                     android:id="@+id/title_layout_2"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:text="@string/phone_colon"
                         android:id="@+id/phone_title"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_colon" />
 
                     <TextView
-                        android:text="@string/email_colon"
                         android:id="@+id/email_title"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/email_colon" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/text_layout_2"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/phone_text_view"
@@ -134,8 +138,8 @@
             </LinearLayout>
 
             <Button
-                style="@style/cloud_button"
                 android:id="@+id/logout_button"
+                style="@style/cloud_button"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="@string/logout"
