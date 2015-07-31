@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -254,6 +255,14 @@ public class PolicyScreenFragment extends Fragment {
 
         uploadsList.setHasFixedSize(true);
         uploadsList.setLayoutManager(llm);
+
+        uploadsList.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         address2 = (LinearLayout)view.findViewById(R.id.address2Layout);
         stateAdapter = ArrayAdapter.createFromResource(getActivity(),

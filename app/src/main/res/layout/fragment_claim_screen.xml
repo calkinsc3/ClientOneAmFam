@@ -76,6 +76,7 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/uploadsLayout"
         style="@style/cloud_view"
@@ -112,7 +113,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/uploadsLayout"
         android:layout_marginTop="10dp">
-
 
     </android.support.v7.widget.RecyclerView>
 

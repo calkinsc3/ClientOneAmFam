@@ -129,7 +129,8 @@
             android:maxLength="16"/>
 
     </LinearLayout>
-    <LinearLayout
+
+        <LinearLayout
         android:id="@+id/uploadsLayout"
         style="@style/cloud_view"
         android:layout_width="match_parent"
