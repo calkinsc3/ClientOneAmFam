@@ -66,12 +66,12 @@
                     android:text="Ockham Enterprises, LLC -- VP of Technology"
                     />
 
-                <TextView
-                    style="@style/cloud_view"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Co-Founder of Wristbank"
-                    />
+                <!--<TextView-->
+                <!--style="@style/cloud_view"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Co-Founder of Wristbank"-->
+                <!--/>-->
 
             </LinearLayout>
 
