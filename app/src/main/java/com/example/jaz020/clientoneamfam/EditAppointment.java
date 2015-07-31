@@ -309,8 +309,6 @@ public class EditAppointment extends Fragment {
                 }
             }
         });
-
-        saveToGoogle();
     }
 
     private void saveToGoogle(){
