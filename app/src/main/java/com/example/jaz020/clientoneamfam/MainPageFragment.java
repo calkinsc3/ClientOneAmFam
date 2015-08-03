@@ -24,16 +24,20 @@ import com.parse.ParseException;
 public class MainPageFragment extends Fragment {
 
     private static final long CLOUD_SPEED = 500;
+
     //PARSE KEYS
     private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
     private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
+
     View rootView;
+
     Button myAgent;
     Button findAnAgent;
     Button myPolicies;
     Button myClaims;
     Button settings;
     Button meetTheInterns;
+
     Display display;
     Point size = new Point();
 
@@ -191,7 +195,6 @@ public class MainPageFragment extends Fragment {
 
     @Override
     public void onResume() {
-
         super.onCreate(null);
 
         meetTheInterns.setEnabled(true);

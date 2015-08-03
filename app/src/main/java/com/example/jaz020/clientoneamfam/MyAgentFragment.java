@@ -26,6 +26,14 @@ public class MyAgentFragment extends Fragment {
 
     private final long CLOUD_SPEED = 500;
 
+    private ParseUser agent;
+
+    private ImageButton agentDirection;
+    private ImageButton agentCall;
+    private ImageButton emailBtn;
+
+    private Button agentScheduleButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,19 +46,19 @@ public class MyAgentFragment extends Fragment {
 
         ImageView agentImg = (ImageView) view.findViewById(R.id.agentImage);
 
-        ImageButton agentDirection = (ImageButton) view.findViewById(R.id.agentDirectionsButton);
-        ImageButton agentCall = (ImageButton) view.findViewById(R.id.agentCallButton);
-        ImageButton emailBtn = (ImageButton) view.findViewById(R.id.agentEmailingButton);
+        agentDirection = (ImageButton) view.findViewById(R.id.agentDirectionsButton);
+        agentCall = (ImageButton) view.findViewById(R.id.agentCallButton);
+        emailBtn = (ImageButton) view.findViewById(R.id.agentEmailingButton);
 
-        final Button agentScheduleButton = (Button) view.findViewById(R.id.AgentScheduleButton);
+        agentScheduleButton = (Button) view.findViewById(R.id.AgentScheduleButton);
 
-        final ParseUser agent = Singleton.getMyAgent();
+        agent = Singleton.getMyAgent();
         String phoneNum = agent.getNumber("phoneNumber").toString();
 
         agentName.setText(agent.getString("Name"));
         agentAddress1.setText(agent.getString("Address"));
         agentAddress2.setText(agent.getString("City") + "," +
-                agent.getString("State")+ " " + agent.getNumber("Zip").toString());
+                agent.getString("State") + " " + agent.getNumber("Zip").toString());
         agentPhone.setText("( " + phoneNum.substring(0, 3) + " ) " +
                 phoneNum.substring(3, 6) + " - " + phoneNum.substring(6));
 
@@ -60,9 +68,17 @@ public class MyAgentFragment extends Fragment {
                 .centerCrop()
                 .into(agentImg);
 
+        setOnClickListeners();
+
+        return view;
+    }
+
+    private void setOnClickListeners() {
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                agentScheduleButton.setEnabled(false);
+
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
                 agentScheduleButton.startAnimation(anim);
@@ -82,6 +98,8 @@ public class MyAgentFragment extends Fragment {
         agentDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                agentDirection.setEnabled(false);
+
                 String addrstr = Singleton.getMyAgent().getString("Address");
                 addrstr = addrstr.replace(" ", "+");
 
@@ -101,6 +119,8 @@ public class MyAgentFragment extends Fragment {
         agentCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                agentCall.setEnabled(false);
+
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
                         Singleton.getMyAgent().getNumber("phoneNumber").toString()));
                 startActivity(intent);
@@ -110,6 +130,8 @@ public class MyAgentFragment extends Fragment {
         emailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                emailBtn.setEnabled(false);
+
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("plain/text");
 
@@ -120,7 +142,15 @@ public class MyAgentFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
 
-        return view;
+    @Override
+    public void onResume() {
+        super.onCreate(null);
+
+        agentScheduleButton.setEnabled(true);
+        agentDirection.setEnabled(true);
+        agentCall.setEnabled(true);
+        emailBtn.setEnabled(true);
     }
 }
