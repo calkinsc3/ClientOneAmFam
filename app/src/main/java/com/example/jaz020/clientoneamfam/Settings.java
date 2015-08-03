@@ -55,6 +55,8 @@ public class Settings extends Fragment {
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                logout_button.setEnabled(false);
+
                 SlideAnimation sa = new SlideAnimation(logout_button.getX(), size.x, logout_button);
                 sa.setInterpolator(new AccelerateInterpolator());
                 sa.setDuration(CLOUD_SPEED);
@@ -95,5 +97,12 @@ public class Settings extends Fragment {
         address_text_view.setText(address);
         phone_text_view.setText(phone);
         email_text_view.setText(email);
+    }
+
+    @Override
+    public void onResume() {
+        super.onCreate(null);
+
+        logout_button.setEnabled(true);
     }
 }
