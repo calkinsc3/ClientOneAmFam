@@ -52,11 +52,8 @@ public class MeetNavneetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initializeFields();
-
         setDescription();
-
         emailButtonListener();
-
         imageClickListener();
     }
 
@@ -127,6 +124,8 @@ public class MeetNavneetFragment extends Fragment {
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                emailButton.setEnabled(false);
+
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("text/plain");
@@ -147,5 +146,12 @@ public class MeetNavneetFragment extends Fragment {
                         descriptionText, rootView, backgroundView, null);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onCreate(null);
+
+        emailButton.setEnabled(true);
     }
 }
