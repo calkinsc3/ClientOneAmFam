@@ -1,6 +1,8 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -109,6 +111,7 @@ public class MainActivity extends Activity {
                 drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
                 drawerExpandableList.collapseGroup(0);
 
+
                 final int HOME_PAGE = 0;
                 final int MY_AGENT = 1;
                 final int FIND_AN_AGENT = 2;
@@ -118,13 +121,17 @@ public class MainActivity extends Activity {
 
                 switch (position) {
                     case HOME_PAGE:
-                        Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MainPageFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MainPageFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     case MY_AGENT:
-                        Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MyAgentFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MyAgentFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     case FIND_AN_AGENT:
@@ -136,18 +143,24 @@ public class MainActivity extends Activity {
                         break;
 
                     case MY_POLICIES:
-                        Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MyPoliciesFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MyPoliciesFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     case MY_CLAIMS:
-                        Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MyClaimsFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MyClaimsFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     case SETTINGS:
-                        Tools.replaceFragment(R.id.fragment_container, new Settings(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new Settings())) {
+                            Tools.replaceFragment(R.id.fragment_container, new Settings(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     default:
@@ -162,6 +175,7 @@ public class MainActivity extends Activity {
                                         int groupPosition, int childPosition, long id) {
                 drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
                 drawerExpandableList.collapseGroup(0);
+                drawerExpandableList.setEnabled(false);
 
                 final int EVAN = 0;
                 final int LEVI = 1;
@@ -170,23 +184,31 @@ public class MainActivity extends Activity {
 
                 switch (childPosition) {
                     case EVAN:
-                        Tools.replaceFragment(R.id.fragment_container, new MeetEvanFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MeetEvanFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MeetEvanFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     case LEVI:
-                        Tools.replaceFragment(R.id.fragment_container, new MeetLeviFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MeetLeviFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MeetLeviFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     case NAVNEET:
-                        Tools.replaceFragment(R.id.fragment_container, new MeetNavneetFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MeetNavneetFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MeetNavneetFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     case JAMES:
-                        Tools.replaceFragment(R.id.fragment_container, new MeetJamesFragment(),
-                                getFragmentManager(), true);
+                        if(!fragmentIsInflated(new MeetJamesFragment())) {
+                            Tools.replaceFragment(R.id.fragment_container, new MeetJamesFragment(),
+                                    getFragmentManager(), true);
+                        }
                         break;
 
                     default:
@@ -198,6 +220,17 @@ public class MainActivity extends Activity {
         });
     }
 
+    public boolean fragmentIsInflated(Fragment currFragment){
+        FragmentManager fm = getFragmentManager();
+        boolean isVisible = false;
+        Fragment f = fm.findFragmentById(R.id.fragment_container);
+
+        if(currFragment.getClass().toString().equals(f.getClass().toString())){
+            isVisible = true;
+        }
+
+        return isVisible;
+    }
 
     /**
      * Moves the the down arrow on the expandable list view to the right side of the screen.
