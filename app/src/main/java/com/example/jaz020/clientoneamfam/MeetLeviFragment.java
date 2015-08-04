@@ -42,6 +42,7 @@ public class MeetLeviFragment extends Fragment {
                 final View ll_view = LayoutInflater.from(getActivity()).inflate(R.layout.levi_info, null);
                 // do all the stuff you need to do to your view
                 TextView info = (TextView)ll_view.findViewById(R.id.basicInfo);
+                info.setVisibility(View.VISIBLE);
 
                 info.setText("Levi Lavender currently holds a Associates Degree from the " +
                         "University of Wisconsin Baraboo/Sauk County. He is one semester away from " +
@@ -60,7 +61,6 @@ public class MeetLeviFragment extends Fragment {
                     public View createTabContent(String tag) {
                         final View ll_view = LayoutInflater.from(getActivity()).inflate(R.layout.levi_info, null);
                         // do all the stuff you need to do to your view
-                        TextView info = (TextView)ll_view.findViewById(R.id.basicInfo);
                         TextView label = (TextView)ll_view.findViewById(R.id.label);
                         TextView label2 = (TextView)ll_view.findViewById(R.id.label2);
                         TextView information = (TextView)ll_view.findViewById(R.id.information);
@@ -75,6 +75,10 @@ public class MeetLeviFragment extends Fragment {
                         information2.setText("Problem Solver, Critical Thinking, Teamwork, Customer Service," +
                                 "Dependable, Consistent, and Versatile");
 
+                        label.setVisibility(View.VISIBLE);
+                        label2.setVisibility(View.VISIBLE);
+                        information.setVisibility(View.VISIBLE);
+                        information2.setVisibility(View.VISIBLE);
                         github.setVisibility(View.VISIBLE);
                         cademy.setVisibility(View.VISIBLE);
                         return ll_view;
@@ -86,15 +90,21 @@ public class MeetLeviFragment extends Fragment {
                     public View createTabContent(String tag) {
                         final View ll_view = LayoutInflater.from(getActivity()).inflate(R.layout.levi_info, null);
                         // do all the stuff you need to do to your view
-                        TextView info = (TextView)ll_view.findViewById(R.id.basicInfo);
-                        TextView address = (TextView)ll_view.findViewById(R.id.label);
-                        TextView address2 = (TextView)ll_view.findViewById(R.id.information);
+                        TextView label = (TextView)ll_view.findViewById(R.id.label);
+                        TextView label2 = (TextView)ll_view.findViewById(R.id.label2);
+                        TextView information = (TextView)ll_view.findViewById(R.id.information);
+                        TextView information2 = (TextView)ll_view.findViewById(R.id.information2);
 
-                        info.setText("Email: llavender@madisoncollege.edu");
-                        info.setPadding(0,15,0,15);
-                        address.setVisibility(View.VISIBLE);
-                        address2.setText("420 Russell Street" +
-                                "\nBaraboo, Wi 53913");
+                        label.setText("Email: ");
+                        information.setText("llavender@madisoncollege.edu");
+//                        info.setPadding(0, 15, 0, 15);
+                        label2.setText("Phone: ");
+                        information2.setText("(608)415-1288");
+
+                        label.setVisibility(View.VISIBLE);
+                        label2.setVisibility(View.VISIBLE);
+                        information.setVisibility(View.VISIBLE);
+                        information2.setVisibility(View.VISIBLE);
 
                         return ll_view;
                     }
