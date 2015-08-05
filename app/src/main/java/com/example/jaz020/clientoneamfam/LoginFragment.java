@@ -1,8 +1,10 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,41 +68,49 @@ public class LoginFragment extends Fragment {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
-                        "", "Signing in to Parse.com", true);
 
-                final String username = username_entry.getText().toString();
-                String password = password_entry.getText().toString();
+                //check for interner connection
+                if (isNetworkAvailable()) {
 
-                ParseUser.logInInBackground(username, password, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        progressDialog.dismiss();
+                    final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
+                            "", "Signing in to Parse.com", true);
 
-                        if (e == null && user != null) {
-                            //UPDATE SHARED PREFERENCES
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("UserID", user.getObjectId());
-                            editor.putBoolean("StayLoggedIn", login_checkbox.isChecked());
+                    final String username = username_entry.getText().toString();
+                    String password = password_entry.getText().toString();
 
-                            if (username_checkbox.isChecked()) {
-                                editor.putString("Username", username);
+                    ParseUser.logInInBackground(username, password, new LogInCallback() {
+                        @Override
+                        public void done(ParseUser user, ParseException e) {
+                            progressDialog.dismiss();
+
+                            if (e == null && user != null) {
+                                //UPDATE SHARED PREFERENCES
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("UserID", user.getObjectId());
+                                editor.putBoolean("StayLoggedIn", login_checkbox.isChecked());
+
+                                if (username_checkbox.isChecked()) {
+                                    editor.putString("Username", username);
+                                } else {
+                                    editor.remove("Username");
+                                }
+
+                                editor.apply();
+
+                                //login successful
+                                loginSuccess();
+
+                            } else if (user == null) {
+                                loginFail();
                             } else {
-                                editor.remove("Username");
+                                loginError(e);
                             }
-
-                            editor.apply();
-
-                            //login successful
-                            loginSuccess();
-
-                        } else if (user == null) {
-                            loginFail();
-                        } else {
-                            loginError(e);
                         }
-                    }
-                });
+                    });
+                }
+                else{
+                    Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -116,5 +126,13 @@ public class LoginFragment extends Fragment {
 
     public void loginError(ParseException e) {
         Toast.makeText(getActivity(), "Login Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    public boolean isNetworkAvailable(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getActiveNetworkInfo() == null){
+            return false;
+        }
+        return true;
     }
 }
