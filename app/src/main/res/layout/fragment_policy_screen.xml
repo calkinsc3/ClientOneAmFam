@@ -126,7 +126,7 @@
             android:clickable="false"
             android:focusable="false"
             android:inputType="number"
-            android:maxLength="16"/>
+            android:maxLength="5"/>
 
     </LinearLayout>
 
