@@ -175,7 +175,6 @@ public class MainActivity extends Activity {
                                         int groupPosition, int childPosition, long id) {
                 drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
                 drawerExpandableList.collapseGroup(0);
-                drawerExpandableList.setEnabled(false);
 
                 final int EVAN = 0;
                 final int LEVI = 1;

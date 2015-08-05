@@ -69,8 +69,6 @@ public class EditAppointment extends Fragment {
     static boolean[] checkedUserIDs;
 
     AlertDialog.Builder builder;
-
-    private EditText attendees_entry;
     EditText meeting_entry;
     EditText location_entry;
     EditText start_time_entry;
@@ -78,14 +76,17 @@ public class EditAppointment extends Fragment {
     EditText end_time_entry;
     EditText end_date_entry;
     EditText comments_entry;
-
     //the current users calendarInfo
     String[] calendarInfo;
     Calendar startDateCalendar;
     Calendar endDateCalendar;
-
+    private EditText attendees_entry;
     // Flag to prevent the alert dialog builder from showing twice on a double click.
     private int alertdialogFlag;
+    private DatePickerDialog startDatePicker;
+    private DatePickerDialog endDatePicker;
+    private TimePickerDialog startTimePicker;
+    private TimePickerDialog endTimePicker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,11 +125,6 @@ public class EditAppointment extends Fragment {
 
         setListeners();
     }
-
-    private DatePickerDialog startDatePicker;
-    private DatePickerDialog endDatePicker;
-    private TimePickerDialog startTimePicker;
-    private TimePickerDialog endTimePicker;
 
     /**
      * Sets all the Listeners for edittexts and datePickers
@@ -382,6 +378,8 @@ public class EditAppointment extends Fragment {
             accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
             ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
         }
+
+        cur.close();
 
         return new String[] {String.valueOf(calID), displayName, accountName, ownerName};
     }
