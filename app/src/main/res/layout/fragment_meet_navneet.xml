@@ -305,7 +305,8 @@
                         android:text="@string/email_navneet"
                         android:padding="0dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_alignParentBottom="true"
+                        style="@style/cloud_button" />
 
                 </RelativeLayout>
 
