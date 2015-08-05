@@ -17,8 +17,6 @@ public class Splash extends Activity implements Runnable {
     private Handler handler = new Handler();
     private FrameLayout frameLayout;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
