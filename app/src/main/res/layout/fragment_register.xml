@@ -49,7 +49,7 @@
                     android:id="@+id/address_street"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/address" />
+                    android:hint="Address" />
 
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                     android:id="@+id/address_city"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/city" />
+                    android:hint="City" />
 
                 <Spinner
                     android:id="@+id/state_spinner"
