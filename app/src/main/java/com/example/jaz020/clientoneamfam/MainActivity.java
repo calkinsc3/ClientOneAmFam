@@ -270,8 +270,10 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings:
-                Tools.replaceFragment(R.id.fragment_container, new Settings(),
-                        getFragmentManager(), true);
+                if(!fragmentIsInflated(new Settings())) {
+                    Tools.replaceFragment(R.id.fragment_container, new Settings(),
+                            getFragmentManager(), true);
+                }
                 return true;
 
             case R.id.action_logout:
