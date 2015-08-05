@@ -44,6 +44,8 @@ public class LoginFragment extends Fragment {
 
     SharedPreferences sharedPreferences;
 
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -69,14 +71,16 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                final String username = username_entry.getText().toString();
+                String password = password_entry.getText().toString();
+
+                if(validateEntries(username, password)){
+
                 //check for interner connection
                 if (Tools.isNetworkAvailable(getActivity())) {
 
                     final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
                             "", "Signing in to Parse.com", true);
-
-                    final String username = username_entry.getText().toString();
-                    String password = password_entry.getText().toString();
 
                     ParseUser.logInInBackground(username, password, new LogInCallback() {
                         @Override
@@ -100,7 +104,7 @@ public class LoginFragment extends Fragment {
                                 //login successful
                                 loginSuccess();
 
-                            } else if (user == null) {
+                            } else if (e == null) {
                                 loginFail();
                             } else {
                                 loginError(e);
@@ -111,6 +115,7 @@ public class LoginFragment extends Fragment {
                 else{
                     Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
+            }
             }
         });
     }
@@ -125,7 +130,31 @@ public class LoginFragment extends Fragment {
     }
 
     public void loginError(ParseException e) {
-        Toast.makeText(getActivity(), "Login Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        String message;
+        switch (e.getCode()){
+            case 100:
+                message = "Connection Timed Out";
+                break;
+
+            default:
+                message = "Login Error";
+                break;
+        }
+
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
+    private boolean validateEntries(String username, String password){
+
+        if(username.length() < 1){
+            username_entry.setError("Enter Your Username");
+            return false;
+        }
+        if(password.length() < 1){
+            password_entry.setError("Enter Your Password.");
+            return false;
+        }
+        return true;
     }
 
 

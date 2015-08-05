@@ -48,6 +48,8 @@ public class RegisterFragment extends Fragment {
     private List<ParseUser> agentList;
     private List<String> agentNames;
 
+    private boolean agentSelected = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,8 +60,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //TODO send email verifications
 
         initializeFields(view);
 
@@ -126,11 +126,14 @@ public class RegisterFragment extends Fragment {
                         //populate agent spinner
                         populateAgentSpinner();
 
+                        //set flag
+                        agentSelected = true;
+
                     } else {
                         Toast.makeText(getActivity(), "No Agents Available", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Agents could not be loaded. Check Network Connection", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -183,6 +186,10 @@ public class RegisterFragment extends Fragment {
         String phone = phone_entry.getText().toString();
         String email = email_entry.getText().toString();
 
+        if(!agentSelected){
+            Toast.makeText(getActivity(), "Select an Agent.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if(username.length() < 1) {
             username_entry.setError("You must enter a username.");
             return false;
@@ -278,9 +285,18 @@ public class RegisterFragment extends Fragment {
                         if(message.contains("email")) {
                             email_entry.setError("Please enter a valid email address");
                         } else {
-                            Toast.makeText(getActivity(), "Could Not Create New User: " +
-                                    e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                            switch (e.getCode()){
+                                case 100:
+                                    //cleared the message from here so it doesn't show up on parse connection
+                                    break;
+
+                                default:
+                                    message = "Could Not Create User.";
+                                    break;
+                            }
+
+                            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    }
                     }
                 }
             });
