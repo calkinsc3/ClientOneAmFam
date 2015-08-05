@@ -14,55 +14,59 @@
         android:layout_weight="35">
     
     <ImageView
+        android:id="@+id/mainImage"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/evan_headshot"
         android:scaleType="fitCenter"
-        android:id="@+id/mainImage"/>
+        android:src="@drawable/evan_headshot" />
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="47dp"
-            android:text="Evan Feller"
-            android:id="@+id/textView2"
-            android:textColor="@android:color/white"
             android:layout_gravity="right|bottom"
-            android:textSize="35sp"
-            android:background="#65706d74" />
+            android:background="#65706d74"
+            android:text="Evan Feller"
+            android:textColor="@android:color/white"
+            android:textSize="35sp" />
 
     </FrameLayout>
-    <RelativeLayout
+
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="50">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_evan_one"
             android:id="@+id/textView4"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about_evan_two"
-            android:id="@+id/textView3"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:layout_below="@+id/textView4"
-            android:layout_alignStart="@+id/textView4" />
-    </RelativeLayout>
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/about_evan_one" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView4"
+            android:layout_below="@+id/textView4"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/about_evan_two" />
+    </RelativeLayout>
+    </ScrollView>
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="15"
-        android:id="@+id/horizontalScrollView"
         android:layout_gravity="center_horizontal"
+        android:layout_weight="15"
         android:background="@color/light_gray">
 
         <LinearLayout
@@ -73,42 +77,42 @@
                 android:layout_height="fill_parent" />
 
             <ImageButton
+                android:id="@+id/evan_linked_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:background="@null"
-                android:id="@+id/evan_linked_button"/>
+                android:background="@null" />
             <Space
                 android:layout_width="40dp"
                 android:layout_height="fill_parent" />
             <ImageButton
+                android:id="@+id/evan_github_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:id="@+id/evan_github_button"
                 android:background="@null"/>
             <Space
                 android:layout_width="40dp"
                 android:layout_height="fill_parent" />
             <ImageButton
+                android:id="@+id/evan_gmail_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:background="@null"
-                android:id="@+id/evan_gmail_button"/>
+                android:background="@null" />
             <Space
                 android:layout_width="40dp"
                 android:layout_height="fill_parent" />
             <ImageButton
+                android:id="@+id/evan_stack_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:background="@null"
-                android:id="@+id/evan_stack_button"/>
+                android:background="@null" />
             <Space
                 android:layout_width="40dp"
                 android:layout_height="fill_parent" />
             <ImageButton
+                android:id="@+id/evan_code_academy_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:background="@null"
-                android:id="@+id/evan_code_academy_button"/>
+                android:background="@null" />
             <Space
                 android:layout_width="40dp"
                 android:layout_height="fill_parent" />

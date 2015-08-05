@@ -121,6 +121,8 @@ public class LoginFragment extends Fragment {
     }
 
     public void loginSuccess() {
+        password_entry.setText("");
+        if(!username_checkbox.isChecked()) username_entry.setText("");
         Intent intent = new Intent(getActivity(), Splash.class);
         startActivity(intent);
     }
