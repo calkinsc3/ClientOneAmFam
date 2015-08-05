@@ -70,7 +70,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
 
                 //check for interner connection
-                if (isNetworkAvailable()) {
+                if (Tools.isNetworkAvailable(getActivity())) {
 
                     final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
                             "", "Signing in to Parse.com", true);
@@ -128,11 +128,5 @@ public class LoginFragment extends Fragment {
         Toast.makeText(getActivity(), "Login Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
-    public boolean isNetworkAvailable(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getActiveNetworkInfo() == null){
-            return false;
-        }
-        return true;
-    }
+
 }
