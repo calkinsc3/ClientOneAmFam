@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.widget.EditText;
 
 import com.parse.FindCallback;
@@ -73,5 +74,13 @@ public class Tools {
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.US);
 
         editText.setText(sdf.format(calendar.getTime()));
+    }
+
+    public static boolean isNetworkAvailable(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getActiveNetworkInfo() == null){
+            return false;
+        }
+        return true;
     }
 }

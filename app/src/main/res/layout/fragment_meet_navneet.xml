@@ -139,8 +139,9 @@
 
         <ImageView
             android:id="@+id/expanded_image_portrait"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:padding="@dimen/padding_interns"
             android:visibility="invisible"
             android:contentDescription="@string/expanded_image" />
@@ -314,8 +315,9 @@
 
         <ImageView
             android:id="@+id/expanded_image_landscape"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:padding="@dimen/padding_interns"
             android:visibility="invisible"
             android:contentDescription="@string/expanded_image" />

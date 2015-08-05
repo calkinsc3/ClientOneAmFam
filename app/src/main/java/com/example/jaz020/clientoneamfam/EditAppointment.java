@@ -69,6 +69,8 @@ public class EditAppointment extends Fragment {
     static boolean[] checkedUserIDs;
 
     AlertDialog.Builder builder;
+
+    private EditText attendees_entry;
     EditText meeting_entry;
     EditText location_entry;
     EditText start_time_entry;
@@ -76,17 +78,19 @@ public class EditAppointment extends Fragment {
     EditText end_time_entry;
     EditText end_date_entry;
     EditText comments_entry;
+
     //the current users calendarInfo
     String[] calendarInfo;
     Calendar startDateCalendar;
     Calendar endDateCalendar;
-    private EditText attendees_entry;
-    // Flag to prevent the alert dialog builder from showing twice on a double click.
-    private int alertdialogFlag;
+
     private DatePickerDialog startDatePicker;
     private DatePickerDialog endDatePicker;
     private TimePickerDialog startTimePicker;
     private TimePickerDialog endTimePicker;
+
+    // Flag to prevent the alert dialog builder from showing twice on a double click.
+    private int alertdialogFlag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -297,10 +301,12 @@ public class EditAppointment extends Fragment {
                 progressDialog.dismiss();
 
                 if (e == null) {
-                    Toast.makeText(getActivity(), "Appointment Saved to Parse.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Appointment Saved to Parse.",
+                            Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
                 } else {
-                    Toast.makeText(getActivity(), "Appointment NOT Saved to Parse.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Appointment NOT Saved to Parse.",
+                            Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

@@ -17,12 +17,9 @@ public class Splash extends Activity implements Runnable {
     private Handler handler = new Handler();
     private FrameLayout frameLayout;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_splash);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);

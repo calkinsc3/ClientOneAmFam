@@ -1,8 +1,10 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -42,6 +44,8 @@ public class LoginFragment extends Fragment {
 
     SharedPreferences sharedPreferences;
 
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,41 +70,52 @@ public class LoginFragment extends Fragment {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
-                        "", "Signing in to Parse.com", true);
 
                 final String username = username_entry.getText().toString();
                 String password = password_entry.getText().toString();
 
-                ParseUser.logInInBackground(username, password, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        progressDialog.dismiss();
+                if(validateEntries(username, password)){
 
-                        if (e == null && user != null) {
-                            //UPDATE SHARED PREFERENCES
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("UserID", user.getObjectId());
-                            editor.putBoolean("StayLoggedIn", login_checkbox.isChecked());
+                //check for interner connection
+                if (Tools.isNetworkAvailable(getActivity())) {
 
-                            if (username_checkbox.isChecked()) {
-                                editor.putString("Username", username);
+                    final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
+                            "", "Signing in to Parse.com", true);
+
+                    ParseUser.logInInBackground(username, password, new LogInCallback() {
+                        @Override
+                        public void done(ParseUser user, ParseException e) {
+                            progressDialog.dismiss();
+
+                            if (e == null && user != null) {
+                                //UPDATE SHARED PREFERENCES
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("UserID", user.getObjectId());
+                                editor.putBoolean("StayLoggedIn", login_checkbox.isChecked());
+
+                                if (username_checkbox.isChecked()) {
+                                    editor.putString("Username", username);
+                                } else {
+                                    editor.remove("Username");
+                                }
+
+                                editor.apply();
+
+                                //login successful
+                                loginSuccess();
+
+                            } else if (e == null) {
+                                loginFail();
                             } else {
-                                editor.remove("Username");
+                                loginError(e);
                             }
-
-                            editor.apply();
-
-                            //login successful
-                            loginSuccess();
-
-                        } else if (user == null) {
-                            loginFail();
-                        } else {
-                            loginError(e);
                         }
-                    }
-                });
+                    });
+                }
+                else{
+                    Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+            }
             }
         });
     }
@@ -115,6 +130,32 @@ public class LoginFragment extends Fragment {
     }
 
     public void loginError(ParseException e) {
-        Toast.makeText(getActivity(), "Login Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        String message;
+        switch (e.getCode()){
+            case 100:
+                message = "Connection Timed Out";
+                break;
+
+            default:
+                message = "Login Error";
+                break;
+        }
+
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
+
+    private boolean validateEntries(String username, String password){
+
+        if(username.length() < 1){
+            username_entry.setError("Enter Your Username");
+            return false;
+        }
+        if(password.length() < 1){
+            password_entry.setError("Enter Your Password.");
+            return false;
+        }
+        return true;
+    }
+
+
 }

@@ -24,6 +24,9 @@ import android.widget.TextView;
  */
 public class ImageZoom {
 
+    private static final int CLOUDY_WHITE =
+            Singleton.getContext().getResources().getColor(R.color.cloudy_white);
+
     private Animator currentAnimator;
     private int animationDuration;
 
@@ -261,26 +264,19 @@ public class ImageZoom {
         backgroundView.setBackgroundColor(Color.TRANSPARENT);
 
         nameText.setTextColor(Color.BLACK);
-        nameText.setBackgroundColor(Singleton.getContext()
-                .getResources().getColor(R.color.cloudy_white));
+        nameText.setBackgroundColor(CLOUDY_WHITE);
 
         if (recyclerView != null) {
             recyclerView.setVisibility(View.VISIBLE);
         } else {
             emailButton.setAlpha(1f);
 
-            aboutText.setBackgroundColor(Singleton.getContext()
-                    .getResources().getColor(R.color.cloudy_white));
-            descriptionText.setBackgroundColor(Singleton.getContext()
-                    .getResources().getColor(R.color.cloudy_white));
-            jobTitleText.setBackgroundColor(Singleton.getContext()
-                    .getResources().getColor(R.color.cloudy_white));
-            jobTeamText.setBackgroundColor(Singleton.getContext()
-                    .getResources().getColor(R.color.cloudy_white));
-            linkedinText.setBackgroundColor(Singleton.getContext()
-                    .getResources().getColor(R.color.cloudy_white));
-            githubText.setBackgroundColor(Singleton.getContext()
-                    .getResources().getColor(R.color.cloudy_white));
+            aboutText.setBackgroundColor(CLOUDY_WHITE);
+            descriptionText.setBackgroundColor(CLOUDY_WHITE);
+            jobTitleText.setBackgroundColor(CLOUDY_WHITE);
+            jobTeamText.setBackgroundColor(CLOUDY_WHITE);
+            linkedinText.setBackgroundColor(CLOUDY_WHITE);
+            githubText.setBackgroundColor(CLOUDY_WHITE);
         }
 
         expandedImage.setVisibility(View.GONE);

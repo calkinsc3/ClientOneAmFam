@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.parse.Parse;
 
@@ -48,7 +49,13 @@ public class Login extends AppCompatActivity {
 
         //CHECK FOR LOGIN
         if (sharedPreferences.getString("UserID", null) != null && sharedPreferences.getBoolean("StayLoggedIn", false)) {
-            loginSuccess();
+            if(Tools.isNetworkAvailable(this)){
+                Intent intent = new Intent(this, Splash.class);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this,"No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         }
 
         // Create the adapter that will return a fragment for each of the two
@@ -58,11 +65,6 @@ public class Login extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-    }
-
-    private void loginSuccess() {
-        Intent intent = new Intent(this, Splash.class);
-        startActivity(intent);
     }
 
     /**

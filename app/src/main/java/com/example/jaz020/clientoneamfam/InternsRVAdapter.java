@@ -29,7 +29,7 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
     private ImageView expandedImage;
     private TextView internTitleText;
 
-    FrameLayout frameLayout;
+    private FrameLayout frameLayout;
 
     private RecyclerView recyclerView;
 
@@ -58,7 +58,8 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.intern_card, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.intern_card,
+                viewGroup, false);
 
         return new ViewHolder(v);
     }
