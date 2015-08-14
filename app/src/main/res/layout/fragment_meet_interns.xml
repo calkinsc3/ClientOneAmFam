@@ -25,7 +25,9 @@
             android:paddingTop="10dp"
             android:text="@string/interns_title"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginBottom="2dp"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/internsRecyclerView"
