@@ -27,39 +27,19 @@ import java.util.List;
 
 
 /**
- * Register Fragment registers new users to the app.
- *
- * @author jziglinski
+ * A simple {@link Fragment} subclass.
  */
 public class RegisterFragment extends Fragment {
 
-    private EditText username_entry;
-    private EditText password_entry;
-    private EditText password_reentry;
-    private EditText name_entry;
-    private EditText phone_entry;
-    private EditText email_entry;
-
-    private EditText street_entry;
-    private EditText city_entry;
-    private EditText zip_entry;
-    private Spinner agent_spinner;
+    private EditText username_entry, password_entry, password_reentry, name_entry, phone_entry, email_entry, street_entry, city_entry, zip_entry;
+    private Spinner agent_spinner, state_spinner;
     private Button register_button;
-    private Spinner state_spinner;
 
     private List<ParseUser> agentList;
     private List<String> agentNames;
 
     private boolean agentSelected = false;
 
-    /**
-     * On create view.
-     *
-     * @param inflater the inflater
-     * @param container the container
-     * @param savedInstanceState the saved instance state
-     * @return the view
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,12 +47,6 @@ public class RegisterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
-    /**
-     * On view created.
-     *
-     * @param view the view
-     * @param savedInstanceState the saved instance state
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,7 +55,6 @@ public class RegisterFragment extends Fragment {
 
         retrieveAgentList();
 
-        //sets on click listener for the register button to register a user
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +62,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        //reentry on text changed checks to make sure the passwords entered match
+        //text watcher to handle password matching verification
         password_reentry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -193,9 +166,10 @@ public class RegisterFragment extends Fragment {
     }
 
     /**
-     * validates that all fields are entered
+     * Validates all the entries before creating the parse object to send to parse.com
      *
-     * @return boolean if passed validation
+     *
+     * @return true if all
      */
     private boolean validateAllEntries(){
         String username = username_entry.getText().toString();

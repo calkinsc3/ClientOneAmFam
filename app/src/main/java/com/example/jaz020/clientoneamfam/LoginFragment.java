@@ -18,57 +18,18 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
-/**
- * The type Login fragment.
- */
 public class LoginFragment extends Fragment {
 
-    /**
-     * The Username _ entry.
-     */
-    EditText username_entry;
-    /**
-     * The Password _ entry.
-     */
-    EditText password_entry;
-
-    /**
-     * The Username _ checkbox.
-     */
-    CheckBox username_checkbox;
-    /**
-     * The Login _ checkbox.
-     */
-    CheckBox login_checkbox;
-
-    /**
-     * The Login _ button.
-     */
+    EditText username_entry, password_entry;
+    CheckBox username_checkbox, login_checkbox;
     Button login_button;
-
-    /**
-     * The Shared preferences.
-     */
     SharedPreferences sharedPreferences;
 
-    /**
-     * On create.
-     *
-     * @param savedInstanceState the saved instance state
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    /**
-     * On create view.
-     *
-     * @param inflater the inflater
-     * @param container the container
-     * @param savedInstanceState the saved instance state
-     * @return the view
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,24 +37,26 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    /**
-     * On view created.
-     *
-     * @param view the view
-     * @param savedInstanceState the saved instance state
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sharedPreferences = getActivity().getSharedPreferences("AmFam", 0);
+        initializeFields(view);
 
+    }
+
+    /**
+     * Initializes all fields, sets the checkboxes of the login screen, and sets the on click listener
+     * for the login button
+     *
+     * @param view main view
+     */
+    private void initializeFields(View view) {
+        sharedPreferences = getActivity().getSharedPreferences("AmFam", 0);
         username_entry = (EditText) view.findViewById(R.id.username_entry);
         password_entry = (EditText) view.findViewById(R.id.password_entry);
-
         username_checkbox = (CheckBox) view.findViewById(R.id.remember_username_checkbox);
         login_checkbox = (CheckBox) view.findViewById(R.id.stay_logged_in_checkbox);
-
         login_button = (Button) view.findViewById(R.id.login_button);
 
         //set checkboxes and username if the user has data saved
@@ -110,54 +73,54 @@ public class LoginFragment extends Fragment {
                 final String username = username_entry.getText().toString();
                 String password = password_entry.getText().toString();
 
-                if(validateEntries(username, password)){
+                if(validateEntries(username, password)) {
 
-                //check for interner connection
-                if (Tools.isNetworkAvailable(getActivity())) {
+                    //check for interner connection
+                    if (Tools.isNetworkAvailable(getActivity())) {
 
-                    final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
-                            "", "Signing in to Parse.com", true);
+                        final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),
+                                "", "Signing in to Parse.com", true);
 
-                    ParseUser.logInInBackground(username, password, new LogInCallback() {
-                        @Override
-                        public void done(ParseUser user, ParseException e) {
-                            progressDialog.dismiss();
+                        ParseUser.logInInBackground(username, password, new LogInCallback() {
+                            @Override
+                            public void done(ParseUser user, ParseException e) {
+                                progressDialog.dismiss();
 
-                            if (e == null && user != null) {
-                                //UPDATE SHARED PREFERENCES
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("UserID", user.getObjectId());
-                                editor.putBoolean("StayLoggedIn", login_checkbox.isChecked());
+                                if (e == null && user != null) {
+                                    //UPDATE SHARED PREFERENCES
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("UserID", user.getObjectId());
+                                    editor.putBoolean("StayLoggedIn", login_checkbox.isChecked());
 
-                                if (username_checkbox.isChecked()) {
-                                    editor.putString("Username", username);
+                                    if (username_checkbox.isChecked()) {
+                                        editor.putString("Username", username);
+                                    } else {
+                                        editor.remove("Username");
+                                    }
+
+                                    editor.apply();
+
+                                    //login successful
+                                    loginSuccess();
+
+                                } else if (e == null) {
+                                    loginFail();
                                 } else {
-                                    editor.remove("Username");
+                                    loginError(e);
                                 }
-
-                                editor.apply();
-
-                                //login successful
-                                loginSuccess();
-
-                            } else if (e == null) {
-                                loginFail();
-                            } else {
-                                loginError(e);
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
-                    Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-                }
-            }
             }
         });
     }
 
     /**
-     * Login success.
+     * Called after a successful log in to Parse
+     * Saves the user's info, and starts the main activity
      */
     public void loginSuccess() {
         password_entry.setText("");
@@ -167,16 +130,15 @@ public class LoginFragment extends Fragment {
     }
 
     /**
-     * Login fail.
+     * Informs user login has failed
      */
     public void loginFail() {
         Toast.makeText(getActivity(), "Wrong Username or Password", Toast.LENGTH_SHORT).show();
     }
 
     /**
-     * Login error.
-     *
-     * @param e the e
+     * Handles any login errors
+     * @param e {@link com.parse.ParseException} thrown by the erroneous login
      */
     public void loginError(ParseException e) {
         String message;
@@ -194,11 +156,10 @@ public class LoginFragment extends Fragment {
     }
 
     /**
-     * validates the username and password entered by the user
-     *
-     * @param username the username
-     * @param password the password
-     * @return isValid
+     * Validates the username and password entries before attempted login
+     * @param username username_entry.getText()
+     * @param password password_entry.getText()
+     * @return true if valid, false otherwise
      */
     private boolean validateEntries(String username, String password){
 

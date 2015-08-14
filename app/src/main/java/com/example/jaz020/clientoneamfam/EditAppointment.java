@@ -64,81 +64,22 @@ public class EditAppointment extends Fragment {
     private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
     private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
-    /**
-     * The M selected users.
-     */
-    static List<Integer> mSelectedUsers;
-    /**
-     * The Attendees list.
-     */
-    static String[] attendeesList;
-    /**
-     * The Checked user i ds.
-     */
-    static boolean[] checkedUserIDs;
 
-    /**
-     * The Builder.
-     */
+    static List<Integer> mSelectedUsers;
+    static String[] attendeesList;
+    static boolean[] checkedUserIDs;
     AlertDialog.Builder builder;
-    /**
-     * The Meeting _ entry.
-     */
-    EditText meeting_entry;
-    /**
-     * The Location _ entry.
-     */
-    EditText location_entry;
-    /**
-     * The Start _ time _ entry.
-     */
-    EditText start_time_entry;
-    /**
-     * The Start _ date _ entry.
-     */
-    EditText start_date_entry;
-    /**
-     * The End _ time _ entry.
-     */
-    EditText end_time_entry;
-    /**
-     * The End _ date _ entry.
-     */
-    EditText end_date_entry;
-    /**
-     * The Comments _ entry.
-     */
-    EditText comments_entry;
-    /**
-     * The Calendar info.
-     */
-//the current users calendarInfo
+    //the current users calendarInfo
     String[] calendarInfo;
-    /**
-     * The Start date calendar.
-     */
-    Calendar startDateCalendar;
-    /**
-     * The End date calendar.
-     */
-    Calendar endDateCalendar;
-    private EditText attendees_entry;
-    private DatePickerDialog startDatePicker;
-    private DatePickerDialog endDatePicker;
-    private TimePickerDialog startTimePicker;
-    private TimePickerDialog endTimePicker;
+    Calendar startDateCalendar, endDateCalendar;
+    private EditText attendees_entry, meeting_entry, location_entry, start_time_entry,
+            start_date_entry, end_time_entry, end_date_entry, comments_entry;
+    private DatePickerDialog startDatePicker, endDatePicker;
+    private TimePickerDialog startTimePicker, endTimePicker;
 
     // Flag to prevent the alert dialog builder from showing twice on a double click.
     private int alertdialogFlag;
 
-    /**
-     * On create view.
-     *
-     * @param inflater the inflater
-     * @param container the container
-     * @param savedInstanceState the saved instance state
-     * @return the view
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,14 +90,49 @@ public class EditAppointment extends Fragment {
         return inflater.inflate(R.layout.fragment_edit_appointment, container, false);
     }
 
-    /**
-     * On view created.
-     *
-     * @param view the view
-     * @param savedInstanceState the saved instance state
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        initializeFields(view);
+
+        loadUserInfo();
+
+        editInvitees();
+
+        setListeners();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        //show the save button on the action bar
+        menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
+        menu.findItem(R.id.optional_action).setVisible(true);
+        menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.optional_action:
+                saveAppointment();
+                saveToGoogle();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Initializes all fields for this class and does some initial value settings
+     *
+     * @param view main view
+     */
+    private void initializeFields(View view) {
         meeting_entry = (EditText) view.findViewById(R.id.meeting_entry);
         location_entry = (EditText) view.findViewById(R.id.location_entry);
         start_time_entry = (EditText) view.findViewById(R.id.start_time_entry);
@@ -175,12 +151,6 @@ public class EditAppointment extends Fragment {
         builder = new AlertDialog.Builder(getActivity());
 
         alertdialogFlag = 0;
-
-        loadUserInfo();
-
-        editInvitees();
-
-        setListeners();
     }
 
     /**
@@ -276,9 +246,6 @@ public class EditAppointment extends Fragment {
         });
     }
 
-    /**
-     * loads the possible attendees from parse
-     */
     private void loadUserInfo(){
         //load current date into datePickers
         startDateCalendar.setTime(Calendar.getInstance().getTime());
@@ -332,7 +299,6 @@ public class EditAppointment extends Fragment {
         final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "", "", true);
         ParseObject appointmentToSave = new ParseObject("Meeting");
 
-        //TODO entry validations
         // Save input from user to parse database.
         String title = meeting_entry.getText().toString();
         JSONArray invitedIDS = new JSONArray((Arrays.asList(attendeesList)));
@@ -347,8 +313,6 @@ public class EditAppointment extends Fragment {
         appointmentToSave.put("StartDate", startDate);
         appointmentToSave.put("EndDate", endDate);
         appointmentToSave.put("Comment", comments);
-
-        // TODO ??
         appointmentToSave.put("Accepted", true);
 
         appointmentToSave.saveInBackground(new SaveCallback() {
@@ -370,7 +334,7 @@ public class EditAppointment extends Fragment {
     }
 
     /**
-     * saves the appointment and sends it to the agent's google calendar
+     * Save the Appointment to the current user's google calendar
      */
     private void saveToGoogle(){
         Date startDate = startDateCalendar.getTime();
@@ -504,7 +468,8 @@ public class EditAppointment extends Fragment {
 
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {}
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
                     });
                 } else {
                     //Something went wrong.
@@ -564,7 +529,7 @@ public class EditAppointment extends Fragment {
                     String attendeeName = possibleAttendees.get(mSelectedUsers.get(i)).getString("Name");
                     attendeesList[i] = objID;
 
-                    if (attendeeName == null  || attendeeName.equals("")) {
+                    if (attendeeName == null || attendeeName.equals("")) {
                         attendeeName = possibleAttendees.get(mSelectedUsers.get(i)).getString("username");
                     }
 
@@ -603,39 +568,5 @@ public class EditAppointment extends Fragment {
         newList.addAll(oldList);
 
         return new ArrayList<>(newList);
-    }
-
-    /**
-     * On create options menu.
-     *
-     * @param menu the menu
-     * @param inflater the inflater
-     */
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
-        menu.findItem(R.id.optional_action).setVisible(true);
-        menu.findItem(R.id.optional_action).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    /**
-     * On options item selected.
-     *
-     * @param item the item
-     * @return the boolean
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.optional_action:
-                saveAppointment();
-                saveToGoogle();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

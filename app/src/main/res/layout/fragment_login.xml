@@ -11,10 +11,10 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
-            android:padding="10dp"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/username_entry"
@@ -28,6 +28,13 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button" />
+
             <CheckBox
                 android:id="@+id/stay_logged_in_checkbox"
                 android:layout_width="wrap_content"
@@ -49,5 +56,12 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="New RadioButton" />
 
 </LinearLayout>
