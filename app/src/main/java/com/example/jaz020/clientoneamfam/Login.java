@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.parse.Parse;
 
 
+/**
+ * The Login activity enables the user to log in.
+ */
 public class Login extends AppCompatActivity {
 
     //PARSE KEYS
@@ -34,8 +37,16 @@ public class Login extends AppCompatActivity {
      */
     ViewPager mViewPager;
 
+    /**
+     * The Shared preferences.
+     */
     SharedPreferences sharedPreferences;
 
+    /**
+     * On create.
+     *
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +84,21 @@ public class Login extends AppCompatActivity {
      */
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        /**
+         * Instantiates a new Sections pager adapter.
+         *
+         * @param fm the fm
+         */
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        /**
+         * Gets item.
+         *
+         * @param position the position
+         * @return the item
+         */
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
@@ -92,12 +114,23 @@ public class Login extends AppCompatActivity {
             return null;
         }
 
+        /**
+         * Gets count.
+         *
+         * @return the count
+         */
         @Override
         public int getCount() {
             // Show 3 total pages.
             return 2;
         }
 
+        /**
+         * Gets page title.
+         *
+         * @param position the position
+         * @return the page title
+         */
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {

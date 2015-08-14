@@ -23,12 +23,26 @@ public class MeetInternsFragment extends Fragment {
     private String[] internNames;
     private HashMap<String, Integer> internPictureMap;
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_meet_interns, container, false);
     }
 
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

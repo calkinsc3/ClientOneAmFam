@@ -1,9 +1,9 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +18,14 @@ import com.squareup.picasso.Picasso;
  */
 public class MeetEvanFragment extends Fragment {
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

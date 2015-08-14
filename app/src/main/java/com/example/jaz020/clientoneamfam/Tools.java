@@ -25,6 +25,14 @@ import java.util.Locale;
  */
 public class Tools {
 
+    /**
+     * Replace fragment.
+     *
+     * @param container_id the container _ id
+     * @param fragment the fragment to inflate
+     * @param fManager the fragmentmanager
+     * @param addToBackStack if fragment need to be on the backstack
+     */
     public static void replaceFragment(int container_id, Fragment fragment, FragmentManager fManager,
                                        boolean addToBackStack) {
         FragmentTransaction fTransaction = fManager.beginTransaction();
@@ -36,6 +44,11 @@ public class Tools {
         fTransaction.commit();
     }
 
+    /**
+     * Sets my agent.
+     *
+     * @throws ParseException the parse exception
+     */
     public static void setMyAgent() throws ParseException{
             ParseUser client = ParseUser.getCurrentUser();
             final String agentID = client.getString("AgentID");
@@ -52,6 +65,11 @@ public class Tools {
             });
     }
 
+    /**
+     * Logs out the user.
+     *
+     * @param context the context
+     */
     public static void logout(Context context) {
         SharedPreferences.Editor editor = context.getSharedPreferences("AmFam", 0).edit();
         editor.remove("UserID");
@@ -62,6 +80,12 @@ public class Tools {
         ((Activity) context).finish();
     }
 
+    /**
+     * formats dates.
+     *
+     * @param editText the edit text
+     * @param calendar the calendar
+     */
     public static void updateDateEntry(EditText editText, Calendar calendar) {
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -69,6 +93,12 @@ public class Tools {
         editText.setText(sdf.format(calendar.getTime()));
     }
 
+    /**
+     * formats time.
+     *
+     * @param editText the edit text
+     * @param calendar the calendar
+     */
     public static void updateTimeEntry(EditText editText, Calendar calendar) {
         String timeFormat = "h:mm a";
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.US);
@@ -76,6 +106,12 @@ public class Tools {
         editText.setText(sdf.format(calendar.getTime()));
     }
 
+    /**
+     * checks if there is network connection.
+     *
+     * @param context the context
+     * @return the boolean
+     */
     public static boolean isNetworkAvailable(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getActiveNetworkInfo() == null){

@@ -29,18 +29,51 @@ public class MainPageFragment extends Fragment {
     private static final String APPLICATION_ID = "4YBarCfwhDQKdD9w7edqe8fIazqWRXv8RhRbNgd7";
     private static final String CLIENT_KEY = "zUguFYSgfxNkzTw6lQGkCWssT1VCMWBccWD44MFw";
 
+    /**
+     * The Root view.
+     */
     View rootView;
-
+    /**
+     * The My agent.
+     */
     Button myAgent;
+    /**
+     * The Find an agent.
+     */
     Button findAnAgent;
+    /**
+     * The My policies.
+     */
     Button myPolicies;
+    /**
+     * The My claims.
+     */
     Button myClaims;
+    /**
+     * The Settings.
+     */
     Button settings;
+    /**
+     * The Meet the interns.
+     */
     Button meetTheInterns;
-
+    /**
+     * The Display.
+     */
     Display display;
+    /**
+     * The Size.
+     */
     Point size = new Point();
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
@@ -70,6 +103,9 @@ public class MainPageFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * sets the button click listeners
+     */
     private void buttonClickListeners() {
         myAgent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +229,9 @@ public class MainPageFragment extends Fragment {
         });
     }
 
+    /**
+     * On resume re-enable the buttons.
+     */
     @Override
     public void onResume() {
         super.onCreate(null);

@@ -48,6 +48,8 @@ import java.util.List;
 
 /**
  * Shows all data pertaining to the selected policy or creates a new policy
+ *
+ * @author llavender
  */
 public class PolicyScreenFragment extends Fragment {
 
@@ -566,6 +568,10 @@ public class PolicyScreenFragment extends Fragment {
             this.objectsToDisplay = objectsToDisplay;
         }
 
+        /**
+         * gets the number of items that the recyclerview is displaying
+         * @return the number of items to display
+         */
         @Override
         public int getItemCount() {
             if(objectsToDisplay != null){
@@ -575,6 +581,12 @@ public class PolicyScreenFragment extends Fragment {
             }
         }
 
+        /**
+         * Creates a holder for the veiw and stores it in memory
+         * @param viewGroup the viewgroup
+         * @param i the position
+         * @return the viewholder
+         */
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.edit_upload_card,
@@ -582,6 +594,7 @@ public class PolicyScreenFragment extends Fragment {
             final ViewHolder vHolder = new ViewHolder(v);
             vHolder.index = i;
 
+            //Adds a text change listener to save the comments in the background
             vHolder.comments.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -598,12 +611,18 @@ public class PolicyScreenFragment extends Fragment {
             return vHolder;
         }
 
+        /**
+         * called by the recyclerview when binding the viewholder to the view in the recycler
+         * @param vHolder the current view holder
+         * @param i position in the recyclerview
+         */
         @Override
         public void onBindViewHolder(final ViewHolder vHolder, int i){
             final ParseObject currentObject = objectsToDisplay.get(i);
 
             vHolder.index = i;
 
+            //populates the comments and sets editable/non-editable
             if(vHolder.comments != null){
                 if(!args.getBoolean("ISEDIT", false) && !args.getBoolean("ISNEW", false)){
                     vHolder.comments.setFocusable(false);
@@ -614,6 +633,7 @@ public class PolicyScreenFragment extends Fragment {
                 vHolder.comments.setText(commentsList.get(vHolder.index));
             }
 
+            //populates the policy image if available
             if(vHolder.policyImage != null){
                 Picasso.with(getActivity())
                         .load(currentObject.getParseFile("Media").getUrl())
@@ -621,11 +641,13 @@ public class PolicyScreenFragment extends Fragment {
                         .centerInside()
                         .into(vHolder.policyImage);
 
+                //check if the policyImage should be editable/changeable
                 if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
                     vHolder.policyImage.setFocusableInTouchMode(true);
                     vHolder.policyImage.setFocusable(true);
                     vHolder.policyImage.setLongClickable(true);
 
+                    //sets a long click listener to change the image
                     vHolder.policyImage.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -643,6 +665,7 @@ public class PolicyScreenFragment extends Fragment {
                 }
             }
 
+            //sets the visibility of the trash image and sets the click listener to delete
             if(vHolder.trash != null){
                 if(args.getBoolean("ISEDIT", false) || args.getBoolean("ISNEW", false)) {
                     vHolder.trash.setVisibility(View.VISIBLE);
@@ -666,6 +689,9 @@ public class PolicyScreenFragment extends Fragment {
             }
         }
 
+        /**
+         * an inner class that defines the recyclerView viewholder class
+         */
         public class ViewHolder extends RecyclerView.ViewHolder {
 
             CardView cv;

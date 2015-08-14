@@ -1,9 +1,9 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * MyAgentFragment shows the information of the Agent the user currently holds
  */
 public class MyAgentFragment extends Fragment {
 
@@ -34,6 +34,14 @@ public class MyAgentFragment extends Fragment {
 
     private Button agentScheduleButton;
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,7 +81,11 @@ public class MyAgentFragment extends Fragment {
         return view;
     }
 
+    /**
+     * sets the click listeners for the buttons on the view
+     */
     private void setOnClickListeners() {
+        //starts a new EditAppointmentFragment
         agentScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +107,7 @@ public class MyAgentFragment extends Fragment {
             }
         });
 
+        //searches for the directions to the agent's address
         agentDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +129,7 @@ public class MyAgentFragment extends Fragment {
             }
         });
 
+        //calls the agent
         agentCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +141,7 @@ public class MyAgentFragment extends Fragment {
             }
         });
 
+        //emails the agent
         emailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +159,9 @@ public class MyAgentFragment extends Fragment {
         });
     }
 
+    /**
+     * On resume re-enables the buttons.
+     */
     @Override
     public void onResume() {
         super.onCreate(null);

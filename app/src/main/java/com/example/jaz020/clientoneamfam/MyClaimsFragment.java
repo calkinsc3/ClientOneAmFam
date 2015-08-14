@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,23 @@ import java.util.List;
  */
 public class MyClaimsFragment extends Fragment {
 
+    /**
+     * The Fab.
+     */
     com.github.clans.fab.FloatingActionButton fab;
+    /**
+     * The RecyclerView.
+     */
     RecyclerView rv;
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,6 +48,12 @@ public class MyClaimsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_my_claims, container, false);
     }
 
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -63,6 +84,9 @@ public class MyClaimsFragment extends Fragment {
         });
     }
 
+    /**
+     * queries parse for queries where the clientID = the currentOID
+     */
     private void getClaims() {
         try {
             String currOID = ParseUser.getCurrentUser().getObjectId();
@@ -94,7 +118,7 @@ public class MyClaimsFragment extends Fragment {
             }
 
         } catch (ParseException e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("Exception: ", e.getMessage());
         }
     }
 }

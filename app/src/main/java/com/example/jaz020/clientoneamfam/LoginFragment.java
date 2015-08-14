@@ -1,10 +1,8 @@
 package com.example.jaz020.clientoneamfam;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,13 +18,57 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
+/**
+ * The type Login fragment.
+ */
 public class LoginFragment extends Fragment {
 
+    /**
+     * The Username _ entry.
+     */
+    EditText username_entry;
+    /**
+     * The Password _ entry.
+     */
+    EditText password_entry;
+
+    /**
+     * The Username _ checkbox.
+     */
+    CheckBox username_checkbox;
+    /**
+     * The Login _ checkbox.
+     */
+    CheckBox login_checkbox;
+
+    /**
+     * The Login _ button.
+     */
+    Button login_button;
+
+    /**
+     * The Shared preferences.
+     */
+    SharedPreferences sharedPreferences;
+
+    /**
+     * On create.
+     *
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,18 +76,12 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    EditText username_entry;
-    EditText password_entry;
-
-    CheckBox username_checkbox;
-    CheckBox login_checkbox;
-
-    Button login_button;
-
-    SharedPreferences sharedPreferences;
-
-
-
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -120,6 +156,9 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    /**
+     * Login success.
+     */
     public void loginSuccess() {
         password_entry.setText("");
         if(!username_checkbox.isChecked()) username_entry.setText("");
@@ -127,10 +166,18 @@ public class LoginFragment extends Fragment {
         startActivity(intent);
     }
 
+    /**
+     * Login fail.
+     */
     public void loginFail() {
         Toast.makeText(getActivity(), "Wrong Username or Password", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Login error.
+     *
+     * @param e the e
+     */
     public void loginError(ParseException e) {
         String message;
         switch (e.getCode()){
@@ -146,6 +193,13 @@ public class LoginFragment extends Fragment {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * validates the username and password entered by the user
+     *
+     * @param username the username
+     * @param password the password
+     * @return isValid
+     */
     private boolean validateEntries(String username, String password){
 
         if(username.length() < 1){

@@ -64,26 +64,65 @@ public class EditAppointment extends Fragment {
     private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
     private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
+    /**
+     * The M selected users.
+     */
     static List<Integer> mSelectedUsers;
+    /**
+     * The Attendees list.
+     */
     static String[] attendeesList;
+    /**
+     * The Checked user i ds.
+     */
     static boolean[] checkedUserIDs;
 
+    /**
+     * The Builder.
+     */
     AlertDialog.Builder builder;
-
-    private EditText attendees_entry;
+    /**
+     * The Meeting _ entry.
+     */
     EditText meeting_entry;
+    /**
+     * The Location _ entry.
+     */
     EditText location_entry;
+    /**
+     * The Start _ time _ entry.
+     */
     EditText start_time_entry;
+    /**
+     * The Start _ date _ entry.
+     */
     EditText start_date_entry;
+    /**
+     * The End _ time _ entry.
+     */
     EditText end_time_entry;
+    /**
+     * The End _ date _ entry.
+     */
     EditText end_date_entry;
+    /**
+     * The Comments _ entry.
+     */
     EditText comments_entry;
-
-    //the current users calendarInfo
+    /**
+     * The Calendar info.
+     */
+//the current users calendarInfo
     String[] calendarInfo;
+    /**
+     * The Start date calendar.
+     */
     Calendar startDateCalendar;
+    /**
+     * The End date calendar.
+     */
     Calendar endDateCalendar;
-
+    private EditText attendees_entry;
     private DatePickerDialog startDatePicker;
     private DatePickerDialog endDatePicker;
     private TimePickerDialog startTimePicker;
@@ -92,6 +131,14 @@ public class EditAppointment extends Fragment {
     // Flag to prevent the alert dialog builder from showing twice on a double click.
     private int alertdialogFlag;
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,6 +149,12 @@ public class EditAppointment extends Fragment {
         return inflater.inflate(R.layout.fragment_edit_appointment, container, false);
     }
 
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         meeting_entry = (EditText) view.findViewById(R.id.meeting_entry);
@@ -223,6 +276,9 @@ public class EditAppointment extends Fragment {
         });
     }
 
+    /**
+     * loads the possible attendees from parse
+     */
     private void loadUserInfo(){
         //load current date into datePickers
         startDateCalendar.setTime(Calendar.getInstance().getTime());
@@ -313,6 +369,9 @@ public class EditAppointment extends Fragment {
         });
     }
 
+    /**
+     * saves the appointment and sends it to the agent's google calendar
+     */
     private void saveToGoogle(){
         Date startDate = startDateCalendar.getTime();
         Date endDate = endDateCalendar.getTime();
@@ -546,6 +605,12 @@ public class EditAppointment extends Fragment {
         return new ArrayList<>(newList);
     }
 
+    /**
+     * On create options menu.
+     *
+     * @param menu the menu
+     * @param inflater the inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.optional_action).setIcon(android.R.drawable.ic_menu_save);
@@ -555,6 +620,12 @@ public class EditAppointment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * On options item selected.
+     *
+     * @param item the item
+     * @return the boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

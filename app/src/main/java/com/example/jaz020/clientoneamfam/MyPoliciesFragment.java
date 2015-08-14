@@ -1,7 +1,7 @@
 package com.example.jaz020.clientoneamfam;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,10 +21,20 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * MyPoliciesFragement displays a list of the policies that the user currently holds
+ *
+ * @author nreddy
  */
 public class MyPoliciesFragment extends Fragment {
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,6 +42,12 @@ public class MyPoliciesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_my_policies, container, false);
     }
 
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -57,6 +73,12 @@ public class MyPoliciesFragment extends Fragment {
         } catch (ParseException pe) {  pe.printStackTrace(); }
     }
 
+    /**
+     * On create options menu.
+     *
+     * @param menu the menu
+     * @param inflater the inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.optional_action).setVisible(true);
@@ -66,6 +88,12 @@ public class MyPoliciesFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * On options item selected.
+     *
+     * @param item the item
+     * @return the boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

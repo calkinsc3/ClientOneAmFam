@@ -24,18 +24,37 @@ import java.util.List;
 
 
 /**
- * Created by nsr009 on 6/10/2015.
+ * genereal RecyclerView adapter
+ *
+ * @author nreddy
  */
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
+    /**
+     * The Objects to display.
+     */
     List<ParseObject> objectsToDisplay;
+    /**
+     * The Card type.
+     */
     String cardType;
 
+    /**
+     * Instantiates a new RV adapter.
+     *
+     * @param cardType the card type
+     * @param objectsToDisplay the objects to display
+     */
     RVAdapter(String cardType, List<ParseObject> objectsToDisplay) {
         this.cardType = cardType;
         this.objectsToDisplay = objectsToDisplay;
     }
 
+    /**
+     * Gets item count.
+     *
+     * @return the item count
+     */
     @Override
     public int getItemCount() {
         if(objectsToDisplay != null) {
@@ -45,6 +64,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         return 0;
     }
 
+    /**
+     * On create view holder.
+     *
+     * @param viewGroup the view group
+     * @param i the i
+     * @return the view holder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_card,
@@ -52,6 +78,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         return new ViewHolder(v);
     }
 
+    /**
+     * On bind view holder.
+     *
+     * @param ivh the ivh
+     * @param i the i
+     */
     @Override
     public void onBindViewHolder(final ViewHolder ivh, int i) {
         final ParseObject currentObject = objectsToDisplay.get(i);
@@ -184,20 +216,48 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
     }
 
+    /**
+     * On attached to recycler view.
+     *
+     * @param recyclerView the recycler view
+     */
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     * The type View holder.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        /**
+         * The Cv.
+         */
         CardView cv;
 
+        /**
+         * The Image.
+         */
         ImageView image;
+        /**
+         * The Edit button.
+         */
         ImageButton editButton;
+        /**
+         * The Description.
+         */
         TextView description;
+        /**
+         * The Cost.
+         */
         TextView cost;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param view the view
+         */
         ViewHolder(View view) {
             super(view);
 
@@ -209,6 +269,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             cost = (TextView) view.findViewById(R.id.cardCost);
         }
 
+        /**
+         * Gets card view.
+         *
+         * @return the card view
+         */
         public CardView getCardView() {
             return cv;
         }

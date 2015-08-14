@@ -27,7 +27,9 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Register Fragment registers new users to the app.
+ *
+ * @author jziglinski
  */
 public class RegisterFragment extends Fragment {
 
@@ -50,6 +52,14 @@ public class RegisterFragment extends Fragment {
 
     private boolean agentSelected = false;
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +67,12 @@ public class RegisterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -65,6 +81,7 @@ public class RegisterFragment extends Fragment {
 
         retrieveAgentList();
 
+        //sets on click listener for the register button to register a user
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +89,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        //reentry on text changed checks to make sure the passwords entered match
         password_reentry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -174,6 +192,11 @@ public class RegisterFragment extends Fragment {
         agent_spinner.setAdapter(adapter);
     }
 
+    /**
+     * validates that all fields are entered
+     *
+     * @return boolean if passed validation
+     */
     private boolean validateAllEntries(){
         String username = username_entry.getText().toString();
         String password = password_entry.getText().toString();

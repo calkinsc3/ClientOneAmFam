@@ -26,19 +26,51 @@ public class MeetJamesFragment extends Fragment {
 
     private final GestureDetector detector = new GestureDetector(new SwipeGestureDetector());
 
+    /**
+     * The Github _ button.
+     */
     ImageButton github_button;
+    /**
+     * The Linkedin _ button.
+     */
     ImageButton linkedin_button;
+    /**
+     * The Facebook _ button.
+     */
     ImageButton facebook_button;
+    /**
+     * The Stack _ exchange _ button.
+     */
     ImageButton stack_exchange_button;
+    /**
+     * The Codecademy _ button.
+     */
     ImageButton codecademy_button;
+    /**
+     * The Google _ button.
+     */
     ImageButton google_button;
-
+    /**
+     * The Email _ james _ button.
+     */
     Button email_james_button;
-
+    /**
+     * The View flipper.
+     */
     ViewFlipper viewFlipper;
-
+    /**
+     * The Context.
+     */
     Context context;
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +78,12 @@ public class MeetJamesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_meet_james, container, false);
     }
 
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,6 +100,10 @@ public class MeetJamesFragment extends Fragment {
         }).start();
     }
 
+    /**
+     * maps the views to the respective code
+     * @param view holds the individual views
+     */
     private void initializeButtons(View view){
         github_button = (ImageButton) view.findViewById(R.id.github_button);
         linkedin_button= (ImageButton) view.findViewById(R.id.linkedin_button);
@@ -74,6 +116,9 @@ public class MeetJamesFragment extends Fragment {
         viewFlipper = (ViewFlipper) view.findViewById(R.id.view_flipper);
     }
 
+    /**
+     * sets up the slideshow flipper
+     */
     private void setUpFlipper(){
         viewFlipper.setAutoStart(true);
         viewFlipper.setFlipInterval(4000);
@@ -90,6 +135,9 @@ public class MeetJamesFragment extends Fragment {
         });
     }
 
+    /**
+     * sets the listeners for all buttons on the page
+     */
     private void setListeners(){
         github_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +213,19 @@ public class MeetJamesFragment extends Fragment {
         });
     }
 
+    /**
+     * The type Swipe gesture detector.
+     */
     class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        /**
+         * On fling.
+         *
+         * @param e1 the e 1
+         * @param e2 the e 2
+         * @param velocityX the velocity x
+         * @param velocityY the velocity y
+         * @return the boolean
+         */
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {

@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Meet Levi Fragment shows information about Levi in a tabbed view
+ *
+ * @author llavender
  */
 public class MeetLeviFragment extends Fragment {
 
@@ -19,6 +21,14 @@ public class MeetLeviFragment extends Fragment {
     TabHost.TabSpec tab2;
     TabHost.TabSpec tab3;
 
+    /**
+     * Called when the view is being inflated to the screen
+     *
+     * @param inflater the layout inflater
+     * @param container the ViewGroup
+     * @param savedInstanceState the instance state saved on rotation
+     * @return the view to inflate
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,6 +39,12 @@ public class MeetLeviFragment extends Fragment {
         return view;
     }
 
+    /**
+     * initializeTabsAndContent creates the separate tabs for the TabHost. Populates the views with
+     * text
+     *
+     * @param view the content view
+     */
     private void initializeTabsAndContent(final View view){
         tabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         tabHost.setup();

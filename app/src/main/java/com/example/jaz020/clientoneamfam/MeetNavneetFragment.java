@@ -1,11 +1,11 @@
 package com.example.jaz020.clientoneamfam;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +40,14 @@ public class MeetNavneetFragment extends Fragment {
 
     private Button emailButton;
 
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +55,12 @@ public class MeetNavneetFragment extends Fragment {
         return view;
     }
 
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -57,12 +71,20 @@ public class MeetNavneetFragment extends Fragment {
         imageClickListener();
     }
 
+    /**
+     * On configuration changed.
+     *
+     * @param newConfig the new config
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         initializeFields();
     }
 
+    /**
+     * initializes all layouts on the view
+     */
     private void initializeFields() {
         // Check the orientation of the device.
         // The fragment has different layouts for the different device orientations.
@@ -104,6 +126,9 @@ public class MeetNavneetFragment extends Fragment {
         rootView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * sets the text for the description text
+     */
     private void setDescription() {
         descriptionText.setMovementMethod(new ScrollingMovementMethod());
 
@@ -120,6 +145,9 @@ public class MeetNavneetFragment extends Fragment {
         descriptionText.setText(description);
     }
 
+    /**
+     * sets the emailButton click listener. Starts an intent to email
+     */
     private void emailButtonListener() {
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +165,9 @@ public class MeetNavneetFragment extends Fragment {
         });
     }
 
+    /**
+     * sets an image click listener to expand the image to the screen size
+     */
     private void imageClickListener() {
         imageThumb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +179,9 @@ public class MeetNavneetFragment extends Fragment {
         });
     }
 
+    /**
+     * On resume.
+     */
     @Override
     public void onResume() {
         super.onCreate(null);

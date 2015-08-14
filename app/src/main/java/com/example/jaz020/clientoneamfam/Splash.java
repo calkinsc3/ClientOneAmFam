@@ -10,13 +10,27 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 
+/**
+ * The type Splash.
+ */
 public class Splash extends Activity implements Runnable {
 
+    /**
+     * The M thread.
+     */
     Thread mThread;
+    /**
+     * The Progress bar.
+     */
     ProgressBar progressBar;
     private Handler handler = new Handler();
     private FrameLayout frameLayout;
 
+    /**
+     * On create.
+     *
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +46,9 @@ public class Splash extends Activity implements Runnable {
         mThread.start();
     }
 
+    /**
+     * Run void.
+     */
     @Override
     public void run() {
 

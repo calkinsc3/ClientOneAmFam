@@ -49,6 +49,24 @@ public class ImageZoom {
     private LinearLayout backgroundView;
     private RecyclerView recyclerView;
 
+    /**
+     * Instantiates a new Image zoom.
+     *
+     * @param imageID the image iD
+     * @param imageThumb the image thumb
+     * @param expandedImage the expanded image
+     * @param emailButton the email button
+     * @param nameText the name text
+     * @param jobTitleText the job title text
+     * @param jobTeamText the job team text
+     * @param linkedinText the linkedin text
+     * @param githubText the github text
+     * @param aboutText the about text
+     * @param descriptionText the description text
+     * @param rootView the root view
+     * @param backgroundView the background view
+     * @param recyclerView the recycler view
+     */
     public ImageZoom(int imageID, ImageButton imageThumb, ImageView expandedImage,
                      Button emailButton, TextView nameText, TextView jobTitleText,
                      TextView jobTeamText, TextView linkedinText, TextView githubText,
@@ -76,6 +94,9 @@ public class ImageZoom {
         zoomImageFromThumb();
     }
 
+    /**
+     * expands and enlarges the thumbnail to the center of the screen
+     */
     private void zoomImageFromThumb() {
         animationDuration = Singleton.getContext()
                 .getResources().getInteger(android.R.integer.config_shortAnimTime);
@@ -230,6 +251,9 @@ public class ImageZoom {
         });
     }
 
+    /**
+     * changes the visibility of the background views to show the main thumbnail more clearly
+     */
     private void prepareVisibilitiesForAnimation() {
         // Hide the thumbnail and show the zoomed-in view. When the animation begins,
         // it will position the zoomed-in view in the place of the thumbnail and
@@ -258,6 +282,9 @@ public class ImageZoom {
         expandedImage.setAlpha(1f);
     }
 
+    /**
+     * End animation and reset views to previous settings.
+     */
     protected void endAnimation() {
         imageThumb.setAlpha(1f);
         backgroundView.setAlpha(1f);

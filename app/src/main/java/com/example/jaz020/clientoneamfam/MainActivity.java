@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends Activity {
 
     private DrawerLayout drawerLayout;
@@ -33,6 +36,11 @@ public class MainActivity extends Activity {
     private List<String> meetInternsHeader;
     private HashMap<String, List<String>> internNames;
 
+    /**
+     * On create.
+     *
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * enables the nav-drawer and the icon touch to open the drawer
+     */
     private void setUpDrawer(){
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(false);
@@ -94,6 +105,9 @@ public class MainActivity extends Activity {
         drawerExpandableList.setAdapter(drawerExpandableListAdapter);
     }
 
+    /**
+     * sets up the expandable list in the nav-drawer
+     */
     private void setExpandDrawerLists() {
         List<String> internNamesList = new ArrayList<>();
         meetInternsHeader = new ArrayList<>();
@@ -104,6 +118,9 @@ public class MainActivity extends Activity {
         internNames.put(meetInternsHeader.get(0), internNamesList);
     }
 
+    /**
+     * Set drawer item click listener.
+     */
     public void setDrawerItemClickListener(){
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -219,6 +236,12 @@ public class MainActivity extends Activity {
         });
     }
 
+    /**
+     * Fragment is inflated.
+     *
+     * @param currFragment the curr fragment
+     * @return the boolean
+     */
     public boolean fragmentIsInflated(Fragment currFragment){
         FragmentManager fm = getFragmentManager();
         boolean isVisible = false;
@@ -234,7 +257,7 @@ public class MainActivity extends Activity {
     /**
      * Moves the the down arrow on the expandable list view to the right side of the screen.
      *
-     * @param hasFocus
+     * @param hasFocus the has focus
      */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -249,6 +272,12 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * On create options menu.
+     *
+     * @param menu the menu
+     * @return the boolean
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -256,6 +285,12 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    /**
+     * On options item selected.
+     *
+     * @param item the item
+     * @return the boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -284,6 +319,9 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * On back pressed.
+     */
     @Override
     public void onBackPressed(){
         if(getFragmentManager().getBackStackEntryCount() > 1){

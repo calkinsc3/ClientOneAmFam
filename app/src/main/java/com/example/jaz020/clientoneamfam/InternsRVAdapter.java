@@ -18,7 +18,9 @@ import java.util.HashMap;
 
 
 /**
- * Created by nsr009 on 7/23/2015.
+ * Custom recycler view for the meet the interns page
+ *
+ * @author nreddy
  */
 public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.ViewHolder> {
 
@@ -33,6 +35,17 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
 
     private RecyclerView recyclerView;
 
+    /**
+     * Instantiates a new Interns rV adapter.
+     *
+     * @param internNames the intern names
+     * @param internPictureMap the intern picture map
+     * @param backgroundView the background view
+     * @param expandedImage the expanded image
+     * @param internTitleText the intern title text
+     * @param recyclerView the recycler view
+     * @param frameLayout the frame layout
+     */
     InternsRVAdapter(String[] internNames, HashMap<String, Integer> internPictureMap,
                      LinearLayout backgroundView, ImageView expandedImage, TextView internTitleText,
                      RecyclerView recyclerView, FrameLayout frameLayout) {
@@ -47,6 +60,11 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
         this.recyclerView = recyclerView;
     }
 
+    /**
+     * Gets item count.
+     *
+     * @return the item count
+     */
     @Override
     public int getItemCount() {
         if (internNames != null) {
@@ -56,6 +74,13 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
         return 0;
     }
 
+    /**
+     * On create view holder.
+     *
+     * @param viewGroup the view group
+     * @param i the i
+     * @return the view holder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.intern_card,
@@ -64,6 +89,12 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
         return new ViewHolder(v);
     }
 
+    /**
+     * On bind view holder.
+     *
+     * @param vh the vh
+     * @param i the i
+     */
     @Override
     public void onBindViewHolder(final ViewHolder vh, final int i) {
         vh.name.setText(internNames[i]);
@@ -116,18 +147,40 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
         });
     }
 
+    /**
+     * On attached to recycler view.
+     *
+     * @param recyclerView the recycler view
+     */
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     * The type View holder.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        /**
+         * The Cv.
+         */
         CardView cv;
 
+        /**
+         * The Image.
+         */
         ImageButton image;
+        /**
+         * The Name.
+         */
         TextView name;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param view the view
+         */
         ViewHolder(View view) {
             super(view);
 
@@ -137,6 +190,11 @@ public class InternsRVAdapter extends RecyclerView.Adapter<InternsRVAdapter.View
             name = (TextView) view.findViewById(R.id.internName);
         }
 
+        /**
+         * Gets card view.
+         *
+         * @return the card view
+         */
         public CardView getCardView() {
             return cv;
         }

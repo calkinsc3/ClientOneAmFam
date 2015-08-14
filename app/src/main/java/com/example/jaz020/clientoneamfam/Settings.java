@@ -21,6 +21,46 @@ import com.parse.ParseUser;
  */
 public class Settings extends Fragment {
 
+    private final long CLOUD_SPEED = 500;
+    /**
+     * The Version _ text _ view.
+     */
+    TextView version_text_view;
+    /**
+     * The Username _ text _ view.
+     */
+    TextView username_text_view;
+    /**
+     * The Address _ text _ view.
+     */
+    TextView address_text_view;
+    /**
+     * The Phone _ text _ view.
+     */
+    TextView phone_text_view;
+    /**
+     * The Email _ text _ view.
+     */
+    TextView email_text_view;
+
+    /**
+     * The Logout _ button.
+     */
+    Button logout_button;
+
+    /**
+     * The Size.
+     */
+    Point size = new Point();
+
+    /**
+     * On create view.
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,18 +68,12 @@ public class Settings extends Fragment {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
-    TextView version_text_view;
-    TextView username_text_view;
-    TextView address_text_view;
-    TextView phone_text_view;
-    TextView email_text_view;
-
-    Button logout_button;
-
-    Point size = new Point();
-
-    private final long CLOUD_SPEED = 500;
-
+    /**
+     * On view created.
+     *
+     * @param view the view
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         version_text_view = (TextView) view.findViewById(R.id.version_text_view);
@@ -50,8 +84,10 @@ public class Settings extends Fragment {
 
         logout_button = (Button) view.findViewById(R.id.logout_button);
 
+        //initializes the text views to the information from the network
         setTextViews();
 
+        //logs the user out
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +108,9 @@ public class Settings extends Fragment {
         });
     }
 
+    /**
+     * populates the views on the page with information from the network
+     */
     private void setTextViews(){
         ParseUser currUser = ParseUser.getCurrentUser();
 
@@ -99,6 +138,9 @@ public class Settings extends Fragment {
         email_text_view.setText(email);
     }
 
+    /**
+     * On resume re-enable buttons.
+     */
     @Override
     public void onResume() {
         super.onCreate(null);

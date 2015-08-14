@@ -51,7 +51,7 @@ import java.util.List;
  * the AddClaim button was pressed it will enable the user to create a new claim from a list of possible
  * policies and allow the user to upload photos.
  *
- * @author lsl017
+ * @author llavender
  */
 public class ClaimScreenFragment extends Fragment {
 
@@ -87,7 +87,7 @@ public class ClaimScreenFragment extends Fragment {
     private boolean hasImages;
 
     /**
-     * On create view.
+     * On create view is called when the view is being created.
      *
      * @param inflater the inflater
      * @param container the container
