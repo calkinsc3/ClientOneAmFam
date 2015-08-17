@@ -147,6 +147,7 @@ public class MyAgentFragment extends Fragment {
             public void onClick(View v) {
                 emailBtn.setEnabled(false);
 
+                //todo default subject and body
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("plain/text");
 

@@ -88,8 +88,6 @@ public class MainPageFragment extends Fragment {
         display = getActivity().getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
-        Singleton.getMyAgent();
-
         buttonClickListeners();
 
         try {
@@ -211,10 +209,11 @@ public class MainPageFragment extends Fragment {
         meetTheInterns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                meetTheInterns.setEnabled(false);
+                //todo move to method, and check if v works
+                v.setEnabled(false);
                 Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_to_right);
                 anim.setDuration(CLOUD_SPEED + 500);
-                meetTheInterns.startAnimation(anim);
+                v.startAnimation(anim);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override

@@ -61,13 +61,15 @@ public class MyPoliciesFragment extends Fragment {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Policy");
             query.whereEqualTo("ClientID", ParseUser.getCurrentUser().getObjectId());
+            //todo findinbackground
             List<ParseObject> policies = query.find();
 
-            if (policies.size() != 0) {
+            if (!policies.isEmpty()) {
                 /* Attach adapter to recycler view */
                 RVAdapter adapter = new RVAdapter("Policies", policies);
                 rv.setAdapter(adapter);
             } else {
+                //todo dialog
                 Toast.makeText(getActivity(), "No Policies Found", Toast.LENGTH_SHORT).show();
             }
         } catch (ParseException pe) {  pe.printStackTrace(); }

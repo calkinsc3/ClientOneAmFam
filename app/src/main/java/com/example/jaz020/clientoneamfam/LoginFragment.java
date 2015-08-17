@@ -41,30 +41,13 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //initialize all ui elements, set onclick
         initializeFields(view);
+        setLoginListener();
 
     }
 
-    /**
-     * Initializes all fields, sets the checkboxes of the login screen, and sets the on click listener
-     * for the login button
-     *
-     * @param view main view
-     */
-    private void initializeFields(View view) {
-        sharedPreferences = getActivity().getSharedPreferences("AmFam", 0);
-        username_entry = (EditText) view.findViewById(R.id.username_entry);
-        password_entry = (EditText) view.findViewById(R.id.password_entry);
-        username_checkbox = (CheckBox) view.findViewById(R.id.remember_username_checkbox);
-        login_checkbox = (CheckBox) view.findViewById(R.id.stay_logged_in_checkbox);
-        login_button = (Button) view.findViewById(R.id.login_button);
-
-        //set checkboxes and username if the user has data saved
-        if (sharedPreferences.getString("Username", null) != null) {
-            username_checkbox.setChecked(true);
-            username_entry.setText(sharedPreferences.getString("Username", ""));
-        }
-
+    private void setLoginListener() {
         //LOGIN CLICK
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +102,29 @@ public class LoginFragment extends Fragment {
     }
 
     /**
+     * Initializes all fields, sets the checkboxes of the login screen, and sets the on click listener
+     * for the login button
+     *
+     * @param view main view
+     */
+    private void initializeFields(View view) {
+        sharedPreferences = getActivity().getSharedPreferences("AmFam", 0);
+        username_entry = (EditText) view.findViewById(R.id.username_entry);
+        password_entry = (EditText) view.findViewById(R.id.password_entry);
+        username_checkbox = (CheckBox) view.findViewById(R.id.remember_username_checkbox);
+        login_checkbox = (CheckBox) view.findViewById(R.id.stay_logged_in_checkbox);
+        login_button = (Button) view.findViewById(R.id.login_button);
+
+        //set checkboxes and username if the user has data saved
+        if (sharedPreferences.getString("Username", null) != null) {
+            username_checkbox.setChecked(true);
+            username_entry.setText(sharedPreferences.getString("Username", ""));
+        }
+
+
+    }
+
+    /**
      * Called after a successful log in to Parse
      * Saves the user's info, and starts the main activity
      */
@@ -133,9 +139,11 @@ public class LoginFragment extends Fragment {
      * Informs user login has failed
      */
     public void loginFail() {
+        //todo dialog
         Toast.makeText(getActivity(), "Wrong Username or Password", Toast.LENGTH_SHORT).show();
     }
 
+    //todo dialog
     /**
      * Handles any login errors
      * @param e {@link com.parse.ParseException} thrown by the erroneous login

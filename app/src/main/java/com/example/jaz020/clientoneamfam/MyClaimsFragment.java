@@ -89,12 +89,12 @@ public class MyClaimsFragment extends Fragment {
      */
     private void getClaims() {
         try {
-            String currOID = ParseUser.getCurrentUser().getObjectId();
 
             //get a list of all policies for current user
             ParseQuery query = ParseQuery.getQuery("Policy");
-            query.whereEqualTo("ClientID", currOID );
+            query.whereEqualTo("ClientID", ParseUser.getCurrentUser().getObjectId());
 
+            //todo find in background
             List<ParseObject> userPolicies = query.find();
             List<ParseQuery<ParseObject>> queries = new ArrayList<>();
 
@@ -113,6 +113,7 @@ public class MyClaimsFragment extends Fragment {
                     RVAdapter adapter = new RVAdapter("Claims", claims);
                     rv.setAdapter(adapter);
                 } else {
+                    //todo dialog
                     Toast.makeText(getActivity(), "No Claims Found", Toast.LENGTH_SHORT).show();
                 }
             }

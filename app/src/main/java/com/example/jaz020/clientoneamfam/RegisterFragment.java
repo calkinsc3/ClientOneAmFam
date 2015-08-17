@@ -31,7 +31,8 @@ import java.util.List;
  */
 public class RegisterFragment extends Fragment {
 
-    private EditText username_entry, password_entry, password_reentry, name_entry, phone_entry, email_entry, street_entry, city_entry, zip_entry;
+    private EditText username_entry, password_entry, password_reentry, name_entry, phone_entry,
+            email_entry, street_entry, city_entry, zip_entry;
     private Spinner agent_spinner, state_spinner;
     private Button register_button;
 
@@ -51,6 +52,7 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //initializes all ui objects
         initializeFields(view);
 
         retrieveAgentList();
@@ -235,6 +237,7 @@ public class RegisterFragment extends Fragment {
 
         //check for valid email
         if (email.length() < 1) {
+            //todo email validator
             email_entry.setError("Please enter a valid email address");
             return false;
         }
@@ -250,6 +253,7 @@ public class RegisterFragment extends Fragment {
         if(validateAllEntries()) {
             String phoneNumber = phone_entry.getText().toString();
             phoneNumber = phoneNumber.replace("(", "");
+            //todo navneet
             phoneNumber = phoneNumber.replace(")", "");
             phoneNumber = phoneNumber.replace("-", "");
             phoneNumber = phoneNumber.replace(" ", "");
@@ -283,6 +287,8 @@ public class RegisterFragment extends Fragment {
                             email_entry.setError("Please enter a valid email address");
                         } else {
                             switch (e.getCode()){
+
+                                //todo handle all parse errors, make a class
                                 case 100:
                                     //cleared the message from here so it doesn't show up on parse connection
                                     break;
@@ -316,6 +322,7 @@ public class RegisterFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), Splash.class);
                     startActivity(intent);
                 } else {
+                    //todo dialog
                     Toast.makeText(getActivity(), "Could Not Log In: " +
                             e.getMessage(), Toast.LENGTH_SHORT).show();
                 }

@@ -36,6 +36,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -333,7 +334,7 @@ public class PolicyScreenFragment extends Fragment {
     private void queryParseForUploads(){
         ParseQuery imageQuery = new ParseQuery("Upload");
         imageQuery.whereEqualTo("PolicyID", currentPolicy.getObjectId());
-
+//todo find in background
         try{
             uploads = (ArrayList<ParseObject>)imageQuery.find();
         } catch (com.parse.ParseException e) {
@@ -402,17 +403,27 @@ public class PolicyScreenFragment extends Fragment {
         currentPolicy.put("Zip", Double.valueOf(zip.getText().toString()));
         currentPolicy.put("State", stateSpinner.getSelectedItem().toString());
 
-        try {
-            currentPolicy.save();
-            policyWasCreated = true;
-            Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
-        } catch(com.parse.ParseException e){
-            Log.e("Save Error", e.toString());
-        }
 
-        Singleton.setCurrentPolicy(currentPolicy);
+        currentPolicy.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    //TODO A;SF;AF
 
-        uploadsLayout.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "Policy Saved", Toast.LENGTH_SHORT).show();
+                    policyWasCreated = true;
+                    Singleton.setCurrentPolicy(currentPolicy);
+
+                    uploadsLayout.setVisibility(View.VISIBLE);
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+
     }
 
     /**

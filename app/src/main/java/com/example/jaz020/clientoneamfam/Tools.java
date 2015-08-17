@@ -28,9 +28,9 @@ public class Tools {
     /**
      * Replace fragment.
      *
-     * @param container_id the container _ id
-     * @param fragment the fragment to inflate
-     * @param fManager the fragmentmanager
+     * @param container_id   the container _ id
+     * @param fragment       the fragment to inflate
+     * @param fManager       the fragmentmanager
      * @param addToBackStack if fragment need to be on the backstack
      */
     public static void replaceFragment(int container_id, Fragment fragment, FragmentManager fManager,
@@ -49,20 +49,20 @@ public class Tools {
      *
      * @throws ParseException the parse exception
      */
-    public static void setMyAgent() throws ParseException{
-            ParseUser client = ParseUser.getCurrentUser();
-            final String agentID = client.getString("AgentID");
+    public static void setMyAgent() throws ParseException {
+        ParseUser client = ParseUser.getCurrentUser();
+        final String agentID = client.getString("AgentID");
 
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.whereEqualTo("objectId", agentID);
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", agentID);
 
-            query.findInBackground(new FindCallback<ParseUser>() {
-                @Override
-                public void done(List<ParseUser> list, ParseException e) {
-                    if (e == null && list.size() > 0)
-                        Singleton.setMyAgent(list.get(0));
-                }
-            });
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> list, ParseException e) {
+                if (e == null && !list.isEmpty())
+                    Singleton.setMyAgent(list.get(0));
+            }
+        });
     }
 
     /**
@@ -112,11 +112,8 @@ public class Tools {
      * @param context the context
      * @return the boolean
      */
-    public static boolean isNetworkAvailable(Context context){
+    public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getActiveNetworkInfo() == null){
-            return false;
-        }
-        return true;
+        return connectivityManager.getActiveNetworkInfo() != null;
     }
 }

@@ -65,6 +65,7 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
             else{
+                //TODO change to dialog, start wifi settings
                 Toast.makeText(this,"No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         }
