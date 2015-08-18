@@ -128,7 +128,6 @@ public class MainActivity extends Activity {
                 drawerLayout.closeDrawer(findViewById(R.id.main_drawer_linear_layout));
                 drawerExpandableList.collapseGroup(0);
 
-
                 final int HOME_PAGE = 0;
                 final int MY_AGENT = 1;
                 final int FIND_AN_AGENT = 2;
